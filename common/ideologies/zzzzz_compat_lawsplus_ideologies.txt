@@ -1,0 +1,1928 @@
+﻿# BPM / Laws+ Compatch - ideologie wlasne Laws+ uzupelnione o stanowiska
+# wobec praw dodanych przez Better Politics Mod (skopiowane z najblizszej
+# ideologii-odpowiednika w BPM).
+
+# --- ideology_national_socialist  (baza: Laws+, uzupelnienie: BPM/ideology_fascist) ---
+REPLACE:ideology_national_socialist = { # 국가사회주의자 (슈트라서주의)
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_national_socialist.dds"
+
+	character_ideology = yes
+
+	lawgroup_governance_principles = {
+		law_corporate_state = strongly_approve
+		law_council_republic = neutral	# 소비에트를 체제를 ‘소련식 나치즘’으로 여기고 존중했던 슈트라서파
+		law_social_monarchy = disapprove
+		law_presidential_republic = disapprove
+		law_parliamentary_republic = disapprove
+		law_theocracy = strongly_disapprove
+		law_monarchy = strongly_disapprove
+		law_corporatocracy = strongly_disapprove
+	}
+
+	lawgroup_citizenship = { # 파시스트와 동일
+		law_ethnostate = strongly_approve
+		law_national_supremacy = approve
+		law_racial_segregation = approve
+		law_cultural_exclusion = disapprove
+		law_subjecthood = strongly_disapprove
+		law_multicultural = strongly_disapprove
+	}
+
+	lawgroup_army_model = {
+		law_national_militia = strongly_approve	# SS의 창설 이념, “민중을 탄압하는 상비군보다 도덕적으로 더 우월한 인민군”
+		law_mass_conscription = approve
+		law_professional_army = disapprove
+		law_peasant_levies = disapprove
+		law_disarmed_nation = strongly_disapprove
+	}
+
+	lawgroup_economic_system = {
+		law_cooperative_ownership = strongly_approve	# 나치당내 좌익
+		law_class_collaboration = approve
+		law_state_capitalism = neutral
+		law_interventionism = neutral
+		law_agrarianism = neutral
+		law_command_economy = disapprove
+		law_traditionalism = disapprove
+		law_laissez_faire = strongly_disapprove
+		law_industry_banned = strongly_disapprove
+		law_extraction_economy = strongly_disapprove
+	}
+
+	lawgroup_policing = { # 1.10 이전 파시스트 참고
+		law_militarized_police = strongly_approve
+		law_local_police = approve
+		law_dedicated_police = approve
+		law_no_police = disapprove
+		law_privatized_police = strongly_disapprove	# Laws +
+		law_elected_police = strongly_disapprove	# z BPM/ideology_fascist
+	}
+
+	lawgroup_labour_associations = {
+		law_guild_system = strongly_approve	# 중앙통제식 사회주의를 거부하고 분권적 길드 사회주의를 택한 슈트라서파
+		law_right_to_associate = approve
+		law_corporatized_unions = neutral
+		law_combination_acts = disapprove
+		law_anti_strike_laws = disapprove
+		law_factory_councils = strongly_disapprove
+	}
+
+	lawgroup_discriminated_pop = { # Laws +
+		law_no_codified_discrimination = disapprove
+		law_racial_hierarchy = approve
+		law_violent_suppresion = strongly_approve
+	}
+
+	country_trigger = {
+		has_technology_researched = political_agitation
+		OR = {
+			country_has_primary_culture = cu:north_german
+			country_has_primary_culture = cu:south_german
+			# 동독일은 제외
+			country_has_primary_culture = cu:swedish
+		}
+	}
+
+	interest_group_leader_trigger = {
+		ideology_national_socialist_valid_trigger = yes
+	}
+
+	non_interest_group_leader_trigger = {
+		# 선동가는 현행법과 상충되는 이념을 가져야 함
+		NAND = {
+			has_role = agitator
+			owner = {
+				has_law_or_variant = law_type:law_corporate_state
+				has_law_or_variant = law_type:law_ethnostate
+				has_law_or_variant = law_type:law_cooperative_ownership
+				has_law_or_variant = law_type:law_guild_system
+			}
+		}
+		interest_group ?= {
+			ideology_national_socialist_valid_trigger = yes
+		}
+	}
+
+	interest_group_leader_weight = {
+		value = {
+			add = 50
+			desc = "base_value"
+		}
+		# 분노 상태에서 더 선호함
+		add = {
+			value = owner.radical_fraction
+			multiply = 100
+			desc = "COUNTRY_RADICALS"
+		}
+		# 관련 이슈가 있을 때 더 선호함
+		if = {
+			limit = {
+				owner.ideology_national_socialist_disfavoured_laws > 0
+			}
+			add = {
+				value = owner.ideology_fascist_disfavoured_laws
+				multiply = 8
+				desc = "DISFAVORED_LAWS"
+			}
+		}
+		# 관련 이슈가 없으면 덜 선호함
+		if = {
+			limit = {
+				owner.ideology_clerical_fascist_favoured_laws > 0
+			}
+			subtract = {
+				value = owner.ideology_fascist_favoured_laws
+				multiply = 8
+				desc = "FAVORED_LAWS"
+			}
+		}
+		# 전쟁 배상금을 지불 중일 때, 더 선호함
+		if = {
+			limit = {
+				owner ?= {
+					any_diplomatically_relevant_country = {
+						any_scope_treaty = {
+							is_enforced = yes
+							any_scope_article = {
+								has_type = money_transfer
+								source_country = root.owner
+							}
+						}
+					}
+				}
+			}
+			add = {
+				value = 25
+				desc = "WAR_REPARATIONS"
+			}
+		}
+		# 만만한 혐오 대상이 있을 때, 더 선호함
+		if = {
+			limit = {
+				owner = {
+					any_scope_state = {
+						is_incorporated = yes
+						any_scope_pop = {
+							pop_acceptance < acceptance_status_4
+							total_size >= 1000
+						}
+					}
+				}
+			}
+			add = {
+				value = 25
+				desc = "PRESENT_MINORITIES"
+			}
+		}
+		# 부도 상태일 때, 더 선호함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						in_default = yes
+						has_modifier = declared_bankruptcy
+					}
+				}
+			}
+			add = {
+				value = 25
+				desc = "BANKRUPTCY"
+			}
+		}
+		# 기업 국가면 덜 선호함
+		if = {
+			limit = {
+				owner = {
+					has_law_or_variant = law_type:law_corporatocracy
+				}
+			}
+			add = -75
+		}
+		# 기업가와 지주를 제외하고 불만 상태일 때, 더 선호함
+		if = {
+			limit = {
+				ig_approval <= define:NPolitics|APPROVAL_THRESHOLD_UNHAPPY
+				NOR = {
+					is_interest_group_type = ig_industrialists
+					is_interest_group_type = ig_landowners
+				}
+			}
+			subtract = {
+				value = ig_approval
+				multiply = 5
+				desc = "IG_APPROVAL_BELOW_UNHAPPY"
+			}
+		}
+		# 민족국가나 조합 국가가 아닐 때, 덜 선호함
+		if = {
+			limit = {
+				owner = {
+					NOR = {
+						has_law_or_variant = law_type:law_ethnostate
+						has_law_or_variant = law_type:law_corporate_state
+					}
+				}
+				ig_approval >= define:NPolitics|APPROVAL_THRESHOLD_HAPPY
+			}
+			subtract = {
+				value = ig_approval
+				multiply = 5
+				desc = "HAPPY_WITHOUT_FASCISM"
+			}
+		}
+		# 노동조합과 전원 주민은 더 선호함
+		if = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_trade_unions
+					is_interest_group_type = ig_rural_folk
+				}
+			}
+			add = 50
+		}
+		# 지식인, 기업가, 지주는 덜 선호함
+		if = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_intelligentsia
+					is_interest_group_type = ig_industrialists
+					is_interest_group_type = ig_landowners
+				}
+			}
+			add = -25
+		}
+		# 민족국가나 조합 국가에서 정부 여권에 있을 때, 더 선호함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_ethnostate
+						has_law_or_variant = law_type:law_corporate_state
+					}
+					NOR = {
+						is_enacting_law = law_type:law_multicultural
+						is_enacting_law = law_type:law_national_supremacy
+						is_enacting_law = law_type:law_racial_segregation
+						is_enacting_law = law_type:law_cultural_exclusion
+					}
+				}
+				is_in_government = yes
+			}
+			add = {
+				add = 50
+				desc = "GOVERNING_ETHNOSTATE_OR_CS"
+			}
+		}
+		# 적색 공포는 파시스트를 양산함
+		if = {
+			limit = {
+				has_variable = fascist_uptick
+			}
+			multiply = {
+				value = 1.5
+				desc = "RED_SCARE"
+			}
+		}
+		# 파시즘 일지는 파시스트를 양산함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						has_journal_entry = je_fascism_1
+						has_variable = completed_fascism_1_var
+					}
+				}
+			}
+			multiply = {
+				value = 1.25
+				desc = "FASCISM_JE"
+			}
+		}
+		# 북독일 문화를 가졌다면 더 선호함. 개신교가 국교라면 더 더 선호함
+		if = {
+			limit = {
+				country_has_primary_culture = cu:north_german
+			}
+			multiply = 2
+			if = {
+				limit = {
+					country_has_state_religion = rel:protestant
+				}
+				multiply = 2
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_variable = communist_ig_var
+					has_variable = chose_vanguardism
+					has_variable = chose_anarchism
+					has_variable = chose_communism
+					has_variable = chose_ethno_nationalism
+				}
+			}
+			multiply = {
+				value = 0.1
+				desc = "CHOSE_A_DIFFERENT_PATH"
+			}
+		}
+	}
+
+	non_interest_group_leader_weight = {
+		value = 50
+
+		# 분노 상태에서 더 선호함
+		add = {
+			value = owner.radical_fraction
+			multiply = 100
+		}
+		# 관련 이슈가 있을 때 더 선호함
+		if = {
+			limit = {
+				owner.ideology_national_socialist_disfavoured_laws > 0
+			}
+			add = {
+				value = owner.ideology_national_socialist_disfavoured_laws
+				multiply = 8
+			}
+		}
+		# 관련 이슈가 없으면 덜 선호함
+		if = {
+			limit = {
+				owner.ideology_national_socialist_favoured_laws > 0
+			}
+			subtract = {
+				value = owner.ideology_national_socialist_favoured_laws
+				multiply = 8
+			}
+		}
+		# 전쟁 배상금을 지불 중일 때, 더 선호함
+		if = {
+			limit = {
+				owner ?= {
+					any_diplomatically_relevant_country = {
+						has_diplomatic_pact = {
+							who = root.owner
+							type = war_reparations
+							is_initiator = yes
+						}
+					}
+				}
+			}
+			add = 25
+		}
+		# 만만한 혐오 대상이 있을 때, 더 선호함
+		if = {
+			limit = {
+				owner = {
+					any_scope_state = {
+						is_incorporated = yes
+						any_scope_pop = {
+							pop_acceptance < acceptance_status_4
+							total_size >= 1000
+						}
+					}
+				}
+			}
+			add = 25
+		}
+		# 부도 상태일 때, 더 선호함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						in_default = yes
+						has_modifier = declared_bankruptcy
+					}
+				}
+			}
+			add = 25
+		}
+		# 기업 국가면 덜 선호함
+		if = {
+			limit = {
+				owner = {
+					has_law_or_variant = law_type:law_corporatocracy
+				}
+			}
+			add = -75
+		}
+		# 기업가와 지주를 제외하고 불만 상태일 때, 더 선호함
+		if = {
+			limit = {
+				ig_approval <= define:NPolitics|APPROVAL_THRESHOLD_UNHAPPY
+				NOR = {
+					is_interest_group_type = ig_industrialists
+					is_interest_group_type = ig_landowners
+				}
+			}
+			add = {
+				value = interest_group.ig_approval
+				multiply = 5
+			}
+		}
+		# 민족국가나 조합 국가가 아닐 때, 덜 선호함
+		if = {
+			limit = {
+				owner = {
+					NOR = {
+						has_law_or_variant = law_type:law_ethnostate
+						has_law_or_variant = law_type:law_corporate_state
+					}
+				}
+				interest_group.ig_approval >= define:NPolitics|APPROVAL_THRESHOLD_HAPPY
+			}
+			subtract = {
+				value = interest_group.ig_approval
+				multiply = 5
+			}
+		}
+		# 노동조합과 전원 주민은 더 선호함
+		if = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_trade_unions
+					is_interest_group_type = ig_rural_folk
+				}
+			}
+			add = 50
+		}
+		# 지식인, 기업가, 지주는 덜 선호함
+		if = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_intelligentsia
+					is_interest_group_type = ig_industrialists
+					is_interest_group_type = ig_landowners
+				}
+			}
+			add = -25
+		}
+		# 민족국가나 조합 국가에서 정부 여권에 있을 때, 더 선호함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_ethnostate
+						has_law_or_variant = law_type:law_corporate_state
+					}
+					NOR = {
+						is_enacting_law = law_type:law_multicultural
+						is_enacting_law = law_type:law_national_supremacy
+						is_enacting_law = law_type:law_racial_segregation
+						is_enacting_law = law_type:law_cultural_exclusion
+					}
+				}
+				interest_group ?= {
+					is_in_government = yes
+				}
+			}
+			add = 50
+		}
+		# 적색 공포는 파시스트를 양산함
+		if = {
+			limit = {
+				has_variable = fascist_uptick
+			}
+			multiply = 1.5
+		}
+		# 파시즘 일지는 파시스트를 양산함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						has_journal_entry = je_fascism_1
+						has_variable = completed_fascism_1_var
+					}
+				}
+			}
+			multiply = 1.25
+		}
+		# 북독일 문화를 가졌다면 더 선호함. 개신교가 국교라면 더 더 선호함
+		if = {
+			limit = {
+				country_has_primary_culture = cu:north_german
+			}
+			multiply = 2
+			if = {
+				limit = {
+					country_has_state_religion = rel:protestant
+				}
+				multiply = 2
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_variable = communist_ig_var
+					has_variable = chose_vanguardism
+					has_variable = chose_anarchism
+					has_variable = chose_communism
+					has_variable = chose_ethno_nationalism
+				}
+			}
+			multiply = 0.1
+		}
+	}
+
+	lawgroup_distribution_of_power = {	# z BPM/ideology_fascist
+		law_autocracy = approve
+		law_oligarchy = neutral
+		law_anarchy = strongly_disapprove
+		law_universal_suffrage = strongly_disapprove
+		law_census_voting = strongly_disapprove
+		law_wealth_voting = strongly_disapprove
+		law_landed_voting = strongly_disapprove	
+		law_technocracy = approve
+		law_military_junta = approve		
+		law_organic_democracy = approve
+	}
+
+	lawgroup_centralization = {	# z BPM/ideology_fascist
+		law_unitary = approve
+		law_devolved = neutral
+		law_federated = neutral
+		law_confederated = disapprove
+		law_ad_hoc_centralization = strongly_disapprove
+	}
+
+	lawgroup_navy_model = {	# z BPM/ideology_fascist
+		law_merchant_navy = disapprove
+		law_jeune_ecole = strongly_approve
+		law_professional_navy = strongly_approve
+		law_diplomatic_navy = neutral
+	}
+
+	lawgroup_free_speech = {	# z BPM/ideology_fascist
+		law_protected_speech = strongly_disapprove
+		law_right_of_assembly = disapprove
+		law_censorship = neutral
+		law_outlawed_dissent = strongly_approve
+	}
+
+	lawgroup_party_laws = {	# z BPM/ideology_fascist
+		law_no_party_bans = disapprove
+		law_party_anti_socialist = neutral
+		law_party_anti_reactionary = strongly_disapprove
+		law_party_reactionary_only = approve
+		law_party_socialist_only = strongly_disapprove
+		law_party_liberal_only = strongly_disapprove
+	}
+
+	lawgroup_foreign_policy = {	# z BPM/ideology_fascist
+		law_ultramilitarism = strongly_approve
+		law_jingoism = approve
+		law_flexible_foreign_policy = neutral
+		law_justum_bellum = strongly_disapprove
+		law_dove_politics = strongly_disapprove
+		law_armed_neutrality = strongly_disapprove
+		law_disarmed_nation = strongly_disapprove
+		law_premodern_diplomacy = strongly_disapprove
+	}
+
+	lawgroup_repeatable_culture = {	# z BPM/ideology_fascist
+		law_repeatable_culture_invite_foreign_experts = strongly_disapprove
+		law_repeatable_culture_promote_democratic_values = strongly_disapprove
+		law_repeatable_culture_affirmative_action = strongly_disapprove
+		law_repeatable_culture_promote_socialist_values = strongly_disapprove
+		law_repeatable_culture_promote_patriotic_values = strongly_approve
+		law_repeatable_culture_promote_absolutist_values = approve
+		law_repeatable_culture_promote_ultranationalist_values = strongly_approve
+	}
+}
+
+# --- ideology_clerical_fascist  (baza: Laws+, uzupelnienie: BPM/ideology_integralist) ---
+REPLACE:ideology_clerical_fascist = { # 교권 파시스트
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_clerical_fascist.dds"
+
+	character_ideology = yes
+
+	lawgroup_governance_principles = {
+		law_theocracy = strongly_approve
+		law_social_monarchy = strongly_approve
+		law_monarchy = approve
+		law_corporate_state = approve
+		law_presidential_republic = disapprove
+		law_parliamentary_republic = disapprove
+		law_corporatocracy = strongly_disapprove
+		law_council_republic = strongly_disapprove
+	}
+
+	lawgroup_distribution_of_power = {
+		law_autocracy = strongly_approve
+		law_single_party_state = approve
+		law_oligarchy = approve
+		law_landed_voting = neutral
+		law_wealth_voting = disapprove
+		law_census_voting = disapprove
+		law_weighted_universal_voting = disapprove
+		law_universal_suffrage = disapprove
+		law_technocracy = strongly_disapprove
+		law_proletariat_dictatorship = strongly_disapprove
+		law_anarchy = strongly_disapprove
+		law_military_junta = approve	# z BPM/ideology_integralist
+		law_organic_democracy = strongly_approve	# z BPM/ideology_integralist
+	}
+
+	lawgroup_church_and_state = { # 전통주의와 동일
+		law_state_religion = strongly_approve
+		law_freedom_of_conscience = disapprove
+		law_religious_pluralism = strongly_disapprove
+		law_total_separation = strongly_disapprove
+		law_state_atheism = strongly_disapprove
+	}
+
+	lawgroup_citizenship = { # 1.8 이전 도덕주의 참고
+		law_national_supremacy = strongly_approve
+		law_subjecthood = neutral
+		law_ethnostate = neutral
+		law_racial_segregation = neutral
+		law_cultural_exclusion = disapprove
+		law_multicultural = strongly_disapprove	
+	}
+
+	lawgroup_free_speech = { # 파시스트와 동일
+		law_outlawed_dissent = strongly_approve
+		law_censorship = neutral
+		law_right_of_assembly = disapprove
+		law_protected_speech = strongly_disapprove
+	}
+
+	lawgroup_labour_associations = {
+		law_guild_system = strongly_approve
+		law_corporatized_unions = approve
+		law_combination_acts = neutral
+		law_anti_strike_laws = neutral
+		law_right_to_associate = disapprove
+		law_factory_councils = strongly_disapprove
+	}
+
+	lawgroup_discriminated_pop = {
+		law_no_codified_discrimination = disapprove
+		law_racial_hierarchy = strongly_approve
+		law_violent_suppresion = approve
+	}
+
+	country_trigger = {
+		has_technology_researched = political_agitation
+		exists = ig:ig_devout
+		ig:ig_devout ?= {
+			ig_counts_as_marginal = no
+		}
+	}
+
+	interest_group_leader_trigger = {
+		ideology_clerical_fascist_valid_trigger = yes
+	}
+
+	non_interest_group_leader_trigger = {
+		# 선동가는 현행법과 상충되는 이념을 가져야 함
+		NAND = {
+			has_role_of_type = agitator
+			owner = {
+				OR = {
+					has_law_or_variant = law_type:law_social_monarchy
+					has_law_or_variant = law_type:law_theocracy
+				}
+				has_law_or_variant = law_type:law_autocracy
+				has_law_or_variant = law_type:law_state_religion
+				has_law_or_variant = law_type:law_national_supremacy
+				has_law_or_variant = law_type:law_outlawed_dissent
+				has_law_or_variant = law_type:law_guild_system
+				has_law_or_variant = law_type:law_racial_hierarchy
+			}
+		}
+		interest_group ?= {
+			ideology_clerical_fascist_valid_trigger = yes
+		}
+	}
+
+	interest_group_leader_weight = {
+		value = {
+			add = 50
+			desc = "base_value"
+		}
+		# 분노 상태에서 더 선호함
+		add = {
+			value = owner.radical_fraction
+			multiply = 100
+			desc = "COUNTRY_RADICALS"
+		}
+		# 관련 이슈가 있을 때 더 선호함
+		if = {
+			limit = {
+				owner.ideology_clerical_fascist_disfavoured_laws > 0
+			}
+			add = {
+				value = owner.ideology_fascist_disfavoured_laws
+				multiply = 8
+				desc = "DISFAVORED_LAWS"
+			}
+		}
+		# 관련 이슈가 없으면 덜 선호함
+		if = {
+			limit = {
+				owner.ideology_clerical_fascist_favoured_laws > 0
+			}
+			subtract = {
+				value = owner.ideology_fascist_favoured_laws
+				multiply = 8
+				desc = "FAVORED_LAWS"
+			}
+		}
+		# 전쟁 배상금을 지불 중일 때, 더 선호함
+		if = {
+			limit = {
+				owner ?= {
+					any_diplomatically_relevant_country = {
+						any_scope_treaty = {
+							is_enforced = yes
+							any_scope_article = {
+								has_type = money_transfer
+								source_country = root.owner
+							}
+						}
+					}
+				}
+			}
+			add = {
+				value = 25
+				desc = "WAR_REPARATIONS"
+			}
+		}
+		# 만만한 혐오 대상이 있을 때, 더 선호함
+		if = {
+			limit = {
+				owner = {
+					any_scope_state = {
+						is_incorporated = yes
+						any_scope_pop = {
+							pop_acceptance < acceptance_status_4
+							total_size >= 1000
+						}
+					}
+				}
+			}
+			add = {
+				value = 25
+				desc = "PRESENT_MINORITIES"
+			}
+		}
+		# 부도 상태일 때, 더 선호함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						in_default = yes
+						has_modifier = declared_bankruptcy
+					}
+				}
+			}
+			add = {
+				value = 25
+				desc = "BANKRUPTCY"
+			}
+		}
+		# 평의회 공화국이면 덜 선호함
+		if = {
+			limit = {
+				owner = {
+					has_law_or_variant = law_type:law_council_republic
+				}
+			}
+			add = {
+				value = -75
+				desc = "COUNCIL_REPUBLIC_LAW"
+			}
+		}
+		# 노동조합을 제외하고 불만 상태일 때, 더 선호함
+		if = {
+			limit = {
+				ig_approval <= define:NPolitics|APPROVAL_THRESHOLD_UNHAPPY
+				NOT = { is_interest_group_type = ig_trade_unions }
+			}
+			subtract = {
+				value = ig_approval
+				multiply = 5
+				desc = "IG_APPROVAL_BELOW_UNHAPPY"
+			}
+		}
+		# 국교제나 신정제, 사회 군주제가 없다면 덜 선호함
+		if = {
+			limit = {
+				owner = {
+					NOR = {
+						has_law_or_variant = law_type:law_state_religion
+						has_law_or_variant = law_type:law_theocracy
+						has_law_or_variant = law_type:law_social_monarchy
+					}
+				}
+				ig_approval >= define:NPolitics|APPROVAL_THRESHOLD_HAPPY
+			}
+			subtract = {
+				value = ig_approval
+				multiply = 5
+				desc = "HAPPY_WITHOUT_FASCISM"
+			}
+		}
+		# 소시민과 종교인은 더 선호함
+		if = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_petty_bourgeoisie
+					is_interest_group_type = ig_devout
+				}
+			}
+			add = {
+				value = 50
+				desc = "PB_OR_DEVOUT"
+			}
+		}
+		# 노동조합과 지식인은 덜 선호함
+		if = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_trade_unions
+					is_interest_group_type = ig_intelligentsia
+				}
+			}
+			add = {
+				value = -25
+				desc = "TU_OR_INTELLIGENTSIA"
+			}
+		}
+		# 국교제나 신정제, 사회 군주제에서 정부 여권에 있다면 더 선호함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_state_religion
+						has_law_or_variant = law_type:law_theocracy
+						has_law_or_variant = law_type:law_social_monarchy
+					}
+					NOR = {
+						is_enacting_law = law_type:law_state_atheism
+						is_enacting_law = law_type:law_total_separation
+						is_enacting_law = law_type:law_religious_pluralism
+						is_enacting_law = law_type:law_freedom_of_conscience
+					}
+				}
+				is_in_government = yes
+			}
+			add = {
+				add = 50
+			}
+		}
+		# 반 드레퓌스파가 승리할 경우, 보수적이거나 반동적인 지도자가 등장할 확률이 증가함
+		if = {
+			limit = {
+				has_variable = anti_dreyfusard_victory
+			}
+			add = {
+				value = 50
+				desc = "ANTI_DREYFUSARD_VICTORY"
+			}
+		}
+		# 보수 진영으로 '두 개의 스페인' 미션을 승리할 경우, 보수적이거나 반동적인 지도자가 등장할 확률이 증가함
+		if = {
+			limit = {
+				has_variable = spa_two_spains_conservative_victory
+			}
+			add = {
+				value = 50
+				desc = "SPA_CONSERVATIVE_VICTORY"
+			}
+		}
+		# 적색 공포는 파시스트를 양산함
+		if = {
+			limit = {
+				has_variable = fascist_uptick
+			}
+			multiply = {
+				value = 1.5
+				desc = "RED_SCARE"
+			}
+		}
+		# 파시즘 일지는 파시스트를 양산함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						has_journal_entry = je_fascism_1
+						has_variable = completed_fascism_1_var
+					}
+				}
+			}
+			multiply = {
+				value = 1.25
+				desc = "FASCISM_JE"
+			}
+		}
+		# 브라질에선 통합주의로 대체
+		if = {
+			limit = {
+				owner = {
+					c:BRZ ?= this
+				}
+			}
+			multiply = 0
+		}
+		# 북독일 문화를 가졌다면 반감. 개신교가 국교라면 또 반감
+		if = {
+			limit = {
+				owner = {
+					country_has_primary_culture = cu:north_german
+				}
+			}
+			multiply = 0.5
+			if = {
+				limit = {
+					owner = {
+						country_has_state_religion = rel:protestant
+					}
+				}
+				multiply = 0.5
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_variable = communist_ig_var
+					has_variable = chose_vanguardism
+					has_variable = chose_anarchism
+					has_variable = chose_communism
+					has_variable = chose_ethno_nationalism
+				}
+			}
+			multiply = {
+				value = 0.1
+				desc = "CHOSE_A_DIFFERENT_PATH"
+			}
+		}
+	}
+
+	non_interest_group_leader_weight = {
+		value = 50
+
+		# 분노 상태에서 더 선호함
+		add = {
+			value = owner.radical_fraction
+			multiply = 100
+		}
+		# 관련 이슈가 있을 때 더 선호함
+		if = {
+			limit = {
+				owner.ideology_clerical_fascist_disfavoured_laws > 0
+			}
+			add = {
+				value = owner.ideology_clerical_fascist_disfavoured_laws
+				multiply = 8
+			}
+		}
+		# 관련 이슈가 없으면 덜 선호함
+		if = {
+			limit = {
+				owner.ideology_clerical_fascist_favoured_laws > 0
+			}
+			subtract = {
+				value = owner.ideology_clerical_fascist_favoured_laws
+				multiply = 8
+			}
+		}
+		# 전쟁 배상금을 지불 중일 때, 더 선호함
+		if = {
+			limit = {
+				owner ?= {
+					any_diplomatically_relevant_country = {
+						has_diplomatic_pact = {
+							who = root.owner
+							type = war_reparations
+							is_initiator = yes
+						}
+					}
+				}
+			}
+			add = 25
+		}
+		# 만만한 혐오 대상이 있을 때, 더 선호함
+		if = {
+			limit = {
+				owner = {
+					any_scope_state = {
+						is_incorporated = yes
+						any_scope_pop = {
+							pop_acceptance < acceptance_status_4
+							total_size >= 1000
+						}
+					}
+				}
+			}
+			add = 25
+		}
+		# 부도 상태일 때, 더 선호함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						in_default = yes
+						has_modifier = declared_bankruptcy
+					}
+				}
+			}
+			add = 25
+		}
+		# 평의회 공화국이면 덜 선호함
+		if = {
+			limit = {
+				owner = {
+					has_law_or_variant = law_type:law_council_republic
+				}
+			}
+			add = -75
+		}
+		# 노동조합을 제외하고 불만 상태일 때, 더 선호함
+		if = {
+			limit = {
+				interest_group.ig_approval <= define:NPolitics|APPROVAL_THRESHOLD_UNHAPPY
+				NOT = { is_interest_group_type = ig_trade_unions }
+			}
+			add = {
+				value = interest_group.ig_approval
+				multiply = 5
+			}
+		}
+		# 국교제나 신정제, 사회 군주제가 없다면 덜 선호함
+		if = {
+			limit = {
+				owner = {
+					NOR = {
+						has_law_or_variant = law_type:law_state_religion
+						has_law_or_variant = law_type:law_theocracy
+						has_law_or_variant = law_type:law_social_monarchy
+					}
+				}
+				interest_group.ig_approval >= define:NPolitics|APPROVAL_THRESHOLD_HAPPY
+			}
+			subtract = {
+				value = interest_group.ig_approval
+				multiply = 5
+			}
+		}
+		# 소시민과 종교인은 더 선호함
+		if = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_petty_bourgeoisie
+					is_interest_group_type = ig_devout
+				}
+			}
+			add = 50
+		}
+		# 노동조합과 지식인은 덜 선호함
+		if = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_trade_unions
+					is_interest_group_type = ig_intelligentsia
+				}
+			}
+			add = -25
+		}
+		# 국교제나 신정제, 사회 군주제에서 정부 여권에 있다면 더 선호함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_state_religion
+						has_law_or_variant = law_type:law_theocracy
+						has_law_or_variant = law_type:law_social_monarchy
+					}
+					NOR = {
+						is_enacting_law = law_type:law_state_atheism
+						is_enacting_law = law_type:law_total_separation
+						is_enacting_law = law_type:law_religious_pluralism
+						is_enacting_law = law_type:law_freedom_of_conscience
+					}
+				}
+				interest_group ?= {
+					is_in_government = yes
+				}
+			}
+			add = 50
+		}
+		# 반 드레퓌스파가 승리할 경우, 보수적이거나 반동적인 지도자가 등장할 확률이 증가함
+		if = {
+			limit = {
+				has_variable = anti_dreyfusard_victory
+			}
+			add = 50
+		}
+		# 보수 진영으로 '두 개의 스페인' 미션을 승리할 경우, 보수적이거나 반동적인 지도자가 등장할 확률이 증가함
+		if = {
+			limit = {
+				has_variable = spa_two_spains_conservative_victory
+			}
+			add = 50
+		}
+		# 적색 공포는 파시스트를 양산함
+		if = {
+			limit = {
+				has_variable = fascist_uptick
+			}
+			multiply = 1.5
+		}
+		# 파시즘 일지는 파시스트를 양산함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						has_journal_entry = je_fascism_1
+						has_variable = completed_fascism_1_var
+					}
+				}
+			}
+			multiply = 1.25
+		}
+		# 브라질에선 통합주의로 대체
+		if = {
+			limit = {
+				owner = {
+					c:BRZ ?= this
+				}
+			}
+			multiply = 0
+		}
+		# 북독일 문화를 가졌다면 반감. 개신교가 국교라면 또 반감
+		if = {
+			limit = {
+				owner = {
+					country_has_primary_culture = cu:north_german
+				}
+			}
+			multiply = 0.5
+			if = {
+				limit = {
+					owner = {
+						country_has_state_religion = rel:protestant
+					}
+				}
+				multiply = 0.5
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					has_variable = communist_ig_var
+					has_variable = chose_vanguardism
+					has_variable = chose_anarchism
+					has_variable = chose_communism
+					has_variable = chose_ethno_nationalism
+				}
+			}
+			multiply = 0.1
+		}
+	}
+
+	lawgroup_policing = {	# z BPM/ideology_integralist
+		law_militarized_police = strongly_approve
+		law_local_police = approve
+		law_dedicated_police = approve
+		law_no_police = disapprove
+		law_elected_police = strongly_disapprove
+	}
+
+	lawgroup_centralization = {	# z BPM/ideology_integralist
+		law_unitary = strongly_disapprove
+		law_devolved = disapprove
+		law_federated = approve
+		law_confederated = strongly_approve
+		law_ad_hoc_centralization = neutral
+	}
+
+	lawgroup_repeatable_religion = {	# z BPM/ideology_integralist
+		law_repeatable_religion_promote_state_religion = approve
+		law_repeatable_religion_anti_secular_reaction = strongly_approve
+		law_repeatable_religion_promote_secular_values = strongly_disapprove
+		law_repeatable_religion_anti_religious_violence = strongly_disapprove
+	}
+}
+
+# --- ideology_anarcho_liberal  (baza: Laws+, uzupelnienie: BPM/ideology_radical) ---
+REPLACE:ideology_anarcho_liberal = { # 무정부주의적 자유주의자
+	icon = "gfx/interface/icons/ideology_icons/ideology_leader/ideology_leader_anarcho_liberal.dds"
+
+	character_ideology = yes
+
+	lawgroup_governance_principles = {
+		law_corporatocracy = strongly_approve
+		law_council_republic = strongly_disapprove
+		law_corporate_state = strongly_disapprove
+		law_social_monarchy = strongly_disapprove
+		law_monarchy = strongly_disapprove	# z BPM/ideology_radical
+		law_theocracy = strongly_disapprove	# z BPM/ideology_radical
+		law_presidential_republic = approve	# z BPM/ideology_radical
+		law_parliamentary_republic = approve	# z BPM/ideology_radical
+	}
+
+	lawgroup_economic_system = {
+		law_laissez_faire = strongly_approve
+		law_interventionism = neutral
+		law_agrarianism = disapprove
+		law_traditionalism = strongly_disapprove
+		law_cooperative_ownership = strongly_disapprove
+		law_command_economy = strongly_disapprove
+		law_industry_banned = strongly_disapprove
+		law_extraction_economy = strongly_disapprove
+		law_state_capitalism = disapprove
+		law_class_collaboration = strongly_disapprove
+	}
+
+	lawgroup_taxation = {
+		law_no_income_tax = strongly_approve
+		law_land_based_taxation = approve
+		law_per_capita_based_taxation = neutral
+		law_consumption_based_taxation = disapprove
+		law_proportional_taxation = strongly_disapprove
+		law_graduated_taxation = strongly_disapprove
+	}
+
+	lawgroup_policing = {
+		law_privatized_police = strongly_approve
+		law_no_police = approve
+		law_local_police = disapprove
+		law_dedicated_police = strongly_disapprove
+		law_militarized_police = strongly_disapprove
+	}
+	# 전반적으로 개인주의보다 더 극단적인 사회개혁 후퇴 성향을 보임
+	lawgroup_education_system = {
+		law_private_schools = strongly_approve
+		law_no_schools = approve
+		law_religious_schools = disapprove
+		law_military_schools = disapprove
+		law_public_schools = strongly_disapprove
+	}
+
+	lawgroup_health_system = {
+		law_private_health_insurance = strongly_approve
+		law_no_health_system = approve
+		law_charitable_health_system = neutral
+		law_public_health_insurance = disapprove
+		law_free_health_system = strongly_disapprove
+	}
+
+	lawgroup_welfare = {
+		law_no_social_security = approve
+		law_poor_laws = neutral
+		law_wage_subsidies = strongly_disapprove
+		law_old_age_pension = strongly_disapprove
+		law_disability_insurance = strongly_disapprove
+	}
+
+	country_trigger = {
+		OR = {
+			has_technology_researched = modern_financial_instruments
+			AND = { # 1848 혁명 중에는 등장 조건이 대폭 완화 됨
+				has_technology_researched = stock_exchange	# 자유무역 정당 창당의 최소 조건
+				owner = {
+					has_journal_entry = je_springtime_of_the_peoples
+				}
+			}
+		}
+		exists = ig:ig_industrialists
+		ig:ig_industrialists ?= {
+			ig_counts_as_marginal = no
+		}
+	}
+
+	interest_group_leader_trigger = {
+		ideology_anarcho_liberal_valid_trigger = yes
+	}
+
+	non_interest_group_leader_trigger = {
+		# 선동가는 현행법과 상충되는 이념을 가져야 함
+		NAND = {
+			has_role_of_type = agitator
+			owner = {
+				has_law_or_variant = law_type:law_corporatocracy
+				has_law_or_variant = law_type:law_laissez_faire
+				has_law_or_variant = law_type:law_free_trade
+				has_law_or_variant = law_type:law_no_income_tax
+				has_law_or_variant = law_type:law_privatized_police
+				has_law_or_variant = law_type:law_private_schools
+				has_law_or_variant = law_type:law_private_health_insurance
+				has_law_or_variant = law_type:law_no_social_security
+			}
+		}
+		interest_group ?= {
+			ideology_market_liberal_valid_trigger = yes
+		}
+		owner = { has_technology_researched = modern_financial_instruments }
+	}
+
+	interest_group_leader_weight = {
+		value = {
+			add = 10	# # 인기 없는 이념 (러다이트와 동일한 기본값)
+			desc = "base_value"
+		}
+		# 불만 상태의 기업가는 더 선호함
+		if = {
+			limit = {
+				is_interest_group_type = ig_industrialists
+				ig_approval <= define:NPolitics|APPROVAL_THRESHOLD_UNHAPPY
+			}
+			subtract = {
+				value = ig_approval
+				multiply = 3
+				desc = "IG_APPROVAL_BELOW_UNHAPPY"
+			}
+		}
+		# 기업가는 그냥 좋아함
+		if = {
+			limit = {
+				is_interest_group_type = ig_industrialists
+			}
+			add = {
+				value = 25
+				desc = "ig_industrialists"
+			}
+		}
+		# 관련 이슈가 있을 때 더 선호함
+		if = {
+			limit = {
+				owner.ideology_anarcho_liberal_disfavoured_laws > 0
+			}
+			add = {
+				value = owner.ideology_anarcho_liberal_disfavoured_laws
+				multiply = 8
+				desc = "DISFAVORED_LAWS"
+			}
+		}
+		# 관련 이슈가 없으면 덜 선호함
+		if = {
+			limit = {
+				owner.ideology_anarcho_liberal_favoured_laws > 0
+			}
+			subtract = {
+				value = owner.ideology_anarcho_liberal_favoured_laws
+				multiply = 8
+				desc = "FAVORED_LAWS"
+			}
+		}
+		# 전통주의와 고립주의 법이 있을 때, 지식인과 기업가와 소시민은 더 선호함
+		if = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_petty_bourgeoisie
+					is_interest_group_type = ig_intelligentsia
+					is_interest_group_type = ig_industrialists
+				}
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_traditionalism
+						has_law_or_variant = law_type:law_isolationism
+					}
+				}
+			}
+			add = 10
+		}
+		# 현대적 보수성 이벤트를 봤고 기업가가 권세일 때, 권세가 아닌 지주들은 더 선호함
+		if = {
+			limit = {
+				has_variable = corn_law_opponent_event
+				AND = {
+					is_interest_group_type = ig_landowners
+					is_powerful = no
+				}
+				owner = {
+					exists = ig:ig_industrialists
+					ig:ig_industrialists ?= {
+						is_powerful = yes
+					}
+				}
+			}
+			add = {
+				value = 25
+				desc = "POWERFUL_INDUSTRIALISTS"
+			}
+		}
+		# 전통주의 법을 채택했을 때, 지주는 기피함
+		if = {
+			limit = {
+				is_interest_group_type = ig_landowners
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_agrarianism
+						has_law_or_variant = law_type:law_traditionalism
+					}
+				}
+			}
+			add = {
+				value = -75
+				desc = "TRADITIONAL_ECONOMY"
+			}
+		}
+		# 누진세에 반발 중인 기업가, 지주 소시민은 더 선호함
+		if = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_industrialists
+					is_interest_group_type = ig_landowners
+					is_interest_group_type = ig_petty_bourgeoisie
+				}
+				interest_group.ig_approval <= -5
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_graduated_taxation
+						is_enacting_law = law_type:law_graduated_taxation
+					}
+				}
+			}
+			subtract = {
+				value = ig_approval
+				multiply = 3
+				desc = "IG_APPROVAL_BELOW_UNHAPPY"
+			}
+		}
+		# 사립 보안 체계를 제정했을 경우 기업가는 더 선호함
+		if = {
+			limit = {
+				is_interest_group_type = ig_industrialists
+				owner = {
+					has_law_or_variant = law_type:law_privatized_police
+				}
+			}
+			add = 50
+		}
+		# 고급 복지 제도가 존재하고 부도 상태일 때, 더 선호함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_free_health_system
+						has_law_or_variant = law_type:law_wage_subsidies
+						has_law_or_variant = law_type:law_old_age_pension
+						has_law_or_variant = law_type:law_disability_insurance
+					}
+					OR = {
+						in_default = yes
+						has_modifier = declared_bankruptcy
+					}
+				}
+			}
+			add = {
+				value = 50
+				desc = "BANKRUPTCY"
+			}
+		}
+		# 정부 지출을 유발하는 법률 또는 사업에 방해 되는 법률을 제정했거나 제정 중일 때, 불만 상태의 기업가는 더 선호함
+		if = {
+			limit = {
+				interest_group.ig_approval <= -10
+				is_interest_group_type = ig_industrialists
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_public_schools
+						has_law_or_variant = law_type:law_public_health_insurance
+						has_law_or_variant = law_type:law_free_health_system
+						has_law_or_variant = law_type:law_worker_protections
+						has_law_or_variant = law_type:law_union_representation
+						has_law_or_variant = law_type:law_child_benefit
+						has_law_or_variant = law_type:law_wage_subsidies
+						has_law_or_variant = law_type:law_old_age_pension
+						has_law_or_variant = law_type:law_disability_insurance
+						is_enacting_law = law_type:law_public_schools
+						is_enacting_law = law_type:law_public_health_insurance
+						is_enacting_law = law_type:law_free_health_system
+						is_enacting_law = law_type:law_worker_protections
+						is_enacting_law = law_type:law_union_representation
+						is_enacting_law = law_type:law_child_benefit
+						is_enacting_law = law_type:law_wage_subsidies
+						is_enacting_law = law_type:law_old_age_pension
+						is_enacting_law = law_type:law_disability_insurance
+					}
+				}
+			}
+			multiply = 1.5
+		}
+		# 국민의 봄 일지 진행 중일 때 기업가에서 확률 급증함
+		if = {
+			limit = {
+				owner = {
+					has_journal_entry = je_springtime_of_the_peoples
+				}
+				scope:interest_group = {
+					is_interest_group_type = ig_industrialists
+				}
+			}
+			multiply = 5
+		}
+		# 큰 도심지가 없을 때, 매우 불호함
+		if = {
+			limit = {
+				owner = {
+					NOT = {
+						any_scope_state = {
+							any_scope_building = {
+								is_building_type = building_urban_center
+								level >= 10
+							}
+						}
+					}
+				}
+			}
+			add = {
+				value = -100
+				desc = "NON_URBANIZED_COUNTRY"
+			}
+		}
+		# 미승인국이면 덜 선호함
+		if = {
+			limit = {
+				owner = {
+					is_country_type = unrecognized
+				}
+			}
+			add = {
+				value = -50
+				desc = "unrecognized"
+			}
+		}
+		# 열강일 때 더 선호함
+		if = {
+			limit = {
+				owner = {
+					country_rank = rank_value:great_power
+				}
+			}
+			add = {
+				value = 10
+				desc = "concept_great_power"
+			}
+		}
+		# 프랑스의 보수적 이해 집단들은 덜 선호함
+		if = {
+			limit = {
+				owner = {
+					exists = c:FRA
+					c:FRA ?= THIS
+					has_journal_entry = je_divided_monarchists
+				}
+				OR = {
+					is_interest_group_type = ig_industrialists
+					is_interest_group_type = ig_petty_bourgeoisie
+				}
+			}
+			add = {
+				value = -100
+				desc = "CONSERVATIVE_IG"
+			}
+		}
+		# 알렉산드르 2세 치하에서 더 선호함
+		if = {
+			limit = {
+				owner = {
+					any_scope_character = {
+						has_template = RUS_alexander_ii
+						is_ruler_of_own_country = yes
+					}
+				}
+			}
+			add = {
+				value = 10
+				desc = "ALEXANDER_II"
+			}
+		}
+		# 반 드레퓌스파가 승리할 경우 자유주의 또는 급진주의 지도자가 등장할 확률이 증가하나, 무정부 자유주의는 예외적으로 반대임
+		if = {
+			limit = {
+				has_variable = anti_dreyfusard_victory
+			}
+			add = {
+				value = 10
+				desc = "ANTI_DREYFUSARD_VICTORY"
+			}
+		}
+		# 남독일 문화를 가졌다면 더 선호함 (오스트리아 학파)
+		if = {
+			limit = {
+				country_has_primary_culture = cu:south_german
+			}
+			multiply = 3
+		}
+		if = {
+			limit = {
+				OR = {
+					has_variable = communist_ig_var
+					has_variable = chose_vanguardism
+					has_variable = chose_anarchism
+					has_variable = chose_communism
+					has_variable = chose_ethno_nationalism
+					has_variable = chose_conservatism
+					has_variable = chose_fascism
+				}
+			}
+			multiply = {
+				value = 0.1
+				desc = "CHOSE_A_DIFFERENT_PATH"
+			}
+		}
+	}
+
+	non_interest_group_leader_weight = {
+		value = 100
+		# 기업가는 그냥 좋아함
+		if = {
+			limit = {
+				is_interest_group_type = ig_industrialists
+			}
+			add = 25
+		}
+		# 관련 이슈가 있을 때 더 선호함
+		if = {
+			limit = {
+				owner.ideology_anarcho_liberal_disfavoured_laws > 0
+			}
+			add = {
+				value = owner.ideology_anarcho_liberal_disfavoured_laws
+				multiply = 8
+			}
+		}
+		# 관련 이슈가 없으면 덜 선호함
+		if = {
+			limit = {
+				owner.ideology_anarcho_liberal_favoured_laws > 0
+			}
+			subtract = {
+				value = owner.ideology_anarcho_liberal_favoured_laws
+				multiply = 8
+			}
+		}
+		# 전통주의 경제 법이 있을 때, 지식인과 기업가와 소시민은 더 선호함
+		if = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_petty_bourgeoisie
+					is_interest_group_type = ig_intelligentsia
+					is_interest_group_type = ig_industrialists
+				}
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_traditionalism
+						has_law_or_variant = law_type:law_isolationism
+					}
+				}
+			}
+			add = 10
+		}
+		# 현대적 보수성 이벤트를 봤고 기업가가 권세일 때, 지주들은 더 선호함
+		if = {
+			limit = {
+				has_variable = corn_law_opponent_event
+				AND = {
+					is_interest_group_type = ig_landowners
+					is_powerful = no
+				}
+				owner = {
+					exists = ig:ig_industrialists
+					ig:ig_industrialists ?= {
+						is_powerful = yes
+					}
+				}
+			}
+			value = 25
+		}
+		# 전통주의 법을 채택했을 때, 지주는 기피함
+		if = {
+			limit = {
+				is_interest_group_type = ig_landowners
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_agrarianism
+						has_law_or_variant = law_type:law_traditionalism
+					}
+				}
+			}
+			value = -75
+		}
+		# 누진세에 반발 중인 기업가, 지주 소시민은 더 선호함
+		if = {
+			limit = {
+				OR = {
+					is_interest_group_type = ig_industrialists
+					is_interest_group_type = ig_landowners
+					is_interest_group_type = ig_petty_bourgeoisie
+				}
+				interest_group.ig_approval <= -5
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_graduated_taxation
+						is_enacting_law = law_type:law_graduated_taxation
+					}
+				}
+			}
+			subtract = {
+				value = ig_approval
+				multiply = 3
+			}
+		}
+		# 사립 보안 체계를 제정했을 경우 기업가는 더 선호함
+		if = {
+			limit = {
+				is_interest_group_type = ig_industrialists
+				owner = {
+					has_law_or_variant = law_type:law_privatized_police
+				}
+			}
+			add = 50
+		}
+		# 고급 복지 제도가 존재하고 부도 상태일 때, 더 선호함
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_free_health_system
+						has_law_or_variant = law_type:law_wage_subsidies
+						has_law_or_variant = law_type:law_old_age_pension
+						has_law_or_variant = law_type:law_disability_insurance
+					}
+					OR = {
+						in_default = yes
+						has_modifier = declared_bankruptcy
+					}
+				}
+			}
+			value = 50
+		}
+		# 정부 지출을 유발하는 법률 또는 사업에 방해 되는 법률을 제정했거나 제정 중일 때, 불만 상태의 기업가는 더 선호함
+		if = {
+			limit = {
+				interest_group.ig_approval <= -10
+				is_interest_group_type = ig_industrialists
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_public_schools
+						has_law_or_variant = law_type:law_public_health_insurance
+						has_law_or_variant = law_type:law_free_health_system
+						has_law_or_variant = law_type:law_worker_protections
+						has_law_or_variant = law_type:law_union_representation
+						has_law_or_variant = law_type:law_child_benefit
+						has_law_or_variant = law_type:law_wage_subsidies
+						has_law_or_variant = law_type:law_old_age_pension
+						has_law_or_variant = law_type:law_disability_insurance
+						is_enacting_law = law_type:law_public_schools
+						is_enacting_law = law_type:law_public_health_insurance
+						is_enacting_law = law_type:law_free_health_system
+						is_enacting_law = law_type:law_worker_protections
+						is_enacting_law = law_type:law_union_representation
+						is_enacting_law = law_type:law_child_benefit
+						is_enacting_law = law_type:law_wage_subsidies
+						is_enacting_law = law_type:law_old_age_pension
+						is_enacting_law = law_type:law_disability_insurance
+					}
+				}
+			}
+			multiply = 1.5
+		}
+		# 국민의 봄 일지 진행 중일 때 기업가에서 확률 급증함
+		if = {
+			limit = {
+				owner = {
+					has_journal_entry = je_springtime_of_the_peoples
+				}
+				scope:interest_group = {
+					is_interest_group_type = ig_industrialists
+				}
+			}
+			multiply = 5
+		}
+		# 큰 도심지가 없을 때, 매우 불호함
+		if = {
+			limit = {
+				owner = {
+					NOT = {
+						any_scope_state = {
+							any_scope_building = {
+								is_building_type = building_urban_center
+								level >= 10
+							}
+						}
+					}
+				}
+			}
+			value = -100
+		}
+		# 미승인국이면 덜 선호함
+		if = {
+			limit = {
+				owner = {
+					is_country_type = unrecognized
+				}
+			}
+			value = -50
+		}
+		# 열강일 때 더 선호함
+		if = {
+			limit = {
+				owner = {
+					country_rank = rank_value:great_power
+				}
+			}
+			value = 10
+		}
+		# 프랑스의 보수적 이해 집단들은 덜 선호함
+		if = {
+			limit = {
+				owner = {
+					exists = c:FRA
+					c:FRA ?= THIS
+					has_journal_entry = je_divided_monarchists
+				}
+				OR = {
+					is_interest_group_type = ig_industrialists
+					is_interest_group_type = ig_petty_bourgeoisie
+				}
+			}
+			value = -100
+		}
+		# 알렉산드르 2세 치하에서 더 선호함
+		if = {
+			limit = {
+				owner = {
+					any_scope_character = {
+						has_template = RUS_alexander_ii
+						is_ruler_of_own_country = yes
+					}
+				}
+			}
+			value = 10
+		}
+		# 반 드레퓌스파가 승리할 경우 자유주의 또는 급진주의 지도자가 등장할 확률이 증가하나, 무정부 자유주의는 예외적으로 반대임
+		if = {
+			limit = {
+				has_variable = anti_dreyfusard_victory
+			}
+			value = 10
+		}
+		# 남독일 문화를 가졌다면 더 선호함 (오스트리아 학파)
+		if = {
+			limit = {
+				country_has_primary_culture = cu:south_german
+			}
+			multiply = 3
+		}
+		if = {
+			limit = {
+				OR = {
+					has_variable = communist_ig_var
+					has_variable = chose_vanguardism
+					has_variable = chose_anarchism
+					has_variable = chose_communism
+					has_variable = chose_ethno_nationalism
+					has_variable = chose_conservatism
+					has_variable = chose_fascism
+				}
+			}
+			multiply = {
+				value = 0.1
+				desc = "CHOSE_A_DIFFERENT_PATH"
+			}
+		}
+	}
+
+	lawgroup_distribution_of_power = {	# z BPM/ideology_radical
+		law_universal_suffrage = strongly_approve
+		law_census_voting = approve
+		law_wealth_voting = neutral
+		law_landed_voting = disapprove
+		law_anarchy = strongly_disapprove
+		law_oligarchy = strongly_disapprove
+		law_autocracy = strongly_disapprove
+		law_technocracy = disapprove
+		law_military_junta = disapprove
+		law_organic_democracy = strongly_disapprove
+	}
+
+	lawgroup_free_speech = {	# z BPM/ideology_radical
+		law_protected_speech = strongly_approve
+		law_right_of_assembly = approve
+		law_censorship = disapprove
+		law_outlawed_dissent = strongly_disapprove
+	}
+
+	lawgroup_internal_security = {	# z BPM/ideology_radical
+		law_guaranteed_liberties = strongly_approve
+		law_no_home_affairs = approve
+		law_national_guard = strongly_disapprove
+		law_secret_police = strongly_disapprove
+	}
+
+	lawgroup_repeatable_politics = {	# z BPM/ideology_radical
+		law_repeatable_politics_modernize_bureaucracy = strongly_approve
+		law_repeatable_politics_military_purge = disapprove
+		law_repeatable_politics_bureaucratic_purge = disapprove
+		law_repeatable_politics_popular_concessions = approve
+		law_repeatable_politics_anti_corruption_drive = approve
+		law_repeatable_politics_great_terror = strongly_disapprove
+	}
+}
+

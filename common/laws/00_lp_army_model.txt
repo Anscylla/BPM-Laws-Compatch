@@ -1,3 +1,0 @@
-﻿# 비무장 국가	# Laws +
-law_no_army = {
-}
