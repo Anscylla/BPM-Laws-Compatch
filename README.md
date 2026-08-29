@@ -30,6 +30,7 @@ niezależnie od pozycji na liście — ale trzymanie go na końcu i tak jest zal
 | `common/amendments/zzzzz_compat_amendments.txt` | poprawki wyborcze i socjalizacyjne |
 | `common/political_movements/zzzzz_compat_political_movements.txt` | ruchy polityczne przyjmują przywódców o ideologiach z Laws+ |
 | `common/interest_groups/zzzzz_compat_interest_groups.txt` | wagi poparcia dla `law_meritocratic_bureaucracy` i `law_gwageo` |
+| `common/laws/zzzzz_compat_lawsplus_laws.txt` | prawa Laws+ przeniesione na model BPM: `country_rigidity_baseline_add` oraz `institution`/`institution_modifier` |
 
 ## Regeneracja po aktualizacji modów źródłowych
 
@@ -37,7 +38,9 @@ Patch jest **generowany**, nie pisany ręcznie. Po aktualizacji BPM lub Laws+ wy
 
 ```sh
 python tools/merge_ideo.py     # ideologie BPM  (czyta stanowiska z istniejącego pliku)
-python tools/gen_laws.py       # prawa
+python tools/gen_ideo_gaps.py  # uzupełnienie luk regułami (analogia / interpolacja)
+python tools/gen_laws.py       # prawa BPM
+python tools/gen_lp_laws.py    # prawa Laws+ na modelu BPM (rigidity, instytucje)
 python tools/gen_rest.py       # triggery, efekty, ustroje, poprawki, ruchy, IG
 python tools/gen_lp_ideo.py    # ideologie Laws+
 python tools/verify.py         # czy wpisy patcha wygrywają i czy REPLACE ma cel
@@ -51,3 +54,27 @@ jeśli gra jest gdzie indziej. Folder `tools/` jest ignorowany przez grę.
 Narzędzia diagnostyczne: `tools/lost.py` (co z Laws+ ginie pod BPM), `tools/ctx.py <katalog>`
 (pokazuje konkretne linie z kontekstem bloków), `tools/show.py <katalog> <klucz>` (porównanie
 definicji BPM vs Laws+).
+
+
+## Zasada projektowa
+
+**BPM wyznacza model, Laws+ się do niego dopasowuje.** BPM przebudowuje system głosowania,
+frakcje polityczne i instytucje; Laws+ dokłada prawa. Wszędzie, gdzie oba mody mówią co innego,
+obowiązuje mechanika i skala BPM, a prawa Laws+ są do niej doginane — nigdy odwrotnie.
+
+Konsekwencje widoczne w plikach:
+
+* prawa Laws+ dostają `country_rigidity_baseline_add` w skali BPM (odniesienia do konkretnych
+  praw BPM są w komentarzach w `tools/gen_lp_laws.py`);
+* prawa Laws+ z `lawgroup_economic_system` dostają `institution_economy`, bo BPM wiąże
+  instytucję z całą tą grupą;
+* `lawgroup_ballot_system` (nowa grupa Laws+) jest podpięty pod ustroje BPM — ustrój bez
+  legislatywy wyłącza wybory, powrót do głosowania przywraca kartę wyborczą;
+* ideologie Laws+ dostają stanowiska wobec praw BPM, a nie odwrotnie;
+* eventy uchwalania praw z Laws+ **nie** są przywracane, bo BPM celowo zastępuje losowe
+  wydarzenia legislacyjne własną minigrą;
+* flavour Laws+ (wagi partii, nazwy partii, wagi IG) nie jest przenoszony tam, gdzie BPM
+  przepisał dany system od zera.
+
+Stanowiska ideologii oznaczone `# auto` w `zzzzz_compat_ideologies.txt` są wyprowadzone
+regułami; można je ręcznie poprawiać — generator zachowa każdą ręczną zmianę.
