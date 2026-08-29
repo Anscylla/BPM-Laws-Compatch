@@ -1,0 +1,34 @@
+{
+	"name" : "[1.13] BPM / Laws+ Compatch",
+	"id" : "bpm.lawsplus.compatch",
+	"version" : "2.0.0",
+	"game_id" : "victoria3",
+	"picture" : "thumbnail.png",
+	"supported_game_version" : "1.13.*",
+	"short_description" : "Compatibility patch for Better Politics Mod and Laws+.",
+	"tags" : [
+		"Fixes",
+		"ComPatch",
+		"Gameplay",
+		"1.13"
+	],
+	"relationships" : [
+		{
+			"rel_type" : "dependency",
+			"id" : "2932134122",
+			"display_name" : "Better Politics Mod",
+			"resource_type" : "mod",
+			"version" : "2.5"
+		},
+		{
+			"rel_type" : "dependency",
+			"id" : "2941539986",
+			"display_name" : "Laws +",
+			"resource_type" : "mod",
+			"version" : "1.12.12"
+		}
+	],
+	"game_custom_data" : {
+		"multiplayer_synchronized" : true
+	}
+}
