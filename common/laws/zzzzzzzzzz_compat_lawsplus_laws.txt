@@ -8,16 +8,6 @@
 # --- law_class_collaboration  (zrodlo: Laws+/01_economic_system.txt) ---
 INJECT:law_class_collaboration = {
 	modifier = {
-		state_capitalists_investment_pool_contribution_add = 0.15
-		building_nationalization_cost_mult = -0.5
-		building_nationalization_radicals_mult = -0.5
-		country_nationalization_cost_non_members_mult = -0.25
-		country_government_dividends_efficiency_add = 0.2
-		country_government_dividends_reinvestment_add = 0.25
-		country_private_construction_allocation_mult = 0.4
-		building_company_worker_dividends_add = 0.25
-		country_max_companies_add = 1
-		country_free_charters_add = 1
 		country_rigidity_baseline_add = 5	# BPM compat
 	}
 	institution = institution_economy	# BPM compat
@@ -34,12 +24,6 @@ INJECT:law_class_collaboration = {
 # --- law_corporatocracy  (zrodlo: Laws+/00_governance_principles.txt) ---
 INJECT:law_corporatocracy = {
 	modifier = {
-		country_legitimacy_ideological_incoherence_mult = 0.2
-		state_political_strength_from_wealth_mult = 1
-		interest_group_ig_industrialists_pol_str_mult = 0.25
-		country_max_companies_add = 1
-		country_free_charters_add = 3
-		country_forbid_monopoly_bool = no
 		country_rigidity_baseline_add = 10	# BPM compat
 	}
 }
@@ -47,10 +31,6 @@ INJECT:law_corporatocracy = {
 # --- law_direct_democracy  (zrodlo: Laws+/ballot_system.txt) ---
 INJECT:law_direct_democracy = {
 	modifier = {
-		country_authority_add = -100
-		country_legitimacy_govt_total_clout_add = 20
-		country_law_enactment_time_mult = -0.5
-		political_movement_pop_attraction_mult = 0.5
 		country_rigidity_baseline_add = -15	# BPM compat
 	}
 }
@@ -58,16 +38,6 @@ INJECT:law_direct_democracy = {
 # --- law_early_industrialization  (zrodlo: Laws+/01_economic_system.txt) ---
 INJECT:law_early_industrialization = {
 	modifier = {
-		state_shopkeepers_investment_pool_efficiency_mult = -0.5
-		state_farmers_investment_pool_efficiency_mult = -0.5
-		state_clergymen_investment_pool_efficiency_mult = -0.5
-		state_bureaucracy_population_base_cost_factor_mult = -0.25
-		country_government_dividends_reinvestment_add = 0.25
-		country_private_construction_allocation_mult = 0.25
-		building_nationalization_investment_return_add = 0.1
-		state_market_access_price_impact = -0.1
-		building_self_investment_chance_add = 0.25
-		country_disable_nationalization_without_compensation_bool = yes
 		country_rigidity_baseline_add = 8	# BPM compat
 	}
 	institution = institution_economy	# BPM compat
@@ -83,16 +53,6 @@ INJECT:law_early_industrialization = {
 # --- law_ecclesiarchy  (zrodlo: Laws+/00_distribution_of_power.txt) ---
 INJECT:law_ecclesiarchy = {
 	modifier = {
-		country_legitimacy_govt_total_votes_add = 40
-		country_legitimacy_govt_total_clout_add = 100
-		country_legitimacy_govt_size_add = 1
-		country_officers_pol_str_mult = 0.15
-		country_aristocrats_pol_str_mult = 0.15
-		country_capitalists_pol_str_mult = 0.15
-		country_clergymen_pol_str_mult = 0.50
-		country_clergymen_voting_power_add = 100
-		country_authority_add = 100
-		country_electoral_confidence_impact_mult = -0.4
 		country_rigidity_baseline_add = 15	# BPM compat
 	}
 }
@@ -100,7 +60,6 @@ INJECT:law_ecclesiarchy = {
 # --- law_garde_nationale  (zrodlo: Laws+/00_internal_security.txt) ---
 INJECT:law_garde_nationale = {
 	modifier = {
-		country_soldiers_pol_str_mult = 0.25
 		country_rigidity_baseline_add = 2	# BPM compat
 	}
 }
@@ -108,8 +67,6 @@ INJECT:law_garde_nationale = {
 # --- law_gendarmerie  (zrodlo: Laws+/00_internal_security.txt) ---
 INJECT:law_gendarmerie = {
 	modifier = {
-		country_radicals_from_conquest_mult = -0.2
-		country_officers_pol_str_mult = 0.5
 		country_rigidity_baseline_add = 3	# BPM compat
 	}
 }
@@ -117,8 +74,6 @@ INJECT:law_gendarmerie = {
 # --- law_no_election  (zrodlo: Laws+/ballot_system.txt) ---
 INJECT:law_no_election = {
 	modifier = {
-		country_opposition_ig_approval_add = -3
-		country_authority_add = 100
 		country_rigidity_baseline_add = 10	# BPM compat
 	}
 }
@@ -126,8 +81,6 @@ INJECT:law_no_election = {
 # --- law_privatized_police  (zrodlo: Laws+/01_policing_lp.txt) ---
 INJECT:law_privatized_police = {
 	modifier = {
-		country_institution_cost_institution_police_mult = -0.4
-		country_institution_police_max_investment_add = 2
 		country_rigidity_baseline_add = 2	# BPM compat
 	}
 }
@@ -135,13 +88,6 @@ INJECT:law_privatized_police = {
 # --- law_proletariat_dictatorship  (zrodlo: Laws+/00_distribution_of_power.txt) ---
 INJECT:law_proletariat_dictatorship = {
 	modifier = {
-		country_legitimacy_headofstate_add = 10
-		country_legitimacy_govt_total_clout_add = 100
-		state_political_strength_from_wealth_mult = -0.75
-		country_legitimacy_govt_size_add = 1
-		country_laborers_pol_str_mult = 0.5
-		country_machinists_pol_str_mult = 0.75
-		country_peasants_pol_str_mult = 0.25
 		country_rigidity_baseline_add = 10	# BPM compat
 	}
 }
@@ -149,20 +95,6 @@ INJECT:law_proletariat_dictatorship = {
 # --- law_sakoku_shugi  (zrodlo: Laws+/01_trade_policy_lp.txt) ---
 INJECT:law_sakoku_shugi = {
 	modifier = {
-		country_authority_mult = 0.25
-		country_society_tech_spread_mult = -0.2
-		state_trade_capacity_mult = -0.5
-		state_tariff_import_add = 0.5
-		state_tariff_export_add = 0.5
-		state_subvention_export_add = 0.2
-		state_subvention_import_add = 0.2
-		country_leverage_resistance_mult = 0.75
-		country_support_separatism_resistance_mult = 0.25
-
-		country_disallow_trade_outside_kyushu_bool = yes
-		state_trade_center_max_limit_add = 5
-
-		country_nationalization_cost_non_members_mult = -0.75
 		country_rigidity_baseline_add = 10	# BPM compat
 	}
 }
@@ -170,9 +102,6 @@ INJECT:law_sakoku_shugi = {
 # --- law_secret_ballot  (zrodlo: Laws+/ballot_system.txt) ---
 INJECT:law_secret_ballot = {
 	modifier = {
-		country_legitimacy_base_add = 5
-		country_legitimacy_govt_total_votes_add = 15
-		country_legitimacy_ideological_incoherence_mult = -0.15
 		country_rigidity_baseline_add = -5	# BPM compat
 	}
 }
@@ -180,19 +109,6 @@ INJECT:law_secret_ballot = {
 # --- law_semi_constitutional  (zrodlo: Laws+/ballot_system.txt) ---
 INJECT:law_semi_constitutional = {
 	modifier = {
-		country_legitimacy_headofstate_add = 10
-		country_legitimacy_govt_total_votes_add = -15
-		country_legitimacy_govt_total_clout_add = 15
-		country_voting_power_base_add = -20
-		country_authority_add = 100
-		country_electoral_confidence_impact_mult = -0.1
-		interest_group_in_government_attraction_mult = 0.2
-
-		country_opposition_ig_approval_add = -2
-		country_aristocrats_pol_str_mult = 0.25
-		country_capitalists_pol_str_mult = 0.25
-		country_officers_pol_str_mult = 0.25
-		country_clergymen_pol_str_mult = 0.25
 		country_rigidity_baseline_add = 5	# BPM compat
 	}
 }
@@ -212,19 +128,6 @@ INJECT:law_state_capitalism = {
 # --- law_weighted_universal_voting  (zrodlo: Laws+/00_distribution_of_power.txt) ---
 INJECT:law_weighted_universal_voting = {
 	modifier = {
-		country_legitimacy_govt_total_votes_add = 95
-		country_legitimacy_govt_total_clout_add = 40
-		country_voting_power_base_add = 50
-		country_legitimacy_govt_size_add = 1
-		country_aristocrats_voting_power_add = 50
-		country_capitalists_voting_power_add = 50
-		country_clerks_voting_power_add = -20
-		country_farmers_voting_power_add = -20
-		country_laborers_voting_power_add = -20
-		country_machinists_voting_power_add = -20
-		country_peasants_voting_power_add = -20
-		country_soldiers_voting_power_add = -20
-		country_authority_add = 25
 		country_rigidity_baseline_add = -18	# BPM compat
 	}
 }

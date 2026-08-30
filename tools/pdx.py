@@ -100,11 +100,33 @@ def append_in_sub(body, name, snippet, create=True):
     return '\n'.join(lines)
 
 
+MODES = ('REPLACE_OR_CREATE:', 'INJECT_OR_CREATE:', 'TRY_REPLACE:', 'TRY_INJECT:',
+         'REPLACE:', 'INJECT:')
+
+
 def mark_replace(body):
+    """Wymus prefiks REPLACE: - takze gdy zrodlo mialo INJECT: (inaczej wystawilibysmy
+    czesciowe cialo BPM jako INJECT i zgubili definicje bazowa)."""
     first = body.split('\n')[0].lstrip('﻿')
-    if not first.startswith(('REPLACE:', 'INJECT:', 'TRY_')):
-        first = 'REPLACE:' + first
-    return '\n'.join([first] + body.split('\n')[1:])
+    for m in MODES:
+        if first.startswith(m):
+            first = first[len(m):]
+            break
+    return '\n'.join(['REPLACE:' + first] + body.split('\n')[1:])
+
+
+# Sekcje parsowane jako efekt/trigger: powtorzenie w jednym wpisie jest ODRZUCANE
+# przez silnik ("Effect/Trigger section already read earlier"). Tam czesciowy INJECT
+# nie zadziala w zadnej formie.
+EFFECT_TRIGGER_SECTIONS = {
+    'on_activate', 'on_deactivate', 'on_enact', 'on_impose', 'on_created',
+    'is_visible', 'can_enact', 'can_impose', 'ai_will_do', 'would_sponsor',
+    'possible', 'trigger', 'creation_trigger', 'character_support_trigger',
+    'can_pressure_interest_group', 'change_allowed_trigger', 'on_government_type_change',
+    'on_post_government_type_change', 'effect', 'ai_enact_weight_modifier',
+    'ai_impose_chance', 'pop_weight', 'monarch_weight', 'join_weight',
+    'character_support_weight', 'pop_support_weight', 'additional_radicalism_factors',
+}
 
 
 # ---------------------------------------------------------------------------
@@ -177,19 +199,56 @@ def overlay(base, patch):
     return body
 
 
+def _has_dup_names(body):
+    """Czy wpis ma powtorzone nazwy na poziomie 1? Tak wygladaja listy instrukcji
+    (np. 48 x add_to_global_variable_list w efekcie skryptowym) - tam czesciowy INJECT
+    nie ma sensu, bo nazwy nie sa polami tylko kolejnymi poleceniami."""
+    seen = set()
+    for kind, name, _ in depth1_items(body):
+        if (kind, name) in seen:
+            return True
+        seen.add((kind, name))
+    return False
+
+
 def inject_delta(orig, patched, key=None):
-    """Zwroc wpis `INJECT:` niosacy wylacznie te elementy poziomu 1, ktore roznia sie
-    od oryginalu. Dzieki temu patch zamraza pojedyncze sekcje zamiast calego wpisu."""
+    """Zwroc `INJECT:` niosacy dodane elementy poziomu 1 - ale TYLKO wtedy, gdy zadnego
+    z nich nie ma juz w oryginale.
+
+    Silnik traktuje powtorzony blok w jednym wpisie dwojako i oba warianty psuja
+    czesciowy INJECT sekcji, ktora juz istnieje:
+      * sekcje efektow i triggerow (on_activate, is_visible, ai_will_do, possible,
+        would_sponsor, character_support_trigger...) sa ODRZUCANE z bledem
+        "Effect/Trigger section already read earlier" - patch nie robi nic;
+      * bloki modyfikatorow (modifier, institution_modifier, acceptance_modifier) i listy
+        (disallowing_laws, unlocking_laws) SUMUJA sie - wystawienie pelnej sekcji
+        podwoiloby wartosci oryginalu.
+    Dlatego czesciowy INJECT jest dozwolony wylacznie dla sekcji calkiem nowych.
+    W kazdym innym przypadku zwracamy None, a wolajacy wystawia pelny REPLACE."""
     if key is None:
-        key = TOPRE.match(patched.split('\n')[0].lstrip('﻿').strip()).group('key')
+        key = TOPRE.match(patched.split(chr(10))[0].lstrip('﻿').strip()).group('key')
+    if _has_dup_names(orig) or _has_dup_names(patched):
+        return None
     before = {}
     for kind, name, content in depth1_items(orig):
         before.setdefault((kind, name), content)
     keep = []
     for kind, name, content in depth1_items(patched):
         old = before.get((kind, name))
-        if old is None or old != content:
+        if old is None:                       # sekcja calkiem nowa - wchodzi w calosci
             keep.extend(content if kind == 'section' else [content])
+            continue
+        if old == content:
+            continue
+        if kind != 'section' or name in EFFECT_TRIGGER_SECTIONS:
+            return None                       # tylko pelny REPLACE jest tu bezpieczny
+        # sekcja sumujaca sie (modifier / listy praw) - wystawiamy WYLACZNIE dopisane linie
+        addcmp = {strip_c(l).strip() for l in old}
+        added = [l for l in content[1:-1] if strip_c(l).strip()
+                 and strip_c(l).strip() not in addcmp]
+        if not added:
+            continue
+        keep.extend([content[0]] + added + [content[-1]])
     if not keep:
         return None
-    return '\n'.join([f'INJECT:{key} = {{'] + keep + ['}'])
+    return chr(10).join([f'INJECT:{key} = {{'] + keep + ['}'])

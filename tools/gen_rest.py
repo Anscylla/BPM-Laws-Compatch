@@ -189,6 +189,9 @@ for d, outname, items in PATCHES:
             continue
         delta = pdx.inject_delta(orig, body, key)
         if delta is None:
+            if orig.lstrip('﻿').startswith('INJECT:'):
+                warn.append(f'{key}: BPM wstrzykuje ten wpis, zmiana dotyka sekcji efektu/triggera - POMIJAM')
+                continue
             chunks.append((key, fn, pdx.mark_replace(body)))
             continue
         chunks.append((key, fn, delta))

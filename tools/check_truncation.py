@@ -82,16 +82,16 @@ for d, keys in sorted(by_dir.items()):
             if lost:
                 problems.append((d, key, 'CALY WPIS', sorted(lost)[:6], len(lost)))
             continue
-        # INJECT: porownujemy tylko sekcje, ktore niesiemy
+        # INJECT: nasze sekcje to DELTA - silnik sumuje bloki modyfikatorow i skleja listy,
+        # wiec czesciowy blok niczego nie gubi. Bledem jest wylacznie wstrzykniecie sekcji
+        # efektu/triggera, ktora juz istnieje - taka jest odrzucana z bledem.
         for kind, name, content in pdx.depth1_items(ours):
-            r = pdx._find_item(src, kind, name)
-            if not r:
-                continue                      # dokladamy cos nowego - nic nie ginie
-            orig = src.split('\n')[r[0]:r[1] + 1]
-            block = content if kind == 'section' else [content]
-            lost = set(meaningful(orig)) - set(meaningful(block))
-            if lost:
-                problems.append((d, key, name, sorted(lost)[:6], len(lost)))
+            if kind != 'section' or name not in pdx.EFFECT_TRIGGER_SECTIONS:
+                continue
+            if pdx._find_item(src, kind, name):
+                problems.append((d, key, name,
+                                 ['INJECT sekcji efektu/triggera, ktora juz istnieje'
+                                  ' - silnik ja odrzuci'], 1))
 
 print(f'Sprawdzonych wpisow: {checked}')
 print(f'Wpisy gubiace tresc zrodla: {len(problems)}\n')

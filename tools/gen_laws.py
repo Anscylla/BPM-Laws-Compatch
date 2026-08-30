@@ -146,8 +146,10 @@ for law, ops in PATCH.items():
                 warn.append(f'{law}: nie znaleziono kotwicy "{arg[0]}"')
     delta = pdx.inject_delta(orig, body, law)
     if delta is None:
+        if orig.lstrip('﻿').startswith('INJECT:'):
+            warn.append(f'{law}: BPM wstrzykuje ten wpis, a nasza zmiana dotyka sekcji efektu/triggera - POMIJAM (pelny REPLACE zgubilby definicje bazowa)')
+            continue
         delta = pdx.mark_replace(body)
-        warn.append(f'{law}: czesciowy INJECT niebezpieczny - pelny REPLACE')
     chunks.append((law, src, delta))
 
 hdr = """# BPM / Laws+ Compatch - prawa

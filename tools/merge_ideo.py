@@ -131,9 +131,11 @@ for fn in sorted(os.listdir(base)):
                 else:
                     out[-1:-1] = [f'\t{grp} = {{'] + adds[grp] + ['\t}']
             if adds:
-                delta = pdx.inject_delta('\n'.join(blines), '\n'.join(out), key)
-                if delta:
-                    merged.append((fn, key, delta))
+                # Zawsze pelny REPLACE. Bloki lawgroup_* nie sa ani sekcja efektu, ani
+                # sumujacym sie modyfikatorem - nie wiadomo, jak silnik traktuje powtorzony
+                # blok, a bledna odpowiedz gubi stanowiska. Poza tym gen_ideo_gaps naklada
+                # ten plik na definicje BPM i musi dostac kompletne sekcje.
+                merged.append((fn, key, pdx.mark_replace('\n'.join(out))))
         elif any(g.startswith('lawgroup_') for g in bsub):
             missing.append(f'{fn}/{key}')
         # coverage report

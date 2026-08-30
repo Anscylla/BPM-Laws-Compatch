@@ -2,7 +2,110 @@
 # Definicje z Better Politics Mod uzupelnione o tresc z Laws+.
 
 # --- ig_petty_bourgeoisie  (zrodlo: BPM/common/interest_groups/zzzz_petty_bourgeoisie.txt) ---
-INJECT:ig_petty_bourgeoisie = {
+REPLACE:ig_petty_bourgeoisie = {
+	color = hsv{ 0.59 0.12 0.6 }
+	texture = "gfx/interface/icons/ig_icons/petty_bourgeoisie.dds"
+	layer = "revolution_dynamic_petty_bourgeoisie"
+	index = 5
+
+	ideologies = {
+		ideology_dop_state_power
+		ideology_sta_institutional_state
+		# Vanilla
+		ideology_meritocratic
+		ideology_patriotic
+	}
+	
+	character_ideologies = {
+		ideology_moderate
+		ideology_traditionalist
+		# ideology_positivist
+		# ideology_jingoist_leader
+		# ideology_protectionist
+		# ideology_orleanist
+		# ideology_bonapartist
+		# ideology_legitimist
+		# ideology_sovereignist_leader
+		# ideology_liberal_leader
+		# ideology_corporatist_leader
+		ideology_authoritarian
+		ideology_reformer
+	}
+
+	enable = {
+		always = yes
+	}	
+	
+	on_enable = {
+		ig:ig_petty_bourgeoisie = {
+			#set_ig_trait = ig_trait:ig_trait_urban_systematic_corruption
+			#set_ig_trait = ig_trait:ig_trait_urban_well_oiled_machine
+			#set_ig_trait = ig_trait:ig_trait_urban_election_interference
+		}
+
+		# India
+		if = {
+			limit = {
+				c:BIC ?= THIS
+			}
+			ig:ig_petty_bourgeoisie = {
+				set_interest_group_name = ig_civil_servants
+			}
+		}
+	}
+	on_disable = {}
+
+	priority_cultures = { #Country scope
+		rule = {
+			trigger = {
+				c:BIC ?= this
+				any_primary_culture = { 
+					cu:british = this
+				}
+			}
+			cultures = {
+				assamese avadhi baluchi bengali bihari gujarati kannada malayalam marathi oriya panjabi pathan rajput sindi tamil telegu hindustani bundeli pahari gondi bageli chhattisgarhi deccani
+			}
+		}
+		rule = {
+			trigger = {
+				c:ZAN ?= this
+				any_primary_culture = {
+					cu:bedouin = this
+				}
+			}
+			cultures = {
+				swahili gujarati
+			}
+		}
+	}
+
+	on_character_ig_membership = {
+		if = {
+			limit = {
+				culture = cu:gujarati
+				owner = {
+					c:ZAN ?= this
+					any_primary_culture = {
+						cu:bedouin = this
+					}
+				}
+			}
+			change_character_religion = rel:shiite
+		}
+	}
+	
+	pop_potential = {
+		custom_tooltip = {
+			text = BPM_VALID_POP_FOR_IG
+			owner ?= {
+				NOT = {
+					is_country_type = decentralized
+				}
+			}
+		}
+	}	
+	
 	pop_weight = {
 		value = 0
 	
@@ -150,10 +253,459 @@ INJECT:ig_petty_bourgeoisie = {
 
 		multiply = ig_attraction_to_interests_from_stability
 	}
+	
+	monarch_weight = {
+		owner.ig:ig_petty_bourgeoisie = {
+			value = bpm_ig_monarch_weight
+		}
+	}
+
+	agitator_weight = {
+		owner.ig:ig_petty_bourgeoisie = {
+			value = bpm_base_agitator_weight
+		}
+	}
+	
+	commander_weight = {
+		owner.ig:ig_petty_bourgeoisie = {
+			value = bpm_commander_weight
+		}
+	}
+
+	executive_weight = {
+		value = 0.2
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						has_law = law_type:law_cooperative_ownership
+						has_law = law_type:law_command_economy
+					}
+				}
+			}
+			value = 5.0
+		}
+	}
+	
+	noble_chance = {
+		value = 0.5
+	}
+	
+	female_commander_chance = {	
+		value = 1.0
+		multiply = bpm_female_commander_spawn_chance
+	}
+	
+	female_politician_chance = {
+		value = 1.0
+		multiply = bpm_female_character_spawn_chance
+	}	
+
+	female_agitator_chance = {
+		value = 1.0
+		multiply = bpm_female_character_spawn_chance		
+	}
+
+	female_executive_chance = {
+		value = 1.0
+		multiply = bpm_female_character_spawn_chance
+	}
+	
+	# The chance that a commander belonging to this IG takes over leadership when it changes
+	# scope:character is the most popular commander in the IG
+	commander_leader_chance = {
+		value = 0.25
+		if = {
+			limit = {
+				exists = scope:character
+			}
+			multiply = {
+				value = 1
+				add = scope:character.popularity
+				min = 0
+			}
+		}
+	}
 }
 
 # --- ig_devout  (zrodlo: BPM/common/interest_groups/zzzz_devout.txt) ---
-INJECT:ig_devout = {
+REPLACE:ig_devout = {
+	color = hsv{ 0.47 0.1 0.5 }
+	texture = "gfx/interface/icons/ig_icons/devout.dds"
+	layer = "revolution_dynamic_devout"
+	index = 1
+	
+	ideologies = {
+		ideology_rel_radical_moralist
+		ideology_wel_religious_welfare
+		ideology_fem_moderate_patriarchal
+		# Vanilla
+		ideology_pious
+		ideology_moralist
+		ideology_patriarchal
+	}
+
+	character_ideologies = {
+		ideology_moderate
+		ideology_traditionalist
+		# ideology_reformer
+		# ideology_land_reformer
+		# ideology_legitimist
+		# ideology_authoritarian
+		ideology_theocrat
+	}
+	
+	enable = {
+		always = yes
+	}
+	
+	on_enable = {
+		ig:ig_devout = {
+			#set_ig_trait = ig_trait:ig_trait_rural_systematic_corruption
+			#set_ig_trait = ig_trait:ig_trait_rural_well_oiled_machine
+			#set_ig_trait = ig_trait:ig_trait_rural_systematic_opposition
+		}
+		### Specific
+
+		# Buddhist Monks (Japan)
+		if = {
+			limit = {
+				country_has_state_religion = rel:mahayana
+				country_has_primary_culture = cu:japanese
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_buddhist_monks
+				bpm_ig_make_buddhist_moralist = yes
+			}
+		}
+		# Shinto Monks (Japan)
+		else_if = {
+			limit = {
+				country_has_state_religion = rel:shinto
+				country_has_primary_culture = cu:japanese
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_shinto_monks
+				bpm_ig_make_shinto_moralist = yes
+			}
+		}
+		# Christian Missionaries (Hawaii)
+		else_if = {
+			limit = {
+				country_has_state_religion = rel:protestant
+				country_has_primary_culture = cu:hawaiian
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_christian_missionaries
+				add_ideology = ideology_eco_modernizer
+			}
+		}
+		# Anglicans
+		else_if = {
+			limit = {
+				country_has_state_religion = rel:protestant
+				OR = {
+					country_has_primary_culture = cu:maori
+					country_has_primary_culture = cu:australian
+					country_has_primary_culture = cu:anglo_canadian
+					country_has_primary_culture = cu:british
+					country_has_primary_culture = cu:irish
+					c:NRU ?= this
+				}
+				NOT = {
+					c:BIC ?= this
+				}
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_anglican_church
+			}
+		}
+		# Russian Orthodox Church
+		else_if = {
+			limit = {
+				country_has_state_religion = rel:orthodox
+				OR = {
+					country_has_primary_culture = cu:russian
+					country_has_primary_culture = cu:byelorussian
+					country_has_primary_culture = cu:ukrainian
+				}
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_orthodox_church
+				bpm_ig_make_russian_patriarch = yes
+			}
+		}
+		# Church of Denmark
+		else_if = {
+			limit = {
+				country_has_state_religion = rel:protestant
+				country_has_primary_culture = cu:danish
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_church_of_denmark
+			}
+		}
+		# Church of Norway
+		else_if = {
+			limit = {
+				country_has_state_religion = rel:protestant
+				country_has_primary_culture = cu:norwegian
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_church_of_norway
+			}
+		}
+		# Church of Sweden
+		else_if = {
+			limit = {
+				country_has_state_religion = rel:protestant
+				country_has_primary_culture = cu:swedish
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_church_of_sweden
+			}
+		}
+		# Confucian Scholars
+		else_if = {
+			limit = {
+				country_has_state_religion = rel:confucian
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_confucian
+				bpm_ig_make_confucian = yes
+			}
+		}
+		# Evangelicals
+		else_if = {
+			limit = {
+				country_has_state_religion = rel:protestant
+				OR = {
+					country_has_primary_culture = cu:yankee
+					country_has_primary_culture = cu:dixie
+					country_has_primary_culture = cu:afro_american
+					country_has_primary_culture = cu:cherokee
+				}
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_evangelicals
+			}
+		}
+		# Roman Curia
+		else_if = {
+			limit = {
+				c:PAP ?= this
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_roman_curia
+				bpm_ig_make_papal_paternalistic = yes
+			}
+		}
+
+
+		### Generic
+
+		# Catholic Church
+		else_if = {
+			limit = { country_has_state_religion = rel:catholic }
+			ig:ig_devout = { 
+				set_interest_group_name = ig_catholic_church 
+			}
+		}
+		# Evangelical Church
+		else_if = {
+			limit = { 
+				country_has_state_religion = rel:protestant 
+				NOT = {
+					c:BIC ?= this
+				}
+			}
+			ig:ig_devout = { 
+				set_interest_group_name = ig_evangelical_church
+			}
+		}
+		# Sunni Ulema
+		else_if = {
+			limit = { country_has_state_religion = rel:sunni }
+			ig:ig_devout = { 
+				set_interest_group_name = ig_sunni_madrasahs
+			}
+		}
+		# Shi'a Ulema
+		else_if = {
+			limit = { country_has_state_religion = rel:shiite }
+			ig:ig_devout = { 
+				set_interest_group_name = ig_shia_madrasahs
+			}
+		}
+		# Oriental Orthodox Church
+		else_if = {
+			limit = { country_has_state_religion = rel:oriental_orthodox }
+			ig:ig_devout = { 
+				set_interest_group_name = ig_oriental_orthodox_church
+				bpm_ig_make_oriental_orthodox_patriarch = yes
+			}
+		}
+		# Orthodox Church
+		else_if = {
+			limit = { 
+				country_has_state_religion = rel:orthodox
+				NOR = {
+					country_has_primary_culture = cu:russian
+					country_has_primary_culture = cu:byelorussian
+					country_has_primary_culture = cu:ukrainian
+				}
+			}
+			ig:ig_devout = { 
+				set_interest_group_name = ig_orthodox_church
+				bpm_ig_make_orthodox_patriarch = yes
+			}
+		}
+		# Hindu Priesthood
+		else_if = {
+			limit = { 
+				OR = {
+					country_has_state_religion = rel:hindu
+					c:BIC ?= this
+				}
+			}
+			ig:ig_devout = {
+				set_interest_group_name = ig_hindu_priesthood
+				if = {
+					limit = {
+						owner = {
+							c:BIC ?= this
+						}
+					}
+					bpm_ig_make_hindu_moralist_british_india = yes
+				}
+				else = {
+					bpm_ig_make_hindu_moralist = yes
+				}
+			}
+		}
+		# Vajrayana Monks
+		else_if = {
+			limit = { country_has_state_religion = rel:gelugpa }
+			ig:ig_devout = {
+				set_interest_group_name = ig_vajrayana_monks
+				bpm_ig_make_buddhist_moralist = yes
+			}
+		}
+		# Vajrayana Monks
+		else_if = {
+			limit = { country_has_state_religion = rel:theravada }
+			ig:ig_devout = {
+				set_interest_group_name = ig_theravada_monks
+				bpm_ig_make_buddhist_moralist = yes
+			}
+		}
+		# Mahayana Monks
+		else_if = {
+			limit = { country_has_state_religion = rel:mahayana }
+			ig:ig_devout = {
+				set_interest_group_name = ig_mahayana_monks
+				bpm_ig_make_buddhist_moralist = yes
+			}
+		}
+		# Sikh Priesthood
+		else_if = {
+			limit = { country_has_state_religion = rel:sikh }
+			ig:ig_devout = {
+				set_interest_group_name = ig_sikh_priesthood
+				bpm_ig_make_sikh_moralist = yes
+			}
+		}
+
+		ig:ig_devout = { bpm_reorder_ideologies = yes }
+	}
+	on_disable = {}
+
+	priority_cultures = { #Country scope
+		rule = {
+			trigger = {
+				c:BIC ?= this
+				any_primary_culture = { 
+					cu:british = this
+				}
+			}
+			cultures = {
+				assamese avadhi baluchi bengali bihari gujarati kannada malayalam marathi oriya panjabi pathan rajput sindi tamil telegu hindustani bundeli pahari gondi bageli chhattisgarhi deccani
+			}
+		}
+		rule = {
+			trigger = {
+				c:ZAN ?= this
+				any_primary_culture = {
+					cu:bedouin = this
+				}
+			}
+			cultures = {
+				swahili
+			}
+		}
+		rule = {
+			trigger = {
+				c:HAW ?= this
+				NOT = { has_variable = deported_americans }
+			}
+			cultures = {
+				yankee dixie british hawaiian
+			}
+		}
+	}
+
+	on_character_ig_membership = {
+		if = {
+			limit = {
+				owner = {
+					c:BIC ?= this
+				}
+			}
+			change_character_religion = rel:hindu
+		}
+		else_if = {
+			limit = {
+				owner = {
+					c:ZAN ?= this
+				}
+			}
+			change_character_religion = rel:sunni
+		}
+		else_if = {
+			limit = {
+				owner = {
+					NOR = {
+						has_law_or_variant = law_type:law_total_separation
+						has_law = law_type:law_state_atheism
+					}
+				}
+			}
+			change_character_religion = scope:interest_group.owner.religion
+		}
+		else = {
+			change_character_religion = scope:interest_group.owner.country_definition.religion
+		}
+	}
+		
+	pop_potential = {
+		OR = {
+			has_state_religion = yes
+			AND = {
+				exists = c:BIC
+				owner ?= c:BIC
+				has_pop_religion = hindu
+			}
+			AND = {
+				exists = c:ZAN
+				owner ?= c:ZAN
+				has_pop_religion = sunni
+			}
+		}
+		NOT = { 
+			has_pop_religion = atheist
+		}
+	}
+	
 	pop_weight = {
 		value = 25
 
@@ -256,6 +808,68 @@ INJECT:ig_devout = {
 				value = 1.5
 			}
 		}		
+	}
+	
+	monarch_weight = {
+		owner.ig:ig_devout = {
+			value = bpm_ig_monarch_weight
+		}
+	}	
+
+	agitator_weight = {
+		owner.ig:ig_devout = {
+			value = bpm_base_agitator_weight
+		}
+	}
+	
+	commander_weight = {
+		owner.ig:ig_devout = {
+			value = bpm_commander_weight
+		}
+	}	
+
+	executive_weight = {
+		value = 0.1
+	}
+	
+	noble_chance = {
+		value = 0.5
+	}
+	
+	female_commander_chance = {	
+		value = 1.0
+		multiply = bpm_female_commander_spawn_chance
+	}
+	
+	female_politician_chance = {
+		value = 1.0
+		multiply = bpm_female_character_spawn_chance
+	}	
+
+	female_agitator_chance = {
+		value = 1.0
+		multiply = bpm_female_character_spawn_chance		
+	}
+
+	female_executive_chance = {
+		value = 1.0
+		multiply = bpm_female_character_spawn_chance
+	}
+	
+	# The chance that a commander belonging to this IG takes over leadership when it changes
+	# scope:character is the most popular commander in the IG
+	commander_leader_chance = {
+		value = 0.25
+		if = {
+			limit = {
+				exists = scope:character
+			}
+			multiply = {
+				value = 1
+				add = scope:character.popularity
+				min = 0
+			}
+		}
 	}
 }
 

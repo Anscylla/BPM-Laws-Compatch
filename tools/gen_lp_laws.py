@@ -99,7 +99,6 @@ for law in sorted(set(RIGIDITY) | set(INSTITUTION)):
         if law not in INSTITUTION and not rig:
             continue
         delta = pdx.mark_replace(body)
-        warn.append(f'{law}: czesciowy INJECT niebezpieczny - pelny REPLACE')
     chunks.append((law, fn, delta))
 
 out = os.path.join(PROJ, 'common', 'laws', 'zzzzzzzzzz_compat_lawsplus_laws.txt')
