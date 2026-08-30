@@ -90,7 +90,7 @@ REPLACE:ideology_national_socialist = { # 국가사회주의자 (슈트라서주
 	non_interest_group_leader_trigger = {
 		# 선동가는 현행법과 상충되는 이념을 가져야 함
 		NAND = {
-			has_role = agitator
+			has_role_of_type = agitator
 			owner = {
 				has_law_or_variant = law_type:law_corporate_state
 				has_law_or_variant = law_type:law_ethnostate

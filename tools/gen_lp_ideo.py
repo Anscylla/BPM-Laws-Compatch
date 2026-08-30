@@ -80,6 +80,11 @@ for lpid, bpmid in ANALOGUE.items():
             lines[lpg[g][1]:lpg[g][1]] = add
 
     lines[-1:-1] = newblocks
+    # Poprawka API 1.13 w tresci przejmowanej z Laws+: has_role -> has_role_of_type.
+    # Skoro nasza definicja wygrywa, to my odpowiadamy za bledy w niej (Laws+ ma tu
+    # PostValidate of trigger 'has_role' returned false).
+    lines = [re.sub(r'\bhas_role\s*=\s*(agitator|general|admiral|politician)\b',
+                    r'has_role_of_type = \1', l) for l in lines]
     body = pdx.mark_replace('\n'.join(lines))
     chunks.append((lpid, bpmid, body))
     report.append(f'{lpid} <- {bpmid}: +{len(added_groups)} grup ({", ".join(added_groups)}), '
