@@ -1,7 +1,7 @@
 ﻿# BPM / Laws+ Compatch - common/amendments
 # Definicje z Better Politics Mod uzupelnione o tresc z Laws+.
 
-# --- amendment_electoral_clientelism  (zrodlo: BPM/common/amendments/bpm_amendments_historical_04.txt) ---
+# --- amendment_electoral_clientelism  (zrodlo: (vanilla)/00_amendments_historical_04.txt -> 2941539986/00_amendments_historical_04_lp.txt -> 2932134122/bpm_amendments_historical_04.txt) ---
 REPLACE:amendment_electoral_clientelism = {
 
 	parent = law_oligarchy
@@ -65,7 +65,7 @@ REPLACE:amendment_electoral_clientelism = {
 	}
 }
 
-# --- amendment_tradition_of_free_elections  (zrodlo: BPM/common/amendments/bpm_amendments_historical_04.txt) ---
+# --- amendment_tradition_of_free_elections  (zrodlo: (vanilla)/00_amendments_historical_04.txt -> 2941539986/00_amendments_historical_04_lp.txt -> 2932134122/bpm_amendments_historical_04.txt) ---
 REPLACE:amendment_tradition_of_free_elections = {
 
 	parent = law_universal_suffrage
@@ -157,7 +157,7 @@ REPLACE:amendment_tradition_of_free_elections = {
 	}
 }
 
-# --- amendment_foreign_investment_seizures  (zrodlo: BPM/common/amendments/bpm_amendment_enactment.txt) ---
+# --- amendment_foreign_investment_seizures  (zrodlo: (vanilla)/00_amendments_enactment_04.txt -> 2941539986/00_amendments_enactment_04_lp.txt -> 2932134122/bpm_amendment_enactment.txt) ---
 REPLACE:amendment_foreign_investment_seizures = {
 
 	parent = law_protectionism
@@ -204,7 +204,7 @@ REPLACE:amendment_foreign_investment_seizures = {
 	amendment_activism_multiplier = 0.75
 }
 
-# --- amendment_industrial_socialization  (zrodlo: BPM/common/amendments/bpm_amendment_enactment.txt) ---
+# --- amendment_industrial_socialization  (zrodlo: (vanilla)/00_amendments_enactment_04.txt -> 2941539986/00_amendments_enactment_04_lp.txt -> 2932134122/bpm_amendment_enactment.txt) ---
 REPLACE:amendment_industrial_socialization = {
 
 	parent = law_cooperative_ownership
@@ -257,7 +257,7 @@ REPLACE:amendment_industrial_socialization = {
 	amendment_activism_multiplier = 1
 }
 
-# --- amendment_shop_councils  (zrodlo: BPM/common/amendments/bpm_amendment_enactment.txt) ---
+# --- amendment_shop_councils  (zrodlo: (vanilla)/00_amendments_enactment_04.txt -> 2941539986/00_amendments_enactment_04_lp.txt -> 2932134122/bpm_amendment_enactment.txt) ---
 REPLACE:amendment_shop_councils = {
 
 	parent = law_interventionism # TODO PRCAL-35135 change to State Capitalism

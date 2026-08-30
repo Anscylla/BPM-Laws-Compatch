@@ -13,7 +13,7 @@ Laws +
 [1.13] BPM / Laws+ Compatch      <- zawsze na końcu
 ```
 
-Nazwy wszystkich plików mają prefiks `zzzzz_`, więc wygrywają sortowanie ASCII, którym
+Nazwy wszystkich plików mają prefiks `zzzzzzzzzz_`, więc wygrywają sortowanie ASCII, którym
 Victoria 3 rozstrzyga konflikty między różnie nazwanymi plikami. Dzięki temu patch działa
 niezależnie od pozycji na liście — ale trzymanie go na końcu i tak jest zalecane.
 
@@ -21,16 +21,16 @@ niezależnie od pozycji na liście — ale trzymanie go na końcu i tak jest zal
 
 | Plik | Zakres |
 |---|---|
-| `common/ideologies/zzzzz_compat_ideologies.txt` | 132 ideologie BPM dostają stanowiska wobec 35 praw dodanych przez Laws+ |
-| `common/ideologies/zzzzz_compat_lawsplus_ideologies.txt` | 3 ideologie własne Laws+ (`anarcho_liberal`, `clerical_fascist`, `national_socialist`) dostają stanowiska wobec praw BPM |
-| `common/laws/zzzzz_compat_laws.txt` | sprzężenie praw BPM z `lawgroup_ballot_system`, `law_corporatocracy`, `law_proletariat_dictatorship`, `law_cosmopolitanism` |
-| `common/scripted_triggers/zzzzz_compat_triggers.txt` | klasyfikatory przywódców BPM rozpoznają ideologie Laws+ (to naprawia też partie, agendy AI i wiele systemów BPM naraz) |
-| `common/scripted_effects/zzzzz_compat_effects.txt` | wyłączanie wyborów, kategoria praw ustrojowych, wskaźniki komunizmu/populizmu |
-| `common/government_types/zzzzz_compat_government_types.txt` | ustroje radzieckie/sowieckie i faszystowskie rozpoznają prawa Laws+ |
-| `common/amendments/zzzzz_compat_amendments.txt` | poprawki wyborcze i socjalizacyjne |
-| `common/political_movements/zzzzz_compat_political_movements.txt` | ruchy polityczne przyjmują przywódców o ideologiach z Laws+ |
-| `common/interest_groups/zzzzz_compat_interest_groups.txt` | wagi poparcia dla `law_meritocratic_bureaucracy` i `law_gwageo` |
-| `common/laws/zzzzz_compat_lawsplus_laws.txt` | prawa Laws+ przeniesione na model BPM: `country_rigidity_baseline_add` oraz `institution`/`institution_modifier` |
+| `common/ideologies/zzzzzzzzzz_compat_ideologies.txt` | 132 ideologie BPM dostają stanowiska wobec 35 praw dodanych przez Laws+ |
+| `common/ideologies/zzzzzzzzzz_compat_lawsplus_ideologies.txt` | 3 ideologie własne Laws+ (`anarcho_liberal`, `clerical_fascist`, `national_socialist`) dostają stanowiska wobec praw BPM |
+| `common/laws/zzzzzzzzzz_compat_laws.txt` | sprzężenie praw BPM z `lawgroup_ballot_system`, `law_corporatocracy`, `law_proletariat_dictatorship`, `law_cosmopolitanism` |
+| `common/scripted_triggers/zzzzzzzzzz_compat_triggers.txt` | klasyfikatory przywódców BPM rozpoznają ideologie Laws+ (to naprawia też partie, agendy AI i wiele systemów BPM naraz) |
+| `common/scripted_effects/zzzzzzzzzz_compat_effects.txt` | wyłączanie wyborów, kategoria praw ustrojowych, wskaźniki komunizmu/populizmu |
+| `common/government_types/zzzzzzzzzz_compat_government_types.txt` | ustroje radzieckie/sowieckie i faszystowskie rozpoznają prawa Laws+ |
+| `common/amendments/zzzzzzzzzz_compat_amendments.txt` | poprawki wyborcze i socjalizacyjne |
+| `common/political_movements/zzzzzzzzzz_compat_political_movements.txt` | ruchy polityczne przyjmują przywódców o ideologiach z Laws+ |
+| `common/interest_groups/zzzzzzzzzz_compat_interest_groups.txt` | wagi poparcia dla `law_meritocratic_bureaucracy` i `law_gwageo` |
+| `common/laws/zzzzzzzzzz_compat_lawsplus_laws.txt` | prawa Laws+ przeniesione na model BPM: `country_rigidity_baseline_add` oraz `institution`/`institution_modifier` |
 
 ## Regeneracja po aktualizacji modów źródłowych
 
@@ -56,6 +56,19 @@ Narzędzia diagnostyczne: `tools/lost.py` (co z Laws+ ginie pod BPM), `tools/ctx
 definicji BPM vs Laws+).
 
 
+## Patch jest budowany pod konkretny zestaw modów
+
+Generatory nie patrzą na surowe definicje z BPM, tylko na **definicję efektywną** — czyli tę,
+którą gra faktycznie załaduje po rozstrzygnięciu wszystkich modów z `content_load.json`
+(`tools/playset.py`). Bez tego patch po cichu cofałby zmiany modów sortujących się później:
+w tym zestawie 22 ideologie przywódców przepisuje „BPM + Tech & Res ComPatch", a kilka praw
+i ruchów — Community Mod Framework oraz Kuromi's AI.
+
+Konsekwencja: **plik wynikowy zawiera treść także tych modów.** Patch jest przez to
+dopasowany do bieżącego zestawu, a nie uniwersalny. Po zmianie listy modów trzeba go
+przegenerować. Do publikacji na Workshopie trzeba by albo dopisać te mody jako zależności,
+albo przegenerować patch na czystym zestawie BPM + Laws+.
+
 ## Zasada projektowa
 
 **BPM wyznacza model, Laws+ się do niego dopasowuje.** BPM przebudowuje system głosowania,
@@ -76,5 +89,5 @@ Konsekwencje widoczne w plikach:
 * flavour Laws+ (wagi partii, nazwy partii, wagi IG) nie jest przenoszony tam, gdzie BPM
   przepisał dany system od zera.
 
-Stanowiska ideologii oznaczone `# auto` w `zzzzz_compat_ideologies.txt` są wyprowadzone
+Stanowiska ideologii oznaczone `# auto` w `zzzzzzzzzz_compat_ideologies.txt` są wyprowadzone
 regułami; można je ręcznie poprawiać — generator zachowa każdą ręczną zmianę.

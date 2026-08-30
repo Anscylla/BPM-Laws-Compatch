@@ -1,7 +1,7 @@
 ﻿# BPM / Laws+ Compatch - common/political_movements
 # Definicje z Better Politics Mod uzupelnione o tresc z Laws+.
 
-# --- movement_fascist  (zrodlo: BPM/common/political_movements/zzzz_bpm_ideological_reactionary_movements.txt) ---
+# --- movement_fascist  (zrodlo: (vanilla)/00_ideological_movements.txt -> 2941539986/00_ideological_movements_lp.txt -> 3385002128/ycom_00_ideological_movements.txt -> 2932134122/zzzz_bpm_ideological_reactionary_movements.txt) ---
 REPLACE:movement_fascist = {
 	category = movement_category_ideological
 	
@@ -547,7 +547,7 @@ REPLACE:movement_fascist = {
 	}	
 }
 
-# --- movement_cultural_majority  (zrodlo: BPM/common/political_movements/zzzz_bpm_cultural_movement.txt) ---
+# --- movement_cultural_majority  (zrodlo: (vanilla)/02_cultural_movement.txt -> 2941539986/02_cultural_movement_lp.txt -> 3385002128/ycom_02_cultural_movement.txt -> 2932134122/zzzz_bpm_cultural_movement.txt) ---
 REPLACE:movement_cultural_majority = {
 	category = movement_category_cultural_majority
 	
@@ -1042,7 +1042,7 @@ REPLACE:movement_cultural_majority = {
 	}
 }
 
-# --- movement_carlist  (zrodlo: BPM/common/political_movements/zzzz_bpm_country_specific_ideological_movements.txt) ---
+# --- movement_carlist  (zrodlo: (vanilla)/04_country_specific_ideological_movements.txt -> 2941539986/04_country_specific_ideological_movements_lp.txt -> 3385002128/ycom_04_country_specific_ideological_movements.txt -> 2932134122/zzzz_bpm_country_specific_ideological_movements.txt) ---
 REPLACE:movement_carlist = { 
 	category = movement_category_ideological
 
@@ -1610,7 +1610,7 @@ REPLACE:movement_carlist = {
 	}
 }
 
-# --- movement_miguelist  (zrodlo: BPM/common/political_movements/zzzz_bpm_country_specific_ideological_movements.txt) ---
+# --- movement_miguelist  (zrodlo: (vanilla)/04_country_specific_ideological_movements.txt -> 2941539986/04_country_specific_ideological_movements_lp.txt -> 3385002128/ycom_04_country_specific_ideological_movements.txt -> 2932134122/zzzz_bpm_country_specific_ideological_movements.txt) ---
 REPLACE:movement_miguelist = { 
 	category = movement_category_ideological
 
@@ -2123,7 +2123,7 @@ REPLACE:movement_miguelist = {
 	}
 }
 
-# --- movement_legitimist  (zrodlo: BPM/common/political_movements/zzzz_bpm_country_specific_ideological_movements.txt) ---
+# --- movement_legitimist  (zrodlo: (vanilla)/04_country_specific_ideological_movements.txt -> 2941539986/04_country_specific_ideological_movements_lp.txt -> 3385002128/ycom_04_country_specific_ideological_movements.txt -> 2932134122/zzzz_bpm_country_specific_ideological_movements.txt) ---
 REPLACE:movement_legitimist = { 
 	category = movement_category_ideological
 	
@@ -2569,7 +2569,7 @@ REPLACE:movement_legitimist = {
 	}
 }
 
-# --- movement_modernizer  (zrodlo: BPM/common/political_movements/zzzz_bpm_ideological_liberal_movements.txt) ---
+# --- movement_modernizer  (zrodlo: (vanilla)/00_ideological_movements.txt -> 2941539986/00_ideological_movements_lp.txt -> 3385002128/ycom_00_ideological_movements.txt -> 2932134122/zzzz_bpm_ideological_liberal_movements.txt) ---
 REPLACE:movement_modernizer = {
 	category = movement_category_ideological
 	
@@ -2964,7 +2964,7 @@ REPLACE:movement_modernizer = {
 	}		
 }
 
-# --- movement_meiji_restorationist  (zrodlo: BPM/common/political_movements/zzzz_bpm_country_specific_ideological_movements.txt) ---
+# --- movement_meiji_restorationist  (zrodlo: (vanilla)/04_country_specific_ideological_movements.txt -> 2941539986/04_country_specific_ideological_movements_lp.txt -> 3385002128/ycom_04_country_specific_ideological_movements.txt -> 2932134122/zzzz_bpm_country_specific_ideological_movements.txt) ---
 REPLACE:movement_meiji_restorationist = {
 	category = movement_category_ideological
 

@@ -14,10 +14,10 @@ Derived lines are tagged `# auto`; edit them freely, the generator keeps whateve
 """
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pdx, conflicts as c
+import pdx, conflicts as c, playset
 
 PROJ = r"C:\Users\oskar\Documents\Paradox Interactive\Victoria 3\mod\[1.13] BPM  Laws+ Compatch"
-OUT = os.path.join(PROJ, 'common', 'ideologies', 'zzzzz_compat_ideologies.txt')
+OUT = os.path.join(PROJ, 'common', 'ideologies', 'zzzzzzzzzz_compat_ideologies.txt')
 
 STANCES = ['strongly_disapprove', 'disapprove', 'neutral', 'approve', 'strongly_approve']
 VAL = {s: i - 2 for i, s in enumerate(STANCES)}
@@ -147,7 +147,8 @@ base = os.path.join(c.BPM, 'common', 'ideologies')
 for fn in sorted(os.listdir(base)):
     if fn.endswith('.txt'):
         for k, lines in top_blocks(pdx.read(os.path.join(base, fn))):
-            bpm_ideo[k] = (fn, lines)
+            eff, _trail = playset.effective('common/ideologies', k)
+            bpm_ideo[k] = (fn, eff.split('\n') if eff else lines)
 
 added, out_chunks, stats = 0, [], {}
 for key, (fn, blines) in bpm_ideo.items():

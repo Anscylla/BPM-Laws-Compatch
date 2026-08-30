@@ -1,30 +1,50 @@
+"""Verify the compatch against the WHOLE active playset:
+  * czy kazdy wpis patcha wygrywa rozstrzyganie ASCII po nazwie pliku,
+  * czy kazdy REPLACE: ma cel (inaczej gra rzuci blad),
+  * ktore wpisy dzielimy z modami spoza BPM/Laws+.
+Run: python tools/verify.py
+"""
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from conflicts import scan, BPM, LP, VAN, bpm, lp, van
-PROJ = r"C:\Users\oskar\Documents\Paradox Interactive\Victoria 3\mod\[1.13] BPM  Laws+ Compatch"
+import playset
+from conflicts import scan
+
+PROJ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 cp = scan(PROJ)
-print(f'Wpisow w compatchu: {len(cp)}')
-bad = orphan = ok = 0
+
+print(f'Zrodel w zestawie (vanilla + mody): {len(playset._ROOTS)}')
+print(f'Wpisow w compatchu: {len(cp)}\n')
+
+lose, orphan, shared = [], [], []
 for (d, k) in sorted(cp):
     cpfiles = [fn for fn, _ in cp[(d, k)]]
     modes = [mo for _, mo in cp[(d, k)]]
-    rivals = []
-    for db, tag in ((bpm, 'BPM'), (lp, 'L+'), (van, 'VAN')):
-        for fn, _ in db.get((d, k), []):
-            rivals.append((tag, fn))
+    rivals = playset.effective(d, k)[1]      # [(filename, label, mode)] w kolejnosci ladowania
     if not rivals:
         if any(m.startswith(('REPLACE', 'INJECT')) and not m.startswith('TRY') for m in modes):
-            print(f'  !!! SIEROTA (REPLACE bez celu): {d}/{k}')
-            orphan += 1
+            orphan.append(f'{d}/{k}  (REPLACE bez celu)')
         continue
+    ext = [r for r in rivals if r[1] not in ('(vanilla)', '2932134122', '2941539986')]
+    if ext:
+        shared.append((d, k, ext))
     for cpfn in cpfiles:
-        eff = [(t, f) for t, f in rivals if f != cpfn]
-        if not eff:
-            ok += 1; continue
-        latest = max(eff, key=lambda tf: tf[1])
-        if cpfn > latest[1]:
-            ok += 1
-        else:
-            print(f'  !!! PRZEGRYWA: {d}/{cpfn} :: {k}  <- {latest[0]}:{latest[1]}')
-            bad += 1
-print(f'\nOK: {ok}   przegrywajacych: {bad}   sierot: {orphan}')
+        after = [r for r in rivals if r[0] > cpfn]
+        if after:
+            lose.append(f'{d}/{cpfn} :: {k}  <- {after[-1][1]}/{after[-1][0]}')
+
+print(f'PRZEGRYWANE wpisy: {len(lose)}')
+for x in lose[:40]:
+    print('  !!!', x)
+print(f'\nSIEROTY (REPLACE bez celu): {len(orphan)}')
+for x in orphan[:40]:
+    print('  !!!', x)
+print(f'\nWpisy dzielone z modami trzecimi (baza patcha to ich wersja): {len(shared)}')
+seen = {}
+for d, k, ext in shared:
+    for fn, lab, mode in ext:
+        seen.setdefault((lab, fn), 0)
+        seen[(lab, fn)] += 1
+for (lab, fn), n in sorted(seen.items(), key=lambda kv: -kv[1]):
+    print(f'  {n:>4}x  {lab}/{fn}')
+
+print('\nOK' if not lose and not orphan else '\nSA PROBLEMY - patrz wyzej')

@@ -1,7 +1,7 @@
 """Generate the remaining compat files: triggers, effects, gov types, amendments, movements, IGs."""
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pdx, conflicts as c
+import pdx, conflicts as c, playset
 
 PROJ = r"C:\Users\oskar\Documents\Paradox Interactive\Victoria 3\mod\[1.13] BPM  Laws+ Compatch"
 warn = []
@@ -66,7 +66,7 @@ def op_append_top(body, snippet):
 
 
 PATCHES = [
-    ('common/scripted_triggers', 'zzzzz_compat_triggers.txt', [
+    ('common/scripted_triggers', 'zzzzzzzzzz_compat_triggers.txt', [
         # Ideologie przywodcow z Laws+ wpiete w klasyfikatory BPM.
         ('bpm_leader_is_fascist', [('after', 'ideology:ideology_fascist', FASC)]),
         ('bpm_leader_is_nationalist', [('after', 'ideology:ideology_fascist', FASC)]),
@@ -74,7 +74,7 @@ PATCHES = [
             ('after', 'ideology:ideology_radical',
              ['has_ideology = ideology:ideology_anarcho_liberal\t# Laws+'])]),
     ]),
-    ('common/scripted_effects', 'zzzzz_compat_effects.txt', [
+    ('common/scripted_effects', 'zzzzzzzzzz_compat_effects.txt', [
         ('bpm_disable_elective_laws', [
             ('append_top',
              '\tif = { # Laws+ compat: ustroj bez legislatywy wylacza wybory\n'
@@ -94,7 +94,7 @@ PATCHES = [
              'OR = {\n\thas_law = law_type:law_secret_police\n'
              '\thas_law_or_variant = law_type:law_gendarmerie\t# Laws+\n}')]),
     ]),
-    ('common/government_types', 'zzzzz_compat_government_types.txt', [
+    ('common/government_types', 'zzzzzzzzzz_compat_government_types.txt', [
         ('gov_council_republic', [
             ('after', 'has_law = law_type:law_technocracy',
              ['has_law = law_type:law_no_election\t# Laws+'])]),
@@ -116,7 +116,7 @@ PATCHES = [
         ('gov_fascist_corporate_state', [
             ('in_sub', 'possible', '\t\tNOT = { has_law = law_type:law_ecclesiarchy }\t# Laws+')]),
     ]),
-    ('common/amendments', 'zzzzz_compat_amendments.txt', [
+    ('common/amendments', 'zzzzzzzzzz_compat_amendments.txt', [
         ('amendment_electoral_clientelism', [
             ('in_sub', 'allowed_laws',
              '\t\tlaw_ecclesiarchy\t# Laws+\n\t\tlaw_weighted_universal_voting\t# Laws+')]),
@@ -131,7 +131,7 @@ PATCHES = [
             ('after', 'ideology:ideology_fascist',
              ['has_ideology = ideology:ideology_national_socialist\t# Laws+'])]),
     ]),
-    ('common/political_movements', 'zzzzz_compat_political_movements.txt', [
+    ('common/political_movements', 'zzzzzzzzzz_compat_political_movements.txt', [
         ('movement_fascist', [
             ('in_sub', 'character_ideologies',
              '\t\tideology_clerical_fascist\t# Laws+\n\t\tideology_national_socialist\t# Laws+'),
@@ -154,7 +154,7 @@ PATCHES = [
             ('after', 'ideology:ideology_reformer',
              ['has_ideology = ideology:ideology_anarcho_liberal\t# Laws+'])]),
     ]),
-    ('common/interest_groups', 'zzzzz_compat_interest_groups.txt', [
+    ('common/interest_groups', 'zzzzzzzzzz_compat_interest_groups.txt', [
         ('ig_petty_bourgeoisie', [
             ('after', 'has_law = law_type:law_appointed_bureaucrats',
              ['has_law_or_variant = law_type:law_meritocratic_bureaucracy\t# Laws+'])]),
@@ -167,7 +167,7 @@ PATCHES = [
 for d, outname, items in PATCHES:
     chunks = []
     for key, ops in items:
-        fn, body = find(c.BPM, d, key)
+        fn, body = playset.find(d, key)
         if not body:
             warn.append(f'{d}/{key}: BRAK w BPM')
             continue
@@ -187,7 +187,7 @@ for d, outname, items in PATCHES:
         f.write(f'# BPM / Laws+ Compatch - {d}\n'
                 f'# Definicje z Better Politics Mod uzupelnione o tresc z Laws+.\n\n')
         for key, fn, body in chunks:
-            f.write(f'# --- {key}  (zrodlo: BPM/{fn}) ---\n{body}\n\n')
+            f.write(f'# --- {key}  (zrodlo: {fn}) ---\n{body}\n\n')
     print(f'{d}: {len(chunks)} wpisow -> {outname}')
 
 print()

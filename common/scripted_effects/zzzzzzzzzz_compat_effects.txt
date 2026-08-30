@@ -1,7 +1,7 @@
 ﻿# BPM / Laws+ Compatch - common/scripted_effects
 # Definicje z Better Politics Mod uzupelnione o tresc z Laws+.
 
-# --- bpm_disable_elective_laws  (zrodlo: BPM/common/scripted_effects/bpm_law_effects.txt) ---
+# --- bpm_disable_elective_laws  (zrodlo: 2932134122/bpm_law_effects.txt) ---
 REPLACE:bpm_disable_elective_laws = {
 	if = {
 		limit = { has_law = law_type:law_elected_bureaucrats }
@@ -32,7 +32,7 @@ REPLACE:bpm_disable_elective_laws = {
 	}
 }
 
-# --- bpm_setup_global_laws_varlists  (zrodlo: BPM/common/scripted_effects/bpm_setup_state_and_foundation.txt) ---
+# --- bpm_setup_global_laws_varlists  (zrodlo: 2932134122/bpm_setup_state_and_foundation.txt) ---
 REPLACE:bpm_setup_global_laws_varlists = {
     bpm_setup_foundations_varlist = yes
     bpm_setup_repeatables_varlist = yes
@@ -45,7 +45,7 @@ REPLACE:bpm_setup_global_laws_varlists = {
 	}
 }
 
-# --- calculate_populism_progress  (zrodlo: BPM/common/scripted_effects/zz_bpm_00_victoria_scripted_effects.txt) ---
+# --- calculate_populism_progress  (zrodlo: (vanilla)/00_victoria_scripted_effects.txt -> 2941539986/00_victoria_scripted_effects_lp.txt -> 2932134122/zz_bpm_00_victoria_scripted_effects.txt) ---
 REPLACE:calculate_populism_progress = {
 	set_variable = { name = populism_progress_var_next value = 0 }
 	set_variable = { name = populism_progress_from_radicals value = 0 }
@@ -172,7 +172,7 @@ REPLACE:calculate_populism_progress = {
 	change_variable = { name = populism_progress_var_next add = var:populism_progress_var_add }
 }
 
-# --- calculate_communism_progress  (zrodlo: BPM/common/scripted_effects/zz_bpm_00_victoria_scripted_effects.txt) ---
+# --- calculate_communism_progress  (zrodlo: (vanilla)/00_victoria_scripted_effects.txt -> 2941539986/00_victoria_scripted_effects_lp.txt -> 2932134122/zz_bpm_00_victoria_scripted_effects.txt) ---
 REPLACE:calculate_communism_progress = {
 	set_variable = { name = communism_progress_var_next value = 0 }
 	set_variable = { name = communism_progress_from_radicals value = 0 }

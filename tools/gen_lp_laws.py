@@ -5,7 +5,7 @@ Values mirror BPM's scale for the neighbouring laws in the same group.
 """
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pdx, conflicts as c
+import pdx, conflicts as c, playset
 
 PROJ = r"C:\Users\oskar\Documents\Paradox Interactive\Victoria 3\mod\[1.13] BPM  Laws+ Compatch"
 
@@ -64,7 +64,7 @@ INSTITUTION = {
 
 warn, chunks = [], []
 for law in sorted(set(RIGIDITY) | set(INSTITUTION)):
-    fn, body = pdx.find_law(c.LP, law)
+    fn, body = playset.find('common/laws', law)
     if not body:
         warn.append(f'{law}: BRAK w Laws+ - pomijam')
         continue
@@ -97,7 +97,7 @@ for law in sorted(set(RIGIDITY) | set(INSTITUTION)):
         continue  # nic do zmiany
     chunks.append((law, fn, pdx.mark_replace(body)))
 
-out = os.path.join(PROJ, 'common', 'laws', 'zzzzz_compat_lawsplus_laws.txt')
+out = os.path.join(PROJ, 'common', 'laws', 'zzzzzzzzzz_compat_lawsplus_laws.txt')
 with open(out, 'w', encoding='utf-8-sig', newline='\n') as f:
     f.write('# BPM / Laws+ Compatch - prawa Laws+ przeniesione na model BPM\n'
             '# Bazuja na aktualnych definicjach Laws+, dopisane sa:\n'
@@ -106,7 +106,7 @@ with open(out, 'w', encoding='utf-8-sig', newline='\n') as f:
             '#  * institution / institution_modifier tam, gdzie BPM wiaze instytucje z cala grupa praw.\n'
             '# WYGENEROWANE: python tools/gen_lp_laws.py\n\n')
     for law, fn, body in chunks:
-        f.write(f'# --- {law}  (zrodlo: Laws+/{fn}) ---\n{body}\n\n')
+        f.write(f'# --- {law}  (zrodlo: {fn}) ---\n{body}\n\n')
 
 print(f'Zapisano {len(chunks)} praw Laws+ -> {out}')
 for w in warn:

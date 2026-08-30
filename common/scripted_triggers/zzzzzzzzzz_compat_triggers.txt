@@ -1,7 +1,7 @@
 ﻿# BPM / Laws+ Compatch - common/scripted_triggers
 # Definicje z Better Politics Mod uzupelnione o tresc z Laws+.
 
-# --- bpm_leader_is_fascist  (zrodlo: BPM/common/scripted_triggers/bpm_leader_triggers.txt) ---
+# --- bpm_leader_is_fascist  (zrodlo: 2932134122/bpm_leader_triggers.txt) ---
 REPLACE:bpm_leader_is_fascist = {
 	OR = {
 		has_ideology = ideology:ideology_integralist
@@ -12,7 +12,7 @@ REPLACE:bpm_leader_is_fascist = {
 	}
 }
 
-# --- bpm_leader_is_nationalist  (zrodlo: BPM/common/scripted_triggers/bpm_leader_triggers.txt) ---
+# --- bpm_leader_is_nationalist  (zrodlo: 2932134122/bpm_leader_triggers.txt) ---
 REPLACE:bpm_leader_is_nationalist = {
 	OR = {
 		has_ideology = ideology:ideology_jingoist_leader
@@ -24,7 +24,7 @@ REPLACE:bpm_leader_is_nationalist = {
 	}
 }
 
-# --- bpm_leader_is_radical_liberal  (zrodlo: BPM/common/scripted_triggers/bpm_leader_triggers.txt) ---
+# --- bpm_leader_is_radical_liberal  (zrodlo: 2932134122/bpm_leader_triggers.txt) ---
 REPLACE:bpm_leader_is_radical_liberal = {
 	OR = {
 		has_ideology = ideology:ideology_social_democrat

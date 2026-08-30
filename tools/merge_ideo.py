@@ -1,4 +1,4 @@
-"""Regenerate common/ideologies/zzzzz_compat_ideologies.txt.
+"""Regenerate common/ideologies/zzzzzzzzzz_compat_ideologies.txt.
 
 Takes the CURRENT Better Politics Mod ideology definitions and re-applies the
 Laws+ law stances stored in the previously generated compat file (or, on a first
@@ -8,11 +8,11 @@ Run:  python tools/merge_ideo.py
 """
 import os, re, sys, json
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pdx
+import pdx, playset
 from conflicts import BPM, LP, CP, VAN, bpm, lp, van
 
 PROJ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(PROJ, 'common', 'ideologies', 'zzzzz_compat_ideologies.txt')
+OUT = os.path.join(PROJ, 'common', 'ideologies', 'zzzzzzzzzz_compat_ideologies.txt')
 
 NEW_LP_LAWS = ({k for d, k in lp if d == 'common/laws'}
                - {k for d, k in van if d == 'common/laws'}
@@ -87,6 +87,9 @@ for fn in sorted(os.listdir(base)):
     if not fn.endswith('.txt'):
         continue
     for key, blines in top_blocks(pdx.read(os.path.join(base, fn))):
+        eff, _trail = playset.effective('common/ideologies', key)
+        if eff:                      # baza = to, co gra faktycznie zaladuje z calego zestawu
+            blines = eff.split('\n')
         want = WANT.get(key)
         bsub = sub_blocks(blines)
         if want:

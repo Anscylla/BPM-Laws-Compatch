@@ -2,7 +2,7 @@
 by merging in the law-group blocks of their closest BPM analogue."""
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pdx, conflicts as c
+import pdx, conflicts as c, playset
 
 PROJ = r"C:\Users\oskar\Documents\Paradox Interactive\Victoria 3\mod\[1.13] BPM  Laws+ Compatch"
 
@@ -48,8 +48,8 @@ def groups(body):
 
 chunks, report = [], []
 for lpid, bpmid in ANALOGUE.items():
-    _, lpb = find(c.LP, 'common/ideologies', lpid)
-    _, bb = find(c.BPM, 'common/ideologies', bpmid)
+    _, lpb = playset.find('common/ideologies', lpid)
+    _, bb = playset.find('common/ideologies', bpmid)
     if not lpb or not bb:
         report.append(f'{lpid}: BRAK ({lpid if not lpb else bpmid})')
         continue
@@ -85,7 +85,7 @@ for lpid, bpmid in ANALOGUE.items():
     report.append(f'{lpid} <- {bpmid}: +{len(added_groups)} grup ({", ".join(added_groups)}), '
                   f'+{len(added_laws)} pojedynczych praw')
 
-out = os.path.join(PROJ, 'common', 'ideologies', 'zzzzz_compat_lawsplus_ideologies.txt')
+out = os.path.join(PROJ, 'common', 'ideologies', 'zzzzzzzzzz_compat_lawsplus_ideologies.txt')
 with open(out, 'w', encoding='utf-8-sig', newline='\n') as f:
     f.write('# BPM / Laws+ Compatch - ideologie wlasne Laws+ uzupelnione o stanowiska\n'
             '# wobec praw dodanych przez Better Politics Mod (skopiowane z najblizszej\n'

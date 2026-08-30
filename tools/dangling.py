@@ -2,14 +2,16 @@
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from conflicts import BPM, LP, VAN, CP, toplevel_keys
+import playset
 
 PROJ = r"C:\Users\oskar\Documents\Paradox Interactive\Victoria 3\mod\[1.13] BPM  Laws+ Compatch"
 VANROOT = os.path.join(VAN)
 
 # load order: vanilla, BPM, Laws+, compatch  (later shadows same relative path)
-ROOTS = [('VAN', VANROOT), ('BPM', BPM), ('L+', LP), ('CP', PROJ)]
-if '--nocompatch' in sys.argv:
-    ROOTS = ROOTS[:3]
+# caly aktywny zestaw modow + compatch na koncu
+ROOTS = [(lab, path) for lab, path in playset._ROOTS]
+if '--nocompatch' not in sys.argv:
+    ROOTS = ROOTS + [('CP', PROJ)]
 
 vfs = {}   # relpath -> (tag, abspath)
 for tag, root in ROOTS:

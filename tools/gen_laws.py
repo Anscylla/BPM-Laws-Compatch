@@ -1,7 +1,7 @@
-"""Generate common/laws/zzzzz_compat_laws.txt: BPM law entries + Laws+ cross-references."""
+"""Generate common/laws/zzzzzzzzzz_compat_laws.txt: BPM law entries + Laws+ cross-references."""
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pdx, conflicts as c
+import pdx, conflicts as c, playset
 
 PROJ = r"C:\Users\oskar\Documents\Paradox Interactive\Victoria 3\mod\[1.13] BPM  Laws+ Compatch"
 
@@ -123,7 +123,7 @@ SECTIONS_TOUCHED = {
 
 chunks, warn = [], []
 for law, ops in PATCH.items():
-    fn, body = pdx.find_law(c.BPM, law)
+    fn, body = playset.find('common/laws', law)
     if not body:
         warn.append(f'{law}: BRAK w BPM - pomijam')
         continue
@@ -165,11 +165,11 @@ hdr = """# BPM / Laws+ Compatch - prawa
 # REPLACE: nadpisuje wpis w calosci; plik musi ladowac sie jako ostatni (prefiks zzzzz_).
 
 """
-out = os.path.join(PROJ, 'common', 'laws', 'zzzzz_compat_laws.txt')
+out = os.path.join(PROJ, 'common', 'laws', 'zzzzzzzzzz_compat_laws.txt')
 with open(out, 'w', encoding='utf-8-sig', newline='\n') as f:
     f.write(hdr)
     for law, src, body in chunks:
-        f.write(f'# --- {law}  (zrodlo: BPM/{src}) ---\n{body}\n\n')
+        f.write(f'# --- {law}  (zrodlo: {src}) ---\n{body}\n\n')
 
 print(f'Zapisano {len(chunks)} praw -> {out}')
 for w in warn:
