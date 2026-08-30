@@ -1,7 +1,7 @@
 """Generate common/laws/zzzzzzzzzz_compat_laws.txt: BPM law entries + Laws+ cross-references."""
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pdx, conflicts as c, playset
+import pdx, conflicts as c
 
 PROJ = r"C:\Users\oskar\Documents\Paradox Interactive\Victoria 3\mod\[1.13] BPM  Laws+ Compatch"
 
@@ -123,7 +123,7 @@ SECTIONS_TOUCHED = {
 
 chunks, warn = [], []
 for law, ops in PATCH.items():
-    fn, body = playset.find('common/laws', law)
+    fn, body = pdx.find_law(c.BPM, law)
     if not body:
         warn.append(f'{law}: BRAK w BPM - pomijam')
         continue
@@ -169,7 +169,7 @@ out = os.path.join(PROJ, 'common', 'laws', 'zzzzzzzzzz_compat_laws.txt')
 with open(out, 'w', encoding='utf-8-sig', newline='\n') as f:
     f.write(hdr)
     for law, src, body in chunks:
-        f.write(f'# --- {law}  (zrodlo: {src}) ---\n{body}\n\n')
+        f.write(f'# --- {law}  (zrodlo: BPM/{src}) ---\n{body}\n\n')
 
 print(f'Zapisano {len(chunks)} praw -> {out}')
 for w in warn:

@@ -2,7 +2,7 @@
 by merging in the law-group blocks of their closest BPM analogue."""
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pdx, conflicts as c, playset
+import pdx, conflicts as c
 
 PROJ = r"C:\Users\oskar\Documents\Paradox Interactive\Victoria 3\mod\[1.13] BPM  Laws+ Compatch"
 
@@ -48,8 +48,8 @@ def groups(body):
 
 chunks, report = [], []
 for lpid, bpmid in ANALOGUE.items():
-    _, lpb = playset.find('common/ideologies', lpid)
-    _, bb = playset.find('common/ideologies', bpmid)
+    _, lpb = find(c.LP, 'common/ideologies', lpid)
+    _, bb = find(c.BPM, 'common/ideologies', bpmid)
     if not lpb or not bb:
         report.append(f'{lpid}: BRAK ({lpid if not lpb else bpmid})')
         continue

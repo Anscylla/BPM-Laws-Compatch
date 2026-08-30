@@ -1,7 +1,7 @@
 ﻿# BPM / Laws+ Compatch - common/government_types
 # Definicje z Better Politics Mod uzupelnione o tresc z Laws+.
 
-# --- gov_council_republic  (zrodlo: (vanilla)/05_council_republics.txt -> 2941539986/05_council_republics_lp.txt -> 2932134122/bpm_types_override.txt) ---
+# --- gov_council_republic  (zrodlo: BPM/common/government_types/bpm_types_override.txt) ---
 REPLACE:gov_council_republic = {
 	transfer_of_power = presidential_elective
 	# new_leader_on_reform_government = yes
@@ -39,7 +39,7 @@ REPLACE:gov_council_republic = {
 	}
 }
 
-# --- gov_soviet_republic  (zrodlo: (vanilla)/05_council_republics.txt -> 2941539986/05_council_republics_lp.txt -> 2932134122/bpm_types_override.txt) ---
+# --- gov_soviet_republic  (zrodlo: BPM/common/government_types/bpm_types_override.txt) ---
 REPLACE:gov_soviet_republic = {
 	transfer_of_power = presidential_elective
 	# new_leader_on_reform_government = yes
@@ -80,7 +80,7 @@ REPLACE:gov_soviet_republic = {
 	}
 }
 
-# --- gov_council_dictatorship  (zrodlo: (vanilla)/05_council_republics.txt -> 2941539986/05_council_republics_lp.txt -> 2932134122/bpm_types_override.txt) ---
+# --- gov_council_dictatorship  (zrodlo: BPM/common/government_types/bpm_types_override.txt) ---
 REPLACE:gov_council_dictatorship = {
 	transfer_of_power = dictatorial
 
@@ -111,7 +111,7 @@ REPLACE:gov_council_dictatorship = {
 	}
 }
 
-# --- gov_soviet_dictatorship  (zrodlo: (vanilla)/05_council_republics.txt -> 2941539986/05_council_republics_lp.txt -> 2932134122/bpm_types_override.txt) ---
+# --- gov_soviet_dictatorship  (zrodlo: BPM/common/government_types/bpm_types_override.txt) ---
 REPLACE:gov_soviet_dictatorship = {
 	transfer_of_power = dictatorial
 
@@ -146,7 +146,7 @@ REPLACE:gov_soviet_dictatorship = {
 	}
 }
 
-# --- gov_fascist_corporate_state  (zrodlo: (vanilla)/06_corporate_states.txt -> 2941539986/06_corporate_states_lp.txt -> 2932134122/bpm_types_override.txt) ---
+# --- gov_fascist_corporate_state  (zrodlo: BPM/common/government_types/bpm_types_override.txt) ---
 REPLACE:gov_fascist_corporate_state = {
 	transfer_of_power = dictatorial
 

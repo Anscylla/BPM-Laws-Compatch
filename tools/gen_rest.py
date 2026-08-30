@@ -1,7 +1,7 @@
 """Generate the remaining compat files: triggers, effects, gov types, amendments, movements, IGs."""
 import os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pdx, conflicts as c, playset
+import pdx, conflicts as c
 
 PROJ = r"C:\Users\oskar\Documents\Paradox Interactive\Victoria 3\mod\[1.13] BPM  Laws+ Compatch"
 warn = []
@@ -167,7 +167,7 @@ PATCHES = [
 for d, outname, items in PATCHES:
     chunks = []
     for key, ops in items:
-        fn, body = playset.find(d, key)
+        fn, body = find(c.BPM, d, key)
         if not body:
             warn.append(f'{d}/{key}: BRAK w BPM')
             continue
@@ -187,7 +187,7 @@ for d, outname, items in PATCHES:
         f.write(f'# BPM / Laws+ Compatch - {d}\n'
                 f'# Definicje z Better Politics Mod uzupelnione o tresc z Laws+.\n\n')
         for key, fn, body in chunks:
-            f.write(f'# --- {key}  (zrodlo: {fn}) ---\n{body}\n\n')
+            f.write(f'# --- {key}  (zrodlo: BPM/{fn}) ---\n{body}\n\n')
     print(f'{d}: {len(chunks)} wpisow -> {outname}')
 
 print()

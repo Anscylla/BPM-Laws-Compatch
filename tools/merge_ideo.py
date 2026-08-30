@@ -8,7 +8,7 @@ Run:  python tools/merge_ideo.py
 """
 import os, re, sys, json
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import pdx, playset
+import pdx
 from conflicts import BPM, LP, CP, VAN, bpm, lp, van
 
 PROJ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -87,9 +87,6 @@ for fn in sorted(os.listdir(base)):
     if not fn.endswith('.txt'):
         continue
     for key, blines in top_blocks(pdx.read(os.path.join(base, fn))):
-        eff, _trail = playset.effective('common/ideologies', key)
-        if eff:                      # baza = to, co gra faktycznie zaladuje z calego zestawu
-            blines = eff.split('\n')
         want = WANT.get(key)
         bsub = sub_blocks(blines)
         if want:

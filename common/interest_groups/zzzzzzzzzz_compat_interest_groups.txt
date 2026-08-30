@@ -1,7 +1,7 @@
 ﻿# BPM / Laws+ Compatch - common/interest_groups
 # Definicje z Better Politics Mod uzupelnione o tresc z Laws+.
 
-# --- ig_petty_bourgeoisie  (zrodlo: (vanilla)/00_petty_bourgeoisie.txt -> 2941539986/00_petty_bourgeoisie_lp.txt -> 2932134122/zzzz_petty_bourgeoisie.txt) ---
+# --- ig_petty_bourgeoisie  (zrodlo: BPM/common/interest_groups/zzzz_petty_bourgeoisie.txt) ---
 REPLACE:ig_petty_bourgeoisie = {
 	color = hsv{ 0.59 0.12 0.6 }
 	texture = "gfx/interface/icons/ig_icons/petty_bourgeoisie.dds"
@@ -328,7 +328,7 @@ REPLACE:ig_petty_bourgeoisie = {
 	}
 }
 
-# --- ig_devout  (zrodlo: (vanilla)/00_devout.txt -> 2941539986/00_devout_lp.txt -> 2932134122/zzzz_devout.txt) ---
+# --- ig_devout  (zrodlo: BPM/common/interest_groups/zzzz_devout.txt) ---
 REPLACE:ig_devout = {
 	color = hsv{ 0.47 0.1 0.5 }
 	texture = "gfx/interface/icons/ig_icons/devout.dds"

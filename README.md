@@ -13,7 +13,7 @@ Laws +
 [1.13] BPM / Laws+ Compatch      <- zawsze na końcu
 ```
 
-Nazwy wszystkich plików mają prefiks `zzzzzzzzzz_`, więc wygrywają sortowanie ASCII, którym
+Nazwy wszystkich plików mają prefiks `zzzzz_`, więc wygrywają sortowanie ASCII, którym
 Victoria 3 rozstrzyga konflikty między różnie nazwanymi plikami. Dzięki temu patch działa
 niezależnie od pozycji na liście — ale trzymanie go na końcu i tak jest zalecane.
 
@@ -55,19 +55,6 @@ Narzędzia diagnostyczne: `tools/lost.py` (co z Laws+ ginie pod BPM), `tools/ctx
 (pokazuje konkretne linie z kontekstem bloków), `tools/show.py <katalog> <klucz>` (porównanie
 definicji BPM vs Laws+).
 
-
-## Patch jest budowany pod konkretny zestaw modów
-
-Generatory nie patrzą na surowe definicje z BPM, tylko na **definicję efektywną** — czyli tę,
-którą gra faktycznie załaduje po rozstrzygnięciu wszystkich modów z `content_load.json`
-(`tools/playset.py`). Bez tego patch po cichu cofałby zmiany modów sortujących się później:
-w tym zestawie 22 ideologie przywódców przepisuje „BPM + Tech & Res ComPatch", a kilka praw
-i ruchów — Community Mod Framework oraz Kuromi's AI.
-
-Konsekwencja: **plik wynikowy zawiera treść także tych modów.** Patch jest przez to
-dopasowany do bieżącego zestawu, a nie uniwersalny. Po zmianie listy modów trzeba go
-przegenerować. Do publikacji na Workshopie trzeba by albo dopisać te mody jako zależności,
-albo przegenerować patch na czystym zestawie BPM + Laws+.
 
 ## Zasada projektowa
 
