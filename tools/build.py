@@ -321,7 +321,8 @@ def inject_delta(orig, patched, key=None):
 
 
 API_FIXES = ((re.compile(r'\bhas_role\s*=\s*(agitator|general|admiral|politician)\b'),
-              r'has_role_of_type = \1'),)
+              r'has_role_of_type = \1'),
+             (re.compile(r'\bis_ruler\s*=\s*(yes|no)\b'), r'is_ruler_of_own_country = \1'),)
 
 
 def api_fix(lines):
@@ -393,7 +394,9 @@ class Sources:
     def law_table(self):
         """-> {law: (lawgroup, progressiveness)} after vanilla/BPM/Laws+ resolution."""
         vfs = {}
-        for root in (self.game, self.bpm, self.lp):
+        roots = [self.game, self.bpm, self.lp,
+                 os.path.join(os.path.dirname(self.bpm), DONOR_ID)]
+        for root in roots:
             base = os.path.join(root, 'common', 'laws')
             if os.path.isdir(base):
                 for fn in os.listdir(base):
@@ -638,6 +641,9 @@ ANALOGUE = {
     'law_violent_suppresion':         ('law_ethnostate', True),
     'law_racial_hierarchy':           ('law_racial_segregation', False),
     'law_no_codified_discrimination': ('law_multicultural', False),
+    'law_badge_of_shame':             ('law_racial_segregation', False),
+    'law_servitude':                  ('law_ethnostate', False),
+    'law_forced_labour':              ('law_ethnostate', True),
     'law_proletariat_dictatorship':   ('law_single_party_state', False),
     'law_corporatocracy':             ('law_corporate_state', False),
     'law_sakoku_shugi':      ('law_isolationism', False),
@@ -652,6 +658,17 @@ ANALOGUE = {
     'law_paradox_employee_benefits': ('law_worker_protections', True),
     'law_garde_nationale':           ('law_national_guard', False),
     'law_religious_pluralism':       ('law_freedom_of_conscience', False),
+}
+
+# Laws+ dropped three rungs of lawgroup_discriminated_pop but kept everything they
+# need: the scripted effects, the tooltips and two of the three icons. The patch
+# restores them from the donor listed below. law_servitude has no icon left, so it
+# borrows the vanilla serfdom one.
+DONOR_ID = '3543498311'
+RESTORED_LAWS = {
+    'law_badge_of_shame': {},
+    'law_servitude': {'icon': 'gfx/interface/icons/law_icons/serfdom.dds'},
+    'law_forced_labour': {},
 }
 
 STANCES = ['strongly_disapprove', 'disapprove', 'neutral', 'approve', 'strongly_approve']
@@ -782,7 +799,8 @@ def build_ideologies(src, report):
     laws = src.law_table()
     group_of = {k: v[0] for k, v in laws.items()}
     prog = {k: v[1] for k, v in laws.items()}
-    new_lp = (src.law_keys(src.lp) - src.law_keys(src.game) - src.law_keys(src.bpm))
+    new_lp = ((src.law_keys(src.lp) - src.law_keys(src.game) - src.law_keys(src.bpm))
+              | set(RESTORED_LAWS))
 
     want = defaultdict(lambda: defaultdict(dict))
 
@@ -1008,6 +1026,27 @@ def build_lp_laws(src, report):
     report['lp_laws'] = write_file('common/laws', 'lawsplus_laws', chunks, warn)
 
 
+def build_restored_laws(src, report):
+    """Re-add the lawgroup_discriminated_pop laws Laws+ removed."""
+    donor = os.path.join(os.path.dirname(src.bpm), DONOR_ID)
+    if not os.path.isdir(donor):
+        report['warn'].append(f'donor {DONOR_ID} not installed, discrimination laws skipped')
+        return
+    chunks = []
+    for law, opts in RESTORED_LAWS.items():
+        _, body = src.find('common/laws', law, donor)
+        if not body:
+            report['warn'].append(f'{law}: not found in donor {DONOR_ID}')
+            continue
+        lines = api_fix(body.split('\n'))
+        if 'icon' in opts:
+            lines = [re.sub(r'(icon\s*=\s*)"[^"]*"', r'\1"' + opts['icon'] + '"', l)
+                     for l in lines]
+        chunks.append((None, law, '\n'.join(lines)))
+    report['discrimination_laws'] = write_file('common/laws', 'discrimination_laws',
+                                               chunks, report['warn'])
+
+
 def build_other(src, report):
     warn = report['warn']
     for subdir, name, items in OTHER_PATCHES:
@@ -1195,10 +1234,12 @@ def main():
         build_lp_ideologies(src, report)
         build_bpm_laws(src, report)
         build_lp_laws(src, report)
+        build_restored_laws(src, report)
         build_other(src, report)
 
         print('generated:')
-        for k in ('ideologies', 'lp_ideologies', 'bpm_laws', 'lp_laws', 'triggers',
+        for k in ('ideologies', 'lp_ideologies', 'bpm_laws', 'lp_laws',
+                  'discrimination_laws', 'triggers',
                   'effects', 'government_types', 'amendments', 'political_movements',
                   'interest_groups'):
             if k in report:

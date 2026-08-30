@@ -50,7 +50,10 @@ REPLACE:ideology_cit_internationalist = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = strongly_approve
+		law_badge_of_shame = disapprove
+		law_forced_labour = strongly_disapprove
 		law_racial_hierarchy = strongly_disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
 		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
@@ -100,7 +103,10 @@ REPLACE:ideology_cit_closed_internationalist = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = strongly_approve
+		law_badge_of_shame = disapprove
+		law_forced_labour = strongly_disapprove
 		law_racial_hierarchy = strongly_disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
 		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
@@ -150,7 +156,10 @@ REPLACE:ideology_cit_immigrant_nationalist = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = approve
+		law_badge_of_shame = neutral
+		law_forced_labour = strongly_disapprove
 		law_racial_hierarchy = neutral	# derived
+		law_servitude = strongly_disapprove	# derived
 		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
@@ -200,7 +209,10 @@ REPLACE:ideology_cit_liberal_nationalist = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = approve
+		law_badge_of_shame = neutral
+		law_forced_labour = strongly_disapprove
 		law_racial_hierarchy = approve	# derived
+		law_servitude = strongly_disapprove	# derived
 		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
@@ -250,7 +262,10 @@ REPLACE:ideology_cit_nationalist = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = disapprove
+		law_badge_of_shame = strongly_approve
+		law_forced_labour = disapprove
 		law_racial_hierarchy = neutral	# derived
+		law_servitude = neutral	# derived
 		law_violent_suppresion = neutral	# derived
 	}
 }
@@ -300,7 +315,10 @@ REPLACE:ideology_cit_segregationist = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = neutral
+		law_badge_of_shame = strongly_approve
+		law_forced_labour = disapprove
 		law_racial_hierarchy = strongly_approve	# derived
+		law_servitude = neutral	# derived
 		law_violent_suppresion = neutral	# derived
 	}
 }
@@ -343,8 +361,11 @@ REPLACE:ideology_cit_colonial_segregationist = {
 		law_affirmative_action = strongly_disapprove
 	}
 	lawgroup_discriminated_pop = {
+		law_badge_of_shame = strongly_approve	# derived
+		law_forced_labour = strongly_approve	# derived
 		law_no_codified_discrimination = strongly_disapprove	# derived
 		law_racial_hierarchy = strongly_approve	# derived
+		law_servitude = approve	# derived
 		law_violent_suppresion = strongly_approve	# derived
 	}
 }
@@ -388,7 +409,10 @@ REPLACE:ideology_cit_ethnonationalist = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = strongly_disapprove
+		law_badge_of_shame = neutral
+		law_forced_labour = strongly_approve
 		law_racial_hierarchy = disapprove	# derived
+		law_servitude = strongly_approve	# derived
 		law_violent_suppresion = strongly_approve	# derived
 	}
 }
@@ -438,7 +462,10 @@ REPLACE:ideology_cit_multiethnic_nationalist = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = disapprove
+		law_badge_of_shame = strongly_approve
+		law_forced_labour = disapprove
 		law_racial_hierarchy = neutral	# derived
+		law_servitude = neutral	# derived
 		law_violent_suppresion = neutral	# derived
 	}
 }
@@ -482,7 +509,10 @@ REPLACE:ideology_cit_traditional_culture = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = disapprove
+		law_badge_of_shame = strongly_approve
+		law_forced_labour = disapprove
 		law_racial_hierarchy = neutral	# derived
+		law_servitude = neutral	# derived
 		law_violent_suppresion = neutral	# derived
 	}
 }
@@ -525,8 +555,11 @@ REPLACE:ideology_cit_samurai = {
 		law_lax_edo_system = strongly_disapprove
 	}
 	lawgroup_discriminated_pop = {
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = neutral	# derived
 		law_no_codified_discrimination = strongly_disapprove	# derived
 		law_racial_hierarchy = neutral	# derived
+		law_servitude = neutral	# derived
 		law_violent_suppresion = neutral	# derived
 	}
 }
@@ -574,8 +607,11 @@ REPLACE:ideology_cit_christian_internationalist = {
 		law_lax_edo_system = neutral
 	}
 	lawgroup_discriminated_pop = {
+		law_badge_of_shame = disapprove	# derived
+		law_forced_labour = strongly_disapprove	# derived
 		law_no_codified_discrimination = strongly_approve	# derived
 		law_racial_hierarchy = disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
 		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
@@ -611,7 +647,6 @@ REPLACE:ideology_cit_reactionary = {
 		law_secret_police = strongly_approve
 		law_guaranteed_liberties = strongly_disapprove
 		law_gendarmerie = strongly_approve
-		law_garde_nationale = strongly_approve	# derived
 	}
 
 	lawgroup_free_speech = {
@@ -623,7 +658,10 @@ REPLACE:ideology_cit_reactionary = {
 
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = strongly_disapprove
+		law_badge_of_shame = strongly_approve
+		law_forced_labour = neutral
 		law_racial_hierarchy = neutral	# derived
+		law_servitude = approve	# derived
 		law_violent_suppresion = strongly_approve	# derived
 	}
 }
@@ -691,7 +729,10 @@ REPLACE:ideology_cit_fascist = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = strongly_disapprove
+		law_badge_of_shame = strongly_approve
+		law_forced_labour = approve
 		law_racial_hierarchy = disapprove	# derived
+		law_servitude = strongly_approve	# derived
 		law_violent_suppresion = strongly_approve	# derived
 	}
 	lawgroup_army_model = {
@@ -740,9 +781,8 @@ REPLACE:ideology_dop_party_socialist = {
 		law_appointed_bureaucrats = approve
 		law_elected_bureaucrats = approve
 		law_meritocratic_bureaucracy = strongly_disapprove
-		law_gwageo = neutral	# derived
+		law_gwageo = approve	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_labour_associations = {
@@ -788,9 +828,8 @@ REPLACE:ideology_dop_anarchist = {
 		law_appointed_bureaucrats = disapprove
 		law_elected_bureaucrats = approve
 		law_meritocratic_bureaucracy = strongly_disapprove
-		law_gwageo = strongly_disapprove	# derived
+		law_gwageo = disapprove	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = strongly_disapprove	# derived
 	}
 
 	lawgroup_legislative_principles = {
@@ -842,9 +881,8 @@ REPLACE:ideology_dop_party_state = {
 		law_appointed_bureaucrats = approve
 		law_elected_bureaucrats = disapprove
 		law_meritocratic_bureaucracy = neutral
-		law_gwageo = neutral	# derived
+		law_gwageo = approve	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_legislative_principles = {
@@ -897,9 +935,8 @@ REPLACE:ideology_dop_radical_democrat = {
 		law_appointed_bureaucrats = neutral
 		law_elected_bureaucrats = approve
 		law_meritocratic_bureaucracy = neutral
-		law_gwageo = disapprove	# derived
+		law_gwageo = neutral	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = disapprove	# derived
 	}
 
 	lawgroup_legislative_principles = {
@@ -924,9 +961,6 @@ REPLACE:ideology_dop_radical_democrat = {
 		law_non_secret_ballot = approve
 		law_secret_ballot = strongly_approve
 		law_direct_democracy = strongly_approve	# derived
-	}
-	lawgroup_governance_principles = {
-		law_corporatocracy = strongly_disapprove	# derived
 	}
 }
 
@@ -958,7 +992,6 @@ REPLACE:ideology_dop_moderate_democrat = {
 		law_meritocratic_bureaucracy = approve
 		law_gwageo = neutral	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_legislative_principles = {
@@ -982,9 +1015,6 @@ REPLACE:ideology_dop_moderate_democrat = {
 		law_non_secret_ballot = approve
 		law_secret_ballot = strongly_approve
 		law_direct_democracy = strongly_approve	# derived
-	}
-	lawgroup_governance_principles = {
-		law_corporatocracy = disapprove	# derived
 	}
 }
 
@@ -1013,9 +1043,8 @@ REPLACE:ideology_dop_authoritarian_democrat = {
 		law_appointed_bureaucrats = approve
 		law_elected_bureaucrats = neutral
 		law_meritocratic_bureaucracy = neutral
-		law_gwageo = neutral	# derived
+		law_gwageo = approve	# derived
 		law_mestnichestvo = neutral	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_legislative_principles = {
@@ -1069,7 +1098,6 @@ REPLACE:ideology_dop_autocrat = {
 		law_meritocratic_bureaucracy = neutral
 		law_gwageo = neutral	# derived
 		law_mestnichestvo = strongly_approve	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_legislative_principles = {
@@ -1132,7 +1160,6 @@ REPLACE:ideology_dop_oligarch = {
 		law_meritocratic_bureaucracy = approve
 		law_gwageo = approve	# derived
 		law_mestnichestvo = strongly_approve	# derived
-		law_militarisierung_der_burokratie = approve	# derived
 	}
 
     
@@ -1193,9 +1220,8 @@ REPLACE:ideology_dop_technocrat = {
 		law_appointed_bureaucrats = approve
 		law_elected_bureaucrats = neutral
 		law_meritocratic_bureaucracy = strongly_approve
-		law_gwageo = neutral	# derived
+		law_gwageo = approve	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
     
@@ -1250,9 +1276,8 @@ REPLACE:ideology_dop_traditional_power = {
 		law_appointed_bureaucrats = disapprove
 		law_elected_bureaucrats = disapprove
 		law_meritocratic_bureaucracy = disapprove
-		law_gwageo = neutral	# derived
+		law_gwageo = disapprove	# derived
 		law_mestnichestvo = strongly_approve	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_labour_associations = {
@@ -1283,9 +1308,8 @@ REPLACE:ideology_dop_state_power = {
 		law_appointed_bureaucrats = strongly_approve
 		law_elected_bureaucrats = neutral
 		law_meritocratic_bureaucracy = strongly_approve
-		law_gwageo = approve	# derived
+		law_gwageo = strongly_approve	# derived
 		law_mestnichestvo = neutral	# derived
-		law_militarisierung_der_burokratie = approve	# derived
 	}
 
 }
@@ -1326,9 +1350,8 @@ REPLACE:ideology_dop_meritocratic_autocrat = {
 		law_appointed_bureaucrats = strongly_approve
 		law_elected_bureaucrats = disapprove
 		law_meritocratic_bureaucracy = strongly_approve
-		law_gwageo = neutral	# derived
+		law_gwageo = strongly_approve	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_labour_associations = {
@@ -1361,8 +1384,7 @@ REPLACE:ideology_dop_dissent = {
 		law_national_guard = neutral
 		law_secret_police = strongly_disapprove
 		law_guaranteed_liberties = strongly_approve
-		law_garde_nationale = neutral	# derived
-		law_gendarmerie = approve	# derived
+		law_gendarmerie = neutral	# derived
 	}
 
 }
@@ -1386,9 +1408,8 @@ REPLACE:ideology_dop_state_unionist = {
 		law_appointed_bureaucrats = approve
 		law_elected_bureaucrats = neutral
 		law_meritocratic_bureaucracy = neutral
-		law_gwageo = neutral	# derived
+		law_gwageo = approve	# derived
 		law_mestnichestvo = neutral	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 }
@@ -1456,9 +1477,8 @@ REPLACE:ideology_dop_syndicalist = {
 		law_appointed_bureaucrats = neutral
 		law_elected_bureaucrats = approve
 		law_meritocratic_bureaucracy = neutral
-		law_gwageo = disapprove	# derived
+		law_gwageo = neutral	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = disapprove	# derived
 	}
 
     
@@ -1506,9 +1526,8 @@ REPLACE:ideology_dop_anarcho_syndicalist = {
 		law_appointed_bureaucrats = disapprove
 		law_elected_bureaucrats = approve
 		law_meritocratic_bureaucracy = neutral
-		law_gwageo = strongly_disapprove	# derived
+		law_gwageo = disapprove	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = strongly_disapprove	# derived
 	}
 
 	
@@ -1562,12 +1581,8 @@ REPLACE:ideology_dop_metropole_loyalist = {
 		law_appointed_bureaucrats = approve
 		law_elected_bureaucrats = disapprove
 		law_meritocratic_bureaucracy = neutral
-		law_gwageo = neutral	# derived
+		law_gwageo = approve	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
-	}
-	lawgroup_governance_principles = {
-		law_corporatocracy = strongly_approve	# derived
 	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_disapprove	# derived
@@ -1595,7 +1610,7 @@ REPLACE:ideology_dop_christian_democrat = {
 		law_colonial_administration = strongly_disapprove
 		law_organic_democracy = disapprove
 		law_ecclesiarchy = disapprove	# derived
-		law_proletariat_dictatorship = disapprove	# derived
+		law_proletariat_dictatorship = strongly_disapprove	# derived
 		law_weighted_universal_voting = strongly_approve	# derived
 	}
 
@@ -1603,10 +1618,9 @@ REPLACE:ideology_dop_christian_democrat = {
 		law_hereditary_bureaucrats = strongly_disapprove
 		law_appointed_bureaucrats = disapprove
 		law_elected_bureaucrats = approve
-		law_gwageo = strongly_disapprove	# derived
+		law_gwageo = disapprove	# derived
 		law_meritocratic_bureaucracy = approve	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = strongly_disapprove	# derived
 	}
 
 	lawgroup_legislative_principles = {
@@ -1623,9 +1637,6 @@ REPLACE:ideology_dop_christian_democrat = {
 		law_right_to_associate = strongly_approve
 		law_socialist_labor_unions = strongly_disapprove
 		law_factory_councils = disapprove
-	}
-	lawgroup_governance_principles = {
-		law_corporatocracy = strongly_disapprove	# derived
 	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_approve	# derived
@@ -1653,7 +1664,7 @@ REPLACE:ideology_dop_divine_democrat = {
 		law_colonial_administration = disapprove
 		law_organic_democracy = disapprove
 		law_ecclesiarchy = disapprove	# derived
-		law_proletariat_dictatorship = strongly_approve	# derived
+		law_proletariat_dictatorship = neutral	# derived
 		law_weighted_universal_voting = neutral	# derived
 	}
 
@@ -1664,7 +1675,6 @@ REPLACE:ideology_dop_divine_democrat = {
 		law_gwageo = neutral	# derived
 		law_meritocratic_bureaucracy = approve	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_legislative_principles = {
@@ -1681,9 +1691,6 @@ REPLACE:ideology_dop_divine_democrat = {
 		law_right_to_associate = neutral
 		law_socialist_labor_unions = strongly_disapprove
 		law_factory_councils = strongly_disapprove
-	}
-	lawgroup_governance_principles = {
-		law_corporatocracy = disapprove	# derived
 	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_disapprove	# derived
@@ -1719,10 +1726,9 @@ icon = "gfx/interface/icons/ideology_icons/dop_ideology/conservative_democrat.dd
 		law_hereditary_bureaucrats = disapprove
 		law_appointed_bureaucrats = approve
 		law_elected_bureaucrats = approve
-		law_gwageo = neutral	# derived
+		law_gwageo = approve	# derived
 		law_meritocratic_bureaucracy = approve	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_legislative_principles = {
@@ -1739,9 +1745,6 @@ icon = "gfx/interface/icons/ideology_icons/dop_ideology/conservative_democrat.dd
 		law_right_to_associate = neutral
   	  	law_socialist_labor_unions = strongly_disapprove
 		law_factory_councils = strongly_disapprove
-	}
-	lawgroup_governance_principles = {
-		law_corporatocracy = disapprove	# derived
 	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_approve	# derived
@@ -1780,7 +1783,6 @@ REPLACE:ideology_dop_organic_democrat = {
 		law_gwageo = disapprove	# derived
 		law_meritocratic_bureaucracy = approve	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = disapprove	# derived
 	}
 
 	lawgroup_legislative_principles = {
@@ -1797,9 +1799,6 @@ REPLACE:ideology_dop_organic_democrat = {
 		law_right_to_associate = approve
 		law_factory_councils = strongly_disapprove
 		law_socialist_labor_unions = strongly_disapprove
-	}
-	lawgroup_governance_principles = {
-		law_corporatocracy = disapprove	# derived
 	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_approve	# derived
@@ -1842,9 +1841,8 @@ REPLACE:ideology_dop_organic_power = {
 		law_appointed_bureaucrats = approve
 		law_elected_bureaucrats = approve
 		law_meritocratic_bureaucracy = approve
-		law_gwageo = neutral	# derived
+		law_gwageo = approve	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_labour_associations = {
@@ -1855,9 +1853,6 @@ REPLACE:ideology_dop_organic_power = {
 		law_right_to_associate = strongly_disapprove
     	law_socialist_labor_unions = strongly_disapprove
 		law_factory_councils = strongly_disapprove
-	}
-	lawgroup_governance_principles = {
-		law_corporatocracy = disapprove	# derived
 	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_approve	# derived
@@ -1937,7 +1932,7 @@ REPLACE:ideology_eco_laissez_faire = {
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = strongly_disapprove
-		law_class_collaboration = strongly_disapprove	# derived
+		law_class_collaboration = disapprove	# derived
 		law_early_industrialization = strongly_disapprove	# derived
 	}
 
@@ -2005,8 +2000,8 @@ REPLACE:ideology_eco_artisan = {
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = strongly_disapprove
 		law_class_collaboration = neutral	# derived
-		law_early_industrialization = disapprove	# derived
-		law_state_capitalism = neutral	# derived
+		law_early_industrialization = strongly_disapprove	# derived
+		law_state_capitalism = disapprove	# derived
 	}
 
     lawgroup_trade_policy = {
@@ -2070,7 +2065,7 @@ REPLACE:ideology_eco_interventionist = {
 		law_command_economy = neutral
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = strongly_approve
-		law_class_collaboration = disapprove	# derived
+		law_class_collaboration = neutral	# derived
 		law_early_industrialization = strongly_disapprove	# derived
 	}
 
@@ -2135,7 +2130,7 @@ REPLACE:ideology_eco_traditional_agrarian = {
 		law_extraction_economy = disapprove
 		law_state_capitalism = disapprove
 		law_class_collaboration = strongly_disapprove	# derived
-		law_early_industrialization = neutral	# derived
+		law_early_industrialization = strongly_approve	# derived
 	}
 
     lawgroup_trade_policy = {
@@ -2197,7 +2192,7 @@ REPLACE:ideology_eco_modern_agrarian = {
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = neutral
-		law_class_collaboration = strongly_disapprove	# derived
+		law_class_collaboration = disapprove	# derived
 		law_early_industrialization = strongly_disapprove	# derived
 	}
 
@@ -2260,7 +2255,7 @@ REPLACE:ideology_eco_agrarian_socialist = {
 		law_command_economy = disapprove
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = neutral
-		law_class_collaboration = neutral	# derived
+		law_class_collaboration = disapprove	# derived
 		law_early_industrialization = strongly_disapprove	# derived
 	}
 
@@ -2386,7 +2381,7 @@ REPLACE:ideology_eco_agrarian_autarky = {
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = neutral
 		law_state_capitalism = neutral
-		law_class_collaboration = neutral	# derived
+		law_class_collaboration = disapprove	# derived
 		law_early_industrialization = neutral	# derived
 	}
 
@@ -2449,7 +2444,7 @@ REPLACE:ideology_eco_socialist_autarky = {
 		law_command_economy = strongly_approve
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = disapprove
-		law_class_collaboration = approve	# derived
+		law_class_collaboration = neutral	# derived
 		law_early_industrialization = strongly_disapprove	# derived
 	}
 
@@ -2576,7 +2571,7 @@ REPLACE:ideology_eco_proletarian_economy = {
 		law_command_economy = approve
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = neutral
-		law_class_collaboration = strongly_approve	# derived
+		law_class_collaboration = neutral	# derived
 		law_early_industrialization = strongly_disapprove	# derived
 	}
 
@@ -2639,8 +2634,8 @@ REPLACE:ideology_eco_serf_economy = {
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = disapprove
 		law_state_capitalism = disapprove
-		law_class_collaboration = strongly_disapprove	# derived
-		law_early_industrialization = neutral	# derived
+		law_class_collaboration = disapprove	# derived
+		law_early_industrialization = strongly_approve	# derived
 	}
 
     lawgroup_trade_policy = {
@@ -2702,8 +2697,8 @@ REPLACE:ideology_eco_trad_isolationist = {
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = disapprove
 		law_state_capitalism = disapprove
-		law_class_collaboration = strongly_disapprove	# derived
-		law_early_industrialization = neutral	# derived
+		law_class_collaboration = disapprove	# derived
+		law_early_industrialization = strongly_approve	# derived
 	}
 
     lawgroup_trade_policy = {
@@ -2765,8 +2760,8 @@ REPLACE:ideology_eco_slave_economy = {
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = disapprove
 		law_state_capitalism = approve
-		law_class_collaboration = strongly_disapprove	# derived
-		law_early_industrialization = neutral	# derived
+		law_class_collaboration = disapprove	# derived
+		law_early_industrialization = strongly_approve	# derived
 	}
 
     lawgroup_trade_policy = {
@@ -2809,6 +2804,14 @@ REPLACE:ideology_eco_slave_economy = {
 		law_repeatable_economy_public_works = disapprove
 		law_repeatable_economy_forced_industrialization = strongly_disapprove
 	}
+	lawgroup_discriminated_pop = {
+		law_forced_labour = strongly_approve
+		law_badge_of_shame = strongly_approve	# derived
+		law_no_codified_discrimination = strongly_approve	# derived
+		law_racial_hierarchy = strongly_approve	# derived
+		law_servitude = strongly_approve	# derived
+		law_violent_suppresion = strongly_approve	# derived
+	}
 }
 
 # ideology_eco_antebellum_economy
@@ -2828,8 +2831,8 @@ REPLACE:ideology_eco_antebellum_economy = {
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = disapprove
 		law_state_capitalism = neutral
-		law_class_collaboration = strongly_disapprove	# derived
-		law_early_industrialization = neutral	# derived
+		law_class_collaboration = disapprove	# derived
+		law_early_industrialization = strongly_approve	# derived
 	}
 
     lawgroup_trade_policy = {
@@ -2872,6 +2875,14 @@ REPLACE:ideology_eco_antebellum_economy = {
 		law_repeatable_economy_forced_industrialization = strongly_disapprove
 	}
 
+	lawgroup_discriminated_pop = {
+		law_forced_labour = strongly_approve
+		law_badge_of_shame = strongly_approve	# derived
+		law_no_codified_discrimination = strongly_approve	# derived
+		law_racial_hierarchy = strongly_approve	# derived
+		law_servitude = strongly_approve	# derived
+		law_violent_suppresion = strongly_approve	# derived
+	}
 }
 
 # ideology_eco_modernizer
@@ -2891,7 +2902,7 @@ REPLACE:ideology_eco_modernizer = {
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = neutral
-		law_class_collaboration = strongly_disapprove	# derived
+		law_class_collaboration = disapprove	# derived
 		law_early_industrialization = strongly_disapprove	# derived
 	}
 
@@ -2935,6 +2946,14 @@ REPLACE:ideology_eco_modernizer = {
 		law_repeatable_economy_public_works = approve
 		law_repeatable_economy_forced_industrialization = approve
 	}
+	lawgroup_discriminated_pop = {
+		law_forced_labour = strongly_disapprove
+		law_badge_of_shame = strongly_disapprove	# derived
+		law_no_codified_discrimination = strongly_disapprove	# derived
+		law_racial_hierarchy = strongly_disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
+		law_violent_suppresion = strongly_disapprove	# derived
+	}
 }
 
 # ideology_eco_conservative_agrarian
@@ -2954,8 +2973,8 @@ REPLACE:ideology_eco_conservative_agrarian = {
 		law_command_economy = disapprove
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = neutral
-		law_class_collaboration = strongly_disapprove	# derived
-		law_early_industrialization = strongly_disapprove	# derived
+		law_class_collaboration = neutral	# derived
+		law_early_industrialization = disapprove	# derived
 	}
 
     lawgroup_trade_policy = {
@@ -3016,7 +3035,7 @@ REPLACE:ideology_eco_american_system = {
 		law_command_economy = neutral
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = neutral
-		law_class_collaboration = disapprove	# derived
+		law_class_collaboration = neutral	# derived
 		law_early_industrialization = strongly_disapprove	# derived
 	}
 
@@ -3078,8 +3097,8 @@ REPLACE:ideology_eco_debt_serf_economy = {
 		law_cooperative_ownership = strongly_disapprove
 		law_command_economy = strongly_disapprove
 		law_state_capitalism = neutral
-		law_class_collaboration = strongly_disapprove	# derived
-		law_early_industrialization = neutral	# derived
+		law_class_collaboration = disapprove	# derived
+		law_early_industrialization = strongly_approve	# derived
 	}
 
     lawgroup_trade_policy = {
@@ -3122,6 +3141,14 @@ REPLACE:ideology_eco_debt_serf_economy = {
 		law_repeatable_economy_public_works = neutral
 		law_repeatable_economy_forced_industrialization = strongly_disapprove
 	}
+	lawgroup_discriminated_pop = {
+		law_forced_labour = strongly_approve
+		law_badge_of_shame = strongly_approve	# derived
+		law_no_codified_discrimination = strongly_approve	# derived
+		law_racial_hierarchy = strongly_approve	# derived
+		law_servitude = strongly_approve	# derived
+		law_violent_suppresion = strongly_approve	# derived
+	}
 }
 
 # ideology_eco_colonialist
@@ -3141,8 +3168,8 @@ REPLACE:ideology_eco_colonialist = {
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = strongly_approve
 		law_state_capitalism = neutral
-		law_class_collaboration = strongly_disapprove	# derived
-		law_early_industrialization = approve	# derived
+		law_class_collaboration = disapprove	# derived
+		law_early_industrialization = disapprove	# derived
 	}
 
     lawgroup_trade_policy = {
@@ -3204,8 +3231,8 @@ REPLACE:ideology_eco_slave_colonialist = {
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = strongly_approve
 		law_state_capitalism = neutral
-		law_class_collaboration = strongly_disapprove	# derived
-		law_early_industrialization = approve	# derived
+		law_class_collaboration = disapprove	# derived
+		law_early_industrialization = disapprove	# derived
 	}
 
     lawgroup_trade_policy = {
@@ -3248,6 +3275,14 @@ REPLACE:ideology_eco_slave_colonialist = {
 		law_repeatable_economy_public_works = disapprove
 		law_repeatable_economy_forced_industrialization = strongly_disapprove
 	}
+	lawgroup_discriminated_pop = {
+		law_forced_labour = strongly_approve
+		law_badge_of_shame = strongly_approve	# derived
+		law_no_codified_discrimination = strongly_approve	# derived
+		law_racial_hierarchy = strongly_approve	# derived
+		law_servitude = strongly_approve	# derived
+		law_violent_suppresion = strongly_approve	# derived
+	}
 }
 
 # ideology_eco_distributist_economy
@@ -3267,7 +3302,7 @@ REPLACE:ideology_eco_distributist_economy = {
 		law_command_economy = disapprove
 		law_extraction_economy = strongly_disapprove
 		law_class_collaboration = neutral	# derived
-		law_early_industrialization = disapprove	# derived
+		law_early_industrialization = strongly_disapprove	# derived
 		law_state_capitalism = neutral	# derived
 	}
 
@@ -3331,7 +3366,7 @@ REPLACE:ideology_eco_modern_interventionist = {
 		law_extraction_economy = strongly_disapprove
 		law_class_collaboration = neutral	# derived
 		law_early_industrialization = strongly_disapprove	# derived
-		law_state_capitalism = neutral	# derived
+		law_state_capitalism = disapprove	# derived
 	}
 
     lawgroup_trade_policy = {
@@ -3392,9 +3427,9 @@ REPLACE:ideology_eco_centralized_economy = {
 		law_cooperative_ownership = neutral
 		law_command_economy = strongly_approve
 		law_extraction_economy = strongly_disapprove
-		law_class_collaboration = approve	# derived
+		law_class_collaboration = neutral	# derived
 		law_early_industrialization = strongly_disapprove	# derived
-		law_state_capitalism = neutral	# derived
+		law_state_capitalism = disapprove	# derived
 	}
 
     lawgroup_trade_policy = {
@@ -3455,8 +3490,8 @@ REPLACE:ideology_eco_colonial_slavery_supporter = {
 		law_cooperative_ownership = strongly_disapprove
 		law_command_economy = disapprove
 		law_extraction_economy = strongly_disapprove
-		law_class_collaboration = strongly_disapprove	# derived
-		law_early_industrialization = strongly_disapprove	# derived
+		law_class_collaboration = neutral	# derived
+		law_early_industrialization = disapprove	# derived
 		law_state_capitalism = neutral	# derived
 	}
 
@@ -3529,7 +3564,7 @@ REPLACE:ideology_eco_anti_slavery = {
 		law_extraction_economy = neutral
 		law_state_capitalism = neutral
 		law_class_collaboration = neutral	# derived
-		law_early_industrialization = disapprove	# derived
+		law_early_industrialization = strongly_disapprove	# derived
 	}
 
     lawgroup_land_reform = {
@@ -3538,6 +3573,14 @@ REPLACE:ideology_eco_anti_slavery = {
 		law_peasant_proprietorship = neutral
 		law_commercialized_agriculture = neutral
 		law_collectivized_agriculture = neutral
+	}
+	lawgroup_discriminated_pop = {
+		law_forced_labour = strongly_disapprove
+		law_badge_of_shame = strongly_disapprove	# derived
+		law_no_codified_discrimination = strongly_disapprove	# derived
+		law_racial_hierarchy = strongly_disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
+		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
 
@@ -3566,6 +3609,14 @@ REPLACE:ideology_eco_pro_slavery = {
 		law_class_collaboration = neutral	# derived
 		law_early_industrialization = neutral	# derived
 	}
+	lawgroup_discriminated_pop = {
+		law_forced_labour = approve
+		law_badge_of_shame = approve	# derived
+		law_no_codified_discrimination = approve	# derived
+		law_racial_hierarchy = approve	# derived
+		law_servitude = approve	# derived
+		law_violent_suppresion = approve	# derived
+	}
 }
 
 # ideology_eco_land_reform
@@ -3591,7 +3642,7 @@ REPLACE:ideology_eco_land_reform = {
 		law_extraction_economy = neutral
 		law_state_capitalism = neutral
 		law_class_collaboration = neutral	# derived
-		law_early_industrialization = neutral	# derived
+		law_early_industrialization = disapprove	# derived
 	}
 
     lawgroup_land_reform = {
@@ -3626,8 +3677,8 @@ REPLACE:ideology_eco_modernizer_mov = {
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = disapprove
 		law_state_capitalism = approve
-		law_class_collaboration = strongly_disapprove	# derived
-		law_early_industrialization = disapprove	# derived
+		law_class_collaboration = neutral	# derived
+		law_early_industrialization = strongly_disapprove	# derived
 	}
 
 	lawgroup_distribution_of_power = {
@@ -3660,11 +3711,18 @@ REPLACE:ideology_eco_modernizer_mov = {
 		law_meritocratic_bureaucracy = approve
 		law_gwageo = neutral	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_centralization = {
 		law_ad_hoc_centralization = strongly_disapprove
+	}
+	lawgroup_discriminated_pop = {
+		law_forced_labour = strongly_disapprove
+		law_badge_of_shame = strongly_disapprove	# derived
+		law_no_codified_discrimination = strongly_disapprove	# derived
+		law_racial_hierarchy = strongly_disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
+		law_violent_suppresion = strongly_disapprove	# derived
 	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = neutral	# derived
@@ -3689,8 +3747,8 @@ REPLACE:ideology_eco_liberal = {
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = disapprove
 		law_state_capitalism = approve
-		law_class_collaboration = strongly_disapprove	# derived
-		law_early_industrialization = disapprove	# derived
+		law_class_collaboration = neutral	# derived
+		law_early_industrialization = strongly_disapprove	# derived
 	}
 
 	lawgroup_distribution_of_power = {
@@ -3742,9 +3800,9 @@ REPLACE:ideology_eco_market_liberal_mov = {
 		law_cooperative_ownership = strongly_disapprove
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = strongly_disapprove
-		law_class_collaboration = strongly_disapprove	# derived
+		law_class_collaboration = disapprove	# derived
 		law_early_industrialization = strongly_disapprove	# derived
-		law_state_capitalism = neutral	# derived
+		law_state_capitalism = disapprove	# derived
 	}
 
     lawgroup_trade_policy = {
@@ -3794,9 +3852,9 @@ REPLACE:ideology_eco_kaikoku_ha = {
 		law_cooperative_ownership = strongly_disapprove
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = strongly_disapprove
-		law_class_collaboration = strongly_disapprove	# derived
+		law_class_collaboration = neutral	# derived
 		law_early_industrialization = strongly_disapprove	# derived
-		law_state_capitalism = approve	# derived
+		law_state_capitalism = disapprove	# derived
 	}
 
 
@@ -4055,7 +4113,7 @@ REPLACE:ideology_gov_socialist = {
 		law_cooperative_ownership = approve
 		law_command_economy = approve
 		law_state_capitalism = approve
-		law_class_collaboration = approve	# derived
+		law_class_collaboration = neutral	# derived
 		law_early_industrialization = strongly_disapprove	# derived
 	}
 
@@ -4065,7 +4123,7 @@ REPLACE:ideology_gov_socialist = {
 		law_presidential_republic = disapprove
 		law_parliamentary_republic = disapprove
 		law_council_republic = strongly_approve
-		law_corporatocracy = strongly_disapprove	# derived
+		law_corporatocracy = disapprove	# derived
 	}
 
 	lawgroup_distribution_of_power = {
@@ -4132,7 +4190,7 @@ REPLACE:ideology_gov_anarchist = {
 		law_cooperative_ownership = strongly_approve
 		law_command_economy = strongly_disapprove
 		law_state_capitalism = disapprove
-		law_class_collaboration = neutral	# derived
+		law_class_collaboration = disapprove	# derived
 		law_early_industrialization = strongly_disapprove	# derived
 	}
 
@@ -4165,7 +4223,6 @@ REPLACE:ideology_gov_anarchist = {
 		law_secret_police = strongly_disapprove
 		law_guaranteed_liberties = approve
 		law_gendarmerie = strongly_disapprove
-		law_garde_nationale = strongly_disapprove	# derived
 	}
 
     lawgroup_policing = {
@@ -4222,7 +4279,7 @@ REPLACE:ideology_gov_radical_liberal = {
 		law_cooperative_ownership = strongly_disapprove
 		law_command_economy = strongly_disapprove
 		law_state_capitalism = approve
-		law_class_collaboration = strongly_disapprove	# derived
+		law_class_collaboration = neutral	# derived
 		law_early_industrialization = strongly_disapprove	# derived
 	}
 
@@ -4239,7 +4296,6 @@ REPLACE:ideology_gov_radical_liberal = {
 		law_national_guard = strongly_disapprove
 		law_secret_police = strongly_disapprove
 		law_gendarmerie = strongly_disapprove
-		law_garde_nationale = strongly_disapprove	# derived
 	}
 
 	lawgroup_legislative_principles = {
@@ -4273,7 +4329,7 @@ REPLACE:ideology_gov_reformist_socialist = {
 		law_command_economy = neutral
 		law_class_collaboration = neutral	# derived
 		law_early_industrialization = strongly_disapprove	# derived
-		law_state_capitalism = neutral	# derived
+		law_state_capitalism = disapprove	# derived
 	}
 
 	lawgroup_distribution_of_power = {
@@ -4424,7 +4480,10 @@ REPLACE:ideology_traditionalist = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = neutral
+		law_badge_of_shame = approve
+		law_forced_labour = disapprove
 		law_racial_hierarchy = neutral	# derived
+		law_servitude = neutral	# derived
 		law_violent_suppresion = neutral	# derived
 	}
 }
@@ -4690,7 +4749,6 @@ REPLACE:ideology_republican_leader = {
 		law_meritocratic_bureaucracy = neutral
 		law_gwageo = neutral	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_repeatable_culture = {
@@ -5055,7 +5113,6 @@ REPLACE:ideology_radical = {
 		law_national_guard = strongly_disapprove
 		law_secret_police = strongly_disapprove
 		law_gendarmerie = disapprove
-		law_garde_nationale = strongly_disapprove	# derived
 	}
 
 	lawgroup_repeatable_politics = {
@@ -5409,8 +5466,11 @@ REPLACE:ideology_reformer = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = strongly_approve
+		law_badge_of_shame = neutral
+		law_forced_labour = disapprove
 		law_racial_hierarchy = disapprove	# laws+
 		law_violent_suppresion = disapprove	# laws+
+		law_servitude = strongly_disapprove	# derived
 	}
 }
 
@@ -5430,8 +5490,8 @@ REPLACE:ideology_physiocrat = {
 		law_cooperative_ownership = strongly_disapprove
 		law_command_economy = strongly_disapprove
 		law_extraction_economy = strongly_disapprove
-		law_class_collaboration = strongly_disapprove	# derived
-		law_early_industrialization = disapprove	# derived
+		law_class_collaboration = disapprove	# derived
+		law_early_industrialization = strongly_disapprove	# derived
 		law_state_capitalism = neutral	# derived
 	}
 
@@ -5563,8 +5623,8 @@ REPLACE:ideology_cameralist = {
 		law_cooperative_ownership = strongly_disapprove
 		law_command_economy = neutral
 		law_extraction_economy = disapprove
-		law_class_collaboration = disapprove	# derived
-		law_early_industrialization = disapprove	# derived
+		law_class_collaboration = neutral	# derived
+		law_early_industrialization = strongly_disapprove	# derived
 		law_state_capitalism = neutral	# derived
 	}
 
@@ -5755,9 +5815,12 @@ REPLACE:ideology_abolitionist = {
 		}	
 	}
 	lawgroup_discriminated_pop = {
+		law_forced_labour = strongly_disapprove
 		law_no_codified_discrimination = neutral	# laws+
 		law_racial_hierarchy = strongly_disapprove	# laws+
 		law_violent_suppresion = strongly_disapprove	# laws+
+		law_badge_of_shame = neutral	# derived
+		law_servitude = strongly_disapprove	# derived
 	}
 }
 
@@ -6280,7 +6343,7 @@ REPLACE:ideology_socialist_leader = {
 		law_command_economy = approve
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = neutral
-		law_class_collaboration = strongly_approve	# derived
+		law_class_collaboration = neutral	# derived
 		law_early_industrialization = strongly_disapprove	# derived
 	}
 
@@ -6478,7 +6541,7 @@ REPLACE:ideology_syndicalist = {
 		law_command_economy = approve
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = disapprove
-		law_class_collaboration = strongly_approve	# derived
+		law_class_collaboration = neutral	# derived
 		law_early_industrialization = strongly_disapprove	# derived
 	}
 
@@ -7154,7 +7217,6 @@ REPLACE:ideology_vanguardist = {
 		law_secret_police = approve
 		law_guaranteed_liberties = neutral
 		law_gendarmerie = approve
-		law_garde_nationale = disapprove	# derived
 	}
 
     lawgroup_policing = {
@@ -7883,12 +7945,14 @@ REPLACE:ideology_fascist = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = strongly_disapprove
+		law_badge_of_shame = strongly_approve
+		law_forced_labour = approve
 		law_racial_hierarchy = approve	# laws+
 		law_violent_suppresion = approve	# laws+
+		law_servitude = strongly_approve	# derived
 	}
 	lawgroup_internal_security = {
 		law_gendarmerie = approve	# laws+
-		law_garde_nationale = approve	# derived
 	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_disapprove	# derived
@@ -8131,6 +8195,9 @@ REPLACE:ideology_anarchist = {
 		law_no_codified_discrimination = strongly_approve
 		law_racial_hierarchy = strongly_disapprove	# laws+
 		law_violent_suppresion = strongly_disapprove	# laws+
+		law_badge_of_shame = strongly_disapprove	# derived
+		law_forced_labour = strongly_disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
 	}
 	lawgroup_ballot_system = {
 		law_semi_constitutional = disapprove	# laws+
@@ -8226,7 +8293,7 @@ REPLACE:ideology_anarchist_syndicalist = {
 		law_parliamentary_republic = disapprove
 		law_theocracy = strongly_disapprove
 		law_council_republic = strongly_approve
-		law_corporatocracy = strongly_disapprove	# derived
+		law_corporatocracy = disapprove	# derived
 	}
 
 	lawgroup_land_reform = {
@@ -8361,7 +8428,10 @@ REPLACE:ideology_anarchist_syndicalist = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = strongly_approve
+		law_badge_of_shame = strongly_disapprove	# derived
+		law_forced_labour = strongly_disapprove	# derived
 		law_racial_hierarchy = strongly_disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
 		law_violent_suppresion = strongly_disapprove	# derived
 	}
 	lawgroup_ballot_system = {
@@ -8439,7 +8509,7 @@ REPLACE:ideology_agrarian_socialist_leader = {
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = disapprove
 		law_class_collaboration = neutral	# derived
-		law_early_industrialization = disapprove	# derived
+		law_early_industrialization = strongly_disapprove	# derived
 	}
 
 	lawgroup_repeatable_economy = {
@@ -8719,8 +8789,11 @@ REPLACE:ideology_ethno_nationalist = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = strongly_disapprove
+		law_badge_of_shame = strongly_approve
+		law_forced_labour = neutral
 		law_racial_hierarchy = approve	# laws+
 		law_violent_suppresion = neutral	# laws+
+		law_servitude = strongly_approve	# derived
 	}
 }
 
@@ -8866,7 +8939,7 @@ REPLACE:ideology_market_liberal = {
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = disapprove
 		law_class_collaboration = strongly_disapprove	# laws+
-		law_early_industrialization = strongly_disapprove	# derived
+		law_early_industrialization = disapprove	# derived
 	}
 	
 	lawgroup_childrens_rights = {
@@ -9157,7 +9230,6 @@ REPLACE:ideology_authoritarian = {
 		law_national_guard = approve
 		law_secret_police = strongly_approve
 		law_gendarmerie = approve
-		law_garde_nationale = approve	# derived
 	}
 
 	lawgroup_policing = {
@@ -9302,7 +9374,7 @@ REPLACE:ideology_protectionist = {
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = approve
 		law_class_collaboration = neutral	# laws+
-		law_early_industrialization = strongly_disapprove	# derived
+		law_early_industrialization = disapprove	# derived
 	}
 	
 	lawgroup_trade_policy = {
@@ -9453,7 +9525,6 @@ REPLACE:ideology_humanitarian = {
 		law_national_guard = disapprove
 		law_secret_police = disapprove
 		law_gendarmerie = disapprove
-		law_garde_nationale = disapprove	# derived
 	}
 	
 	lawgroup_free_speech = {
@@ -9771,6 +9842,9 @@ REPLACE:ideology_humanitarian = {
 		law_no_codified_discrimination = strongly_approve
 		law_racial_hierarchy = strongly_disapprove	# laws+
 		law_violent_suppresion = strongly_disapprove	# laws+
+		law_badge_of_shame = disapprove	# derived
+		law_forced_labour = strongly_disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
 	}
 	lawgroup_welfare = {
 		law_disability_insurance = approve	# laws+
@@ -9815,7 +9889,6 @@ REPLACE:ideology_jacksonian_democrat = {
 		law_meritocratic_bureaucracy = approve
 		law_gwageo = neutral	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_slavery = {
@@ -9866,17 +9939,20 @@ REPLACE:ideology_jacksonian_democrat = {
 		value = 100
 	}
 
+	lawgroup_discriminated_pop = {
+		law_badge_of_shame = approve
+		law_forced_labour = strongly_disapprove	# derived
+		law_no_codified_discrimination = strongly_disapprove	# derived
+		law_racial_hierarchy = approve	# derived
+		law_servitude = strongly_disapprove	# derived
+		law_violent_suppresion = strongly_disapprove	# derived
+	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_approve	# derived
 		law_no_election = strongly_disapprove	# derived
 		law_non_secret_ballot = neutral	# derived
 		law_secret_ballot = strongly_approve	# derived
 		law_semi_constitutional = disapprove	# derived
-	}
-	lawgroup_discriminated_pop = {
-		law_no_codified_discrimination = strongly_disapprove	# derived
-		law_racial_hierarchy = approve	# derived
-		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
 
@@ -9892,7 +9968,7 @@ REPLACE:ideology_tridemism = {
 		law_council_republic = strongly_disapprove
 		law_parliamentary_republic = approve
 		law_presidential_republic = strongly_approve
-		law_corporatocracy = strongly_disapprove	# derived
+		law_corporatocracy = neutral	# derived
 	}
 	
 	# lawgroup_distribution_of_power = {
@@ -9925,9 +10001,8 @@ REPLACE:ideology_tridemism = {
 		law_appointed_bureaucrats = neutral
 		law_hereditary_bureaucrats = strongly_disapprove
 		law_meritocratic_bureaucracy = approve
-		law_gwageo = disapprove	# derived
+		law_gwageo = neutral	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = disapprove	# derived
 	}
 
 	lawgroup_citizenship = {
@@ -10007,8 +10082,11 @@ REPLACE:ideology_tridemism = {
 		value = 15
 	}
 	lawgroup_discriminated_pop = {
+		law_badge_of_shame = approve	# derived
+		law_forced_labour = strongly_disapprove	# derived
 		law_no_codified_discrimination = disapprove	# derived
 		law_racial_hierarchy = approve	# derived
+		law_servitude = disapprove	# derived
 		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
@@ -10063,9 +10141,8 @@ REPLACE:ideology_positivist = {
 		law_elected_bureaucrats = disapprove
 		law_hereditary_bureaucrats = strongly_disapprove
 		law_meritocratic_bureaucracy = neutral
-		law_gwageo = neutral	# derived
+		law_gwageo = strongly_approve	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 	
 	lawgroup_repeatable_religion = {
@@ -10591,7 +10668,6 @@ REPLACE:ideology_integralist = {
 	}
 	lawgroup_internal_security = {
 		law_gendarmerie = approve	# laws+
-		law_garde_nationale = approve	# derived
 	}
 	lawgroup_governance_principles = {
 		law_corporatocracy = strongly_disapprove	# laws+
@@ -10604,8 +10680,11 @@ REPLACE:ideology_integralist = {
 		law_no_election = approve	# derived
 	}
 	lawgroup_discriminated_pop = {
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = strongly_disapprove	# derived
 		law_no_codified_discrimination = disapprove	# derived
 		law_racial_hierarchy = neutral	# derived
+		law_servitude = disapprove	# derived
 		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
@@ -10639,7 +10718,6 @@ REPLACE:ideology_liberal_leader = {
 		law_meritocratic_bureaucracy = approve
 		law_gwageo = neutral	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 
 	lawgroup_repeatable_culture = {
@@ -10752,7 +10830,6 @@ REPLACE:ideology_liberal_leader = {
 	}
 	lawgroup_internal_security = {
 		law_gendarmerie = disapprove	# laws+
-		law_garde_nationale = disapprove	# derived
 	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_approve	# derived
@@ -11175,6 +11252,9 @@ REPLACE:ideology_humanitarian_royalist = {
 		law_no_codified_discrimination = strongly_approve
 		law_racial_hierarchy = strongly_disapprove	# laws+
 		law_violent_suppresion = strongly_disapprove	# laws+
+		law_badge_of_shame = disapprove	# derived
+		law_forced_labour = strongly_disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
 	}
 	lawgroup_welfare = {
 		law_disability_insurance = approve	# laws+
@@ -11223,7 +11303,7 @@ REPLACE:ideology_orleanist = {
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = disapprove
 		law_class_collaboration = strongly_disapprove	# laws+
-		law_early_industrialization = disapprove	# derived
+		law_early_industrialization = strongly_disapprove	# derived
 	}
 
 	lawgroup_trade_policy = {
@@ -11524,7 +11604,7 @@ REPLACE:ideology_bonapartist = {
 		law_extraction_economy = strongly_disapprove
 		law_state_capitalism = approve
 		law_class_collaboration = strongly_approve	# laws+
-		law_early_industrialization = strongly_disapprove	# derived
+		law_early_industrialization = disapprove	# derived
 	}
 
 	lawgroup_foreign_policy = {
@@ -12060,7 +12140,10 @@ REPLACE:ideology_traditionalist_minoritarian = {
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = strongly_approve
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = strongly_disapprove	# derived
 		law_racial_hierarchy = neutral	# derived
+		law_servitude = strongly_disapprove	# derived
 		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
@@ -12296,6 +12379,9 @@ REPLACE:ideology_sovereignist_leader = { # For colonised peoples
 		law_no_codified_discrimination = neutral	# laws+
 		law_racial_hierarchy = disapprove	# laws+
 		law_violent_suppresion = strongly_disapprove	# laws+
+		law_badge_of_shame = disapprove	# derived
+		law_forced_labour = strongly_disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
 	}
 }
 
@@ -12326,7 +12412,6 @@ REPLACE:ideology_despotic_utopian = {
 		law_national_guard = approve
 		law_secret_police = strongly_approve
 		law_gendarmerie = approve
-		law_garde_nationale = approve	# derived
 	}
 
 	lawgroup_church_and_state = {
@@ -12448,8 +12533,11 @@ REPLACE:ideology_despotic_utopian = {
 		law_no_election = approve	# derived
 	}
 	lawgroup_discriminated_pop = {
+		law_badge_of_shame = disapprove	# derived
+		law_forced_labour = strongly_disapprove	# derived
 		law_no_codified_discrimination = approve	# derived
 		law_racial_hierarchy = disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
 		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
@@ -12502,15 +12590,13 @@ REPLACE:ideology_reconstructionist = {
 		law_elected_bureaucrats = disapprove
 		law_appointed_bureaucrats = strongly_approve
 		law_hereditary_bureaucrats = strongly_disapprove
-		law_gwageo = neutral	# derived
+		law_gwageo = strongly_approve	# derived
 		law_meritocratic_bureaucracy = disapprove	# derived
 		law_mestnichestvo = strongly_disapprove	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 	
 	lawgroup_internal_security = {
 		law_national_guard = strongly_approve
-		law_garde_nationale = strongly_approve	# derived
 		law_gendarmerie = strongly_approve	# derived
 	}
 
@@ -12585,17 +12671,20 @@ REPLACE:ideology_reconstructionist = {
 			add = -100
 		}
 	}
+	lawgroup_discriminated_pop = {
+		law_badge_of_shame = disapprove	# derived
+		law_forced_labour = strongly_disapprove	# derived
+		law_no_codified_discrimination = disapprove	# derived
+		law_racial_hierarchy = disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
+		law_violent_suppresion = strongly_disapprove	# derived
+	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_approve	# derived
 		law_no_election = disapprove	# derived
 		law_non_secret_ballot = disapprove	# derived
 		law_secret_ballot = approve	# derived
 		law_semi_constitutional = disapprove	# derived
-	}
-	lawgroup_discriminated_pop = {
-		law_no_codified_discrimination = disapprove	# derived
-		law_racial_hierarchy = disapprove	# derived
-		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
 
@@ -12649,8 +12738,8 @@ REPLACE:ideology_reactionary_anti_capitalist = {
 		law_command_economy = disapprove
 		law_extraction_economy = strongly_disapprove
 		law_class_collaboration = neutral	# derived
-		law_early_industrialization = disapprove	# derived
-		law_state_capitalism = neutral	# derived
+		law_early_industrialization = strongly_disapprove	# derived
+		law_state_capitalism = approve	# derived
 	}
 
     lawgroup_land_reform = {
@@ -12786,7 +12875,7 @@ REPLACE:ideology_carlist = {
 		law_extraction_economy = disapprove
 		law_state_capitalism = neutral	# laws+
 		law_class_collaboration = disapprove	# laws+
-		law_early_industrialization = neutral	# derived
+		law_early_industrialization = strongly_approve	# derived
 	}
 
 	lawgroup_distribution_of_power = {
@@ -13019,17 +13108,20 @@ REPLACE:ideology_carlist = {
 			multiply = 0.1
 		}
 	}
+	lawgroup_discriminated_pop = {
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = neutral	# derived
+		law_no_codified_discrimination = disapprove	# derived
+		law_racial_hierarchy = neutral	# derived
+		law_servitude = neutral	# derived
+		law_violent_suppresion = neutral	# derived
+	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_disapprove	# derived
 		law_no_election = strongly_approve	# derived
 		law_non_secret_ballot = strongly_disapprove	# derived
 		law_secret_ballot = strongly_disapprove	# derived
 		law_semi_constitutional = disapprove	# derived
-	}
-	lawgroup_discriminated_pop = {
-		law_no_codified_discrimination = disapprove	# derived
-		law_racial_hierarchy = neutral	# derived
-		law_violent_suppresion = neutral	# derived
 	}
 }
 
@@ -13060,7 +13152,7 @@ REPLACE:ideology_miguelist = {
 		law_extraction_economy = disapprove
 		law_state_capitalism = disapprove	# laws+
 		law_class_collaboration = strongly_disapprove	# laws+
-		law_early_industrialization = neutral	# derived
+		law_early_industrialization = strongly_approve	# derived
 	}
 
 	lawgroup_distribution_of_power = {
@@ -13289,17 +13381,20 @@ REPLACE:ideology_miguelist = {
 			multiply = 0.1
 		}
 	}
+	lawgroup_discriminated_pop = {
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = neutral	# derived
+		law_no_codified_discrimination = disapprove	# derived
+		law_racial_hierarchy = neutral	# derived
+		law_servitude = neutral	# derived
+		law_violent_suppresion = neutral	# derived
+	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_disapprove	# derived
 		law_no_election = strongly_approve	# derived
 		law_non_secret_ballot = strongly_disapprove	# derived
 		law_secret_ballot = strongly_disapprove	# derived
 		law_semi_constitutional = disapprove	# derived
-	}
-	lawgroup_discriminated_pop = {
-		law_no_codified_discrimination = disapprove	# derived
-		law_racial_hierarchy = neutral	# derived
-		law_violent_suppresion = neutral	# derived
 	}
 }
 
@@ -13395,8 +13490,11 @@ REPLACE:ideology_ilustrado_leader = { 	# Flavoured variant of Liberal and Anti-C
 		}
 	}
 	lawgroup_discriminated_pop = {
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = strongly_disapprove	# derived
 		law_no_codified_discrimination = disapprove	# derived
 		law_racial_hierarchy = neutral	# derived
+		law_servitude = strongly_disapprove	# derived
 		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
@@ -14253,7 +14351,7 @@ REPLACE:ideology_bpm_movement_republican = {
 	lawgroup_governance_principles = {
 		law_monarchy = strongly_disapprove
 		law_presidential_republic = strongly_approve
-		law_corporatocracy = strongly_disapprove	# derived
+		law_corporatocracy = neutral	# derived
 	}
 }
 
@@ -14272,8 +14370,11 @@ REPLACE:ideology_bpm_movement_nationalist = {
 		law_hellenoturkism = neutral	# derived
 	}
 	lawgroup_discriminated_pop = {
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = neutral	# derived
 		law_no_codified_discrimination = strongly_disapprove	# derived
 		law_racial_hierarchy = neutral	# derived
+		law_servitude = neutral	# derived
 		law_violent_suppresion = neutral	# derived
 	}
 }
@@ -14293,8 +14394,11 @@ REPLACE:ideology_bpm_movement_internationalist = {
 		law_hellenoturkism = strongly_disapprove	# derived
 	}
 	lawgroup_discriminated_pop = {
+		law_badge_of_shame = strongly_disapprove	# derived
+		law_forced_labour = strongly_disapprove	# derived
 		law_no_codified_discrimination = strongly_approve	# derived
 		law_racial_hierarchy = strongly_disapprove	# derived
+		law_servitude = strongly_disapprove	# derived
 		law_violent_suppresion = strongly_disapprove	# derived
 	}
 }
@@ -14307,8 +14411,7 @@ REPLACE:ideology_bpm_movement_liberal_nationalist = {
 		law_no_home_affairs = disapprove
 		law_national_guard = strongly_approve
 		law_guaranteed_liberties = strongly_disapprove
-		law_garde_nationale = strongly_approve	# derived
-		law_gendarmerie = neutral	# derived
+		law_gendarmerie = strongly_approve	# derived
 	}
 
 	lawgroup_army_model = {
@@ -14331,7 +14434,7 @@ REPLACE:ideology_bpm_movement_modernizer = {
 		law_interventionism = approve
 		law_class_collaboration = approve	# derived
 		law_early_industrialization = strongly_disapprove	# derived
-		law_state_capitalism = approve	# derived
+		law_state_capitalism = neutral	# derived
 	}
 
 	lawgroup_centralization = {
@@ -14397,8 +14500,8 @@ REPLACE:ideology_bpm_movement_laissez_faire = {
 		law_laissez_faire = strongly_approve
 		law_interventionism = approve
 		law_class_collaboration = strongly_approve	# derived
-		law_early_industrialization = strongly_approve	# derived
-		law_state_capitalism = strongly_approve	# derived
+		law_early_industrialization = approve	# derived
+		law_state_capitalism = approve	# derived
 	}
 	lawgroup_trade_policy = {
 		law_protectionism = disapprove
@@ -14470,7 +14573,6 @@ REPLACE:ideology_tokugawa_loyalist_movement = {
 		law_no_home_affairs = neutral
 		law_secret_police = approve
 		law_gendarmerie = neutral	# laws+
-		law_garde_nationale = disapprove	# derived
 	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_disapprove	# derived
@@ -14542,7 +14644,6 @@ REPLACE:ideology_tokugawa_loyalist_movement_2 = {
 		law_no_home_affairs = disapprove
 		law_secret_police = approve
 		law_gendarmerie = neutral	# laws+
-		law_garde_nationale = neutral	# derived
 	}
 	lawgroup_ballot_system = {
 		law_direct_democracy = strongly_disapprove	# derived
@@ -14863,7 +14964,6 @@ REPLACE:ideology_sta_minimal_state = {
 		law_secret_police = strongly_disapprove
 		law_guaranteed_liberties = approve
 		law_gendarmerie = strongly_disapprove
-		law_garde_nationale = strongly_disapprove	# derived
 	}
 
     lawgroup_policing = {
@@ -14912,7 +15012,6 @@ REPLACE:ideology_sta_decentralized_state = {
 		law_secret_police = strongly_disapprove
 		law_guaranteed_liberties = neutral
 		law_gendarmerie = neutral
-		law_garde_nationale = approve	# derived
 	}
 
     lawgroup_policing = {
@@ -14965,7 +15064,6 @@ REPLACE:ideology_sta_weak_state = {
 		law_secret_police = strongly_disapprove
 		law_guaranteed_liberties = neutral
 		law_gendarmerie = neutral
-		law_garde_nationale = neutral	# derived
 	}
 
 	lawgroup_policing = {
@@ -15012,7 +15110,6 @@ REPLACE:ideology_sta_powerful_state = {
 		law_secret_police = neutral
 		law_guaranteed_liberties = disapprove
 		law_gendarmerie = approve
-		law_garde_nationale = approve	# derived
 	}
 
     lawgroup_policing = {
@@ -15058,7 +15155,6 @@ REPLACE:ideology_sta_progressive_state = {
 		law_secret_police = disapprove
 		law_guaranteed_liberties = strongly_approve
 		law_gendarmerie = disapprove
-		law_garde_nationale = disapprove	# derived
 	}
 
     lawgroup_policing = {
@@ -15104,7 +15200,6 @@ REPLACE:ideology_sta_security_state = {
 		law_secret_police = strongly_approve
 		law_guaranteed_liberties = strongly_disapprove
 		law_gendarmerie = approve
-		law_garde_nationale = neutral	# derived
 	}
 
     lawgroup_policing = {
@@ -15151,7 +15246,6 @@ REPLACE:ideology_sta_subjugated_state = {
 		law_secret_police = strongly_disapprove
 		law_guaranteed_liberties = approve
 		law_gendarmerie = neutral
-		law_garde_nationale = disapprove	# derived
 	}
 
     lawgroup_policing = {
@@ -15198,7 +15292,6 @@ REPLACE:ideology_sta_subjugated_security_state = {
 		law_secret_police = approve
 		law_guaranteed_liberties = neutral
 		law_gendarmerie = neutral
-		law_garde_nationale = disapprove	# derived
 	}
 
     lawgroup_policing = {
@@ -15245,7 +15338,6 @@ REPLACE:ideology_sta_devolved_state = {
 		law_secret_police = disapprove
 		law_guaranteed_liberties = approve
 		law_gendarmerie = approve
-		law_garde_nationale = approve	# derived
 	}
 
     lawgroup_policing = {
@@ -15292,7 +15384,6 @@ REPLACE:ideology_sta_effective_state = {
 		law_secret_police = disapprove
 		law_guaranteed_liberties = approve
 		law_gendarmerie = approve
-		law_garde_nationale = approve	# derived
 	}
 
     lawgroup_policing = {
@@ -15339,7 +15430,6 @@ REPLACE:ideology_sta_federated_state = {
 		law_secret_police = disapprove
 		law_guaranteed_liberties = approve
 		law_gendarmerie = approve
-		law_garde_nationale = approve	# derived
 	}
 
     lawgroup_policing = {
@@ -15386,7 +15476,6 @@ REPLACE:ideology_sta_institutional_state = {
 		law_secret_police = neutral
 		law_guaranteed_liberties = disapprove
 		law_gendarmerie = approve
-		law_garde_nationale = approve	# derived
 	}
 
     lawgroup_policing = {
@@ -15432,7 +15521,6 @@ REPLACE:ideology_sta_organic_state = {
 		law_secret_police = approve
 		law_guaranteed_liberties = strongly_disapprove
 		law_gendarmerie = strongly_approve
-		law_garde_nationale = approve	# derived
 	}
 
     lawgroup_policing = {
@@ -15478,7 +15566,6 @@ REPLACE:ideology_sta_regionalized_state = {
 		law_national_guard = neutral
 		law_secret_police = disapprove
 		law_guaranteed_liberties = approve
-		law_garde_nationale = neutral	# derived
 		law_gendarmerie = neutral	# derived
 	}
 
@@ -15527,8 +15614,7 @@ REPLACE:ideology_sta_national_liberal = {
 		law_national_guard = approve
 		law_secret_police = approve
 		law_guaranteed_liberties = strongly_disapprove
-		law_garde_nationale = approve	# derived
-		law_gendarmerie = neutral	# derived
+		law_gendarmerie = approve	# derived
 	}
 
     lawgroup_policing = {
@@ -16220,7 +16306,6 @@ REPLACE:ideology_paternalistic = {
 		law_meritocratic_bureaucracy = disapprove	# laws+
 		law_gwageo = disapprove	# derived
 		law_mestnichestvo = disapprove	# derived
-		law_militarisierung_der_burokratie = disapprove	# derived
 	}
 	lawgroup_policing = {
 		law_privatized_police = disapprove	# laws+
@@ -16335,6 +16420,9 @@ REPLACE:ideology_moralist = {
 		law_no_codified_discrimination = neutral	# laws+
 		law_racial_hierarchy = approve	# laws+
 		law_violent_suppresion = neutral	# laws+
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = approve	# derived
+		law_servitude = approve	# derived
 	}
 }
 
@@ -16351,7 +16439,6 @@ REPLACE:ideology_meritocratic = {
 		law_meritocratic_bureaucracy = approve	# laws+
 		law_gwageo = approve	# derived
 		law_mestnichestvo = approve	# derived
-		law_militarisierung_der_burokratie = approve	# derived
 	}
 	lawgroup_taxation = {
 		law_no_income_tax = approve	# laws+
@@ -16364,7 +16451,6 @@ REPLACE:ideology_patriotic = {
 
 	lawgroup_internal_security = {
 		law_gendarmerie = strongly_approve	# laws+
-		law_garde_nationale = strongly_approve	# derived
 	}
 }
 
@@ -16386,7 +16472,6 @@ REPLACE:ideology_liberal = {
 	}
 	lawgroup_internal_security = {
 		law_gendarmerie = disapprove	# laws+
-		law_garde_nationale = disapprove	# derived
 	}
 }
 
@@ -16405,7 +16490,6 @@ REPLACE:ideology_anti_clerical = {
 		law_meritocratic_bureaucracy = approve	# laws+
 		law_gwageo = approve	# derived
 		law_mestnichestvo = approve	# derived
-		law_militarisierung_der_burokratie = approve	# derived
 	}
 }
 
@@ -16555,6 +16639,9 @@ REPLACE:ideology_anti_slavery = {
 		law_no_codified_discrimination = neutral	# laws+
 		law_racial_hierarchy = disapprove	# laws+
 		law_violent_suppresion = strongly_disapprove	# laws+
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = disapprove	# derived
+		law_servitude = disapprove	# derived
 	}
 }
 
@@ -16596,7 +16683,6 @@ REPLACE:ideology_republican_paternalistic = {
 		law_meritocratic_bureaucracy = neutral	# laws+
 		law_gwageo = neutral	# derived
 		law_mestnichestvo = neutral	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 	lawgroup_policing = {
 		law_privatized_police = neutral	# laws+
@@ -16619,7 +16705,6 @@ REPLACE:ideology_scholar_paternalistic = {
 		law_meritocratic_bureaucracy = approve	# laws+
 		law_gwageo = approve	# derived
 		law_mestnichestvo = approve	# derived
-		law_militarisierung_der_burokratie = approve	# derived
 	}
 	lawgroup_policing = {
 		law_privatized_police = disapprove	# laws+
@@ -16642,7 +16727,6 @@ REPLACE:ideology_junker_paternalistic = {
 		law_meritocratic_bureaucracy = disapprove	# laws+
 		law_gwageo = disapprove	# derived
 		law_mestnichestvo = disapprove	# derived
-		law_militarisierung_der_burokratie = disapprove	# derived
 	}
 	lawgroup_policing = {
 		law_privatized_police = disapprove	# laws+
@@ -16665,7 +16749,6 @@ REPLACE:ideology_papal_paternalistic = {
 		law_meritocratic_bureaucracy = disapprove	# laws+
 		law_gwageo = disapprove	# derived
 		law_mestnichestvo = disapprove	# derived
-		law_militarisierung_der_burokratie = disapprove	# derived
 	}
 	lawgroup_policing = {
 		law_privatized_police = disapprove	# laws+
@@ -16686,6 +16769,9 @@ REPLACE:ideology_papal_moralist = {
 		law_no_codified_discrimination = neutral	# laws+
 		law_racial_hierarchy = approve	# laws+
 		law_violent_suppresion = neutral	# laws+
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = approve	# derived
+		law_servitude = approve	# derived
 	}
 }
 
@@ -16734,6 +16820,9 @@ REPLACE:ideology_shinto_moralist = {
 		law_no_codified_discrimination = neutral	# laws+
 		law_racial_hierarchy = approve	# laws+
 		law_violent_suppresion = neutral	# laws+
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = approve	# derived
+		law_servitude = approve	# derived
 	}
 }
 
@@ -16753,7 +16842,6 @@ REPLACE:ideology_caudillismo = {
 		law_meritocratic_bureaucracy = disapprove	# laws+
 		law_gwageo = disapprove	# derived
 		law_mestnichestvo = disapprove	# derived
-		law_militarisierung_der_burokratie = disapprove	# derived
 	}
 	lawgroup_policing = {
 		law_privatized_police = disapprove	# laws+
@@ -16810,6 +16898,9 @@ REPLACE:ideology_buddhist_moralist = {
 		law_no_codified_discrimination = neutral	# laws+
 		law_racial_hierarchy = approve	# laws+
 		law_violent_suppresion = neutral	# laws+
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = approve	# derived
+		law_servitude = approve	# derived
 	}
 }
 
@@ -16827,12 +16918,14 @@ REPLACE:ideology_hindu_moralist = {
 		law_meritocratic_bureaucracy = disapprove	# laws+
 		law_gwageo = disapprove	# derived
 		law_mestnichestvo = disapprove	# derived
-		law_militarisierung_der_burokratie = disapprove	# derived
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = disapprove	# laws+
 		law_racial_hierarchy = approve	# laws+
 		law_violent_suppresion = approve	# laws+
+		law_badge_of_shame = disapprove	# derived
+		law_forced_labour = approve	# derived
+		law_servitude = approve	# derived
 	}
 }
 
@@ -16847,7 +16940,6 @@ REPLACE:ideology_sikh_moralist = {
 		law_meritocratic_bureaucracy = approve	# laws+
 		law_gwageo = approve	# derived
 		law_mestnichestvo = approve	# derived
-		law_militarisierung_der_burokratie = approve	# derived
 	}
 }
 
@@ -16960,7 +17052,6 @@ REPLACE:ideology_liberal_modern = {
 	}
 	lawgroup_internal_security = {
 		law_gendarmerie = disapprove	# laws+
-		law_garde_nationale = disapprove	# derived
 	}
 }
 
@@ -17019,6 +17110,9 @@ REPLACE:ideology_sovereignist = {
 		law_no_codified_discrimination = approve	# laws+
 		law_racial_hierarchy = disapprove	# laws+
 		law_violent_suppresion = strongly_disapprove	# laws+
+		law_badge_of_shame = approve	# derived
+		law_forced_labour = disapprove	# derived
+		law_servitude = disapprove	# derived
 	}
 }
 
@@ -17041,12 +17135,14 @@ REPLACE:ideology_enclavist = {
 		law_meritocratic_bureaucracy = disapprove	# laws+
 		law_gwageo = disapprove	# derived
 		law_mestnichestvo = disapprove	# derived
-		law_militarisierung_der_burokratie = disapprove	# derived
 	}
 	lawgroup_discriminated_pop = {
 		law_no_codified_discrimination = neutral	# laws+
 		law_racial_hierarchy = approve	# laws+
 		law_violent_suppresion = neutral	# laws+
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = approve	# derived
+		law_servitude = approve	# derived
 	}
 }
 
@@ -17113,7 +17209,6 @@ REPLACE:ideology_ilustrado = {
 	}
 	lawgroup_internal_security = {
 		law_gendarmerie = disapprove	# laws+
-		law_garde_nationale = disapprove	# derived
 	}
 }
 
@@ -17143,7 +17238,6 @@ REPLACE:ideology_military_absolutist = {
 	}
 	lawgroup_internal_security = {
 		law_gendarmerie = strongly_approve	# laws+
-		law_garde_nationale = strongly_approve	# derived
 	}
 	lawgroup_education_system = {
 		law_military_schools = approve	# laws+
@@ -17171,6 +17265,9 @@ REPLACE:ideology_ibadi_imamate = {
 		law_no_codified_discrimination = neutral	# laws+
 		law_racial_hierarchy = approve	# laws+
 		law_violent_suppresion = neutral	# laws+
+		law_badge_of_shame = neutral	# derived
+		law_forced_labour = approve	# derived
+		law_servitude = approve	# derived
 	}
 }
 
@@ -17206,7 +17303,6 @@ REPLACE:ideology_carlist_ig = {
 		law_meritocratic_bureaucracy = disapprove	# laws+
 		law_gwageo = disapprove	# derived
 		law_mestnichestvo = disapprove	# derived
-		law_militarisierung_der_burokratie = disapprove	# derived
 	}
 	lawgroup_policing = {
 		law_privatized_police = disapprove	# laws+
@@ -17236,7 +17332,6 @@ REPLACE:ideology_carlist_ig_2 = {
 		law_meritocratic_bureaucracy = disapprove	# laws+
 		law_gwageo = disapprove	# derived
 		law_mestnichestvo = disapprove	# derived
-		law_militarisierung_der_burokratie = disapprove	# derived
 	}
 	lawgroup_policing = {
 		law_privatized_police = disapprove	# laws+
@@ -17284,7 +17379,6 @@ REPLACE:ideology_magnatial = {
 		law_meritocratic_bureaucracy = neutral	# laws+
 		law_gwageo = neutral	# derived
 		law_mestnichestvo = neutral	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 	lawgroup_policing = {
 		law_privatized_police = disapprove	# laws+
@@ -17306,7 +17400,6 @@ REPLACE:ideology_moderantist = {
 		law_meritocratic_bureaucracy = neutral	# laws+
 		law_gwageo = neutral	# derived
 		law_mestnichestvo = neutral	# derived
-		law_militarisierung_der_burokratie = neutral	# derived
 	}
 	lawgroup_policing = {
 		law_privatized_police = disapprove	# laws+
@@ -17328,7 +17421,6 @@ REPLACE:ideology_cartist = {
 		law_meritocratic_bureaucracy = approve	# laws+
 		law_gwageo = approve	# derived
 		law_mestnichestvo = approve	# derived
-		law_militarisierung_der_burokratie = approve	# derived
 	}
 	lawgroup_taxation = {
 		law_no_income_tax = approve	# laws+
@@ -17384,7 +17476,6 @@ REPLACE:ideology_japan_paternalistic = {
 		law_meritocratic_bureaucracy = disapprove	# laws+
 		law_gwageo = disapprove	# derived
 		law_mestnichestvo = disapprove	# derived
-		law_militarisierung_der_burokratie = disapprove	# derived
 	}
 	lawgroup_policing = {
 		law_privatized_police = disapprove	# laws+

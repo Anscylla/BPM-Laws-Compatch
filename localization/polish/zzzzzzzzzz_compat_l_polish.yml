@@ -1,0 +1,9 @@
+﻿l_polish:
+ law_forced_labour: "Praca przymusowa"
+ law_forced_labour_desc: "Kieruje ich do nieodpłatnej pracy przymusowej wszędzie tam, gdzie państwo potrzebuje rąk."
+ law_servitude: "Poddaństwo"
+ law_servitude_desc: "Wiąże ich z ziemią i ich panami jako dziedzicznych poddanych."
+ law_badge_of_shame_desc: "Zmusza ich do noszenia rzucających się w oczy strojów lub oznaczeń wskazujących na pochodzenie."
+ law_racial_hierarchy_desc: "Formalizując ich status jako uciskanych, wiąże ich porządkiem feudalnym."
+ law_violent_suppresion_desc: "Pozbawia ich praw człowieka i zmusza do nieodpłatnej, nieograniczonej pracy."
+ lawgroup_laws_plus: "Tryb dodawania praw: Laws +"
