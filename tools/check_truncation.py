@@ -53,7 +53,11 @@ def meaningful(lines):
     for l in lines:
         s = pdx.strip_c(l).strip()
         if s and s not in ('{', '}'):
-            out.append(re.sub(r'\s+', ' ', s))
+            s = re.sub(r'\s+', ' ', s)
+            # celowe poprawki API 1.13 - nie traktuj ich jako utraty tresci
+            s = re.sub(r'has_role = (agitator|general|admiral|politician)',
+                       r'has_role_of_type = ', s)
+            out.append(s)
     return out
 
 
