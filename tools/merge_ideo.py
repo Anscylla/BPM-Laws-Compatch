@@ -77,7 +77,8 @@ for label, path, _ in sources:
             for l in lines[s:e + 1]:
                 m = STANCE.match(pdx.strip_c(l))
                 if m and m.group(1) in NEW_LP_LAWS:
-                    WANT.setdefault(key, {}).setdefault(grp, {})[m.group(1)] = m.group(2)
+                    tail = l[len(l.split('#')[0]):] if '#' in l else ''   # zachowaj znacznik "# auto"
+                    WANT.setdefault(key, {}).setdefault(grp, {})[m.group(1)] = (m.group(2), tail)
 print(f'Zrodlo stanowisk: {sources[0][0]} ({len(WANT)} ideologii)')
 
 # ---- 2. re-apply them onto the current BPM definitions
@@ -98,17 +99,19 @@ for fn in sorted(os.listdir(base)):
                     bs, be = bsub[grp]
                     have = {m.group(1) for l in blines[bs:be + 1]
                             if (m := STANCE.match(pdx.strip_c(l)))}
-                for law, st in laws.items():
+                for law, (st, tail) in laws.items():
                     if law not in have:
-                        adds.setdefault(grp, []).append(f'\t\t{law} = {st}')
+                        sep = '\t' if tail else ''
+                        adds.setdefault(grp, []).append(f'\t\t{law} = {st}{sep}{tail}')
             for grp in sorted(adds, key=lambda g: bsub.get(g, (10**6, 10**6))[1], reverse=True):
                 if grp in bsub:
                     out[bsub[grp][1]:bsub[grp][1]] = adds[grp]
                 else:
                     out[-1:-1] = [f'\t{grp} = {{'] + adds[grp] + ['\t}']
             if adds:
-                out[0] = pdx.mark_replace(out[0])
-                merged.append((fn, key, '\n'.join(out)))
+                delta = pdx.inject_delta('\n'.join(blines), '\n'.join(out), key)
+                if delta:
+                    merged.append((fn, key, delta))
         elif any(g.startswith('lawgroup_') for g in bsub):
             missing.append(f'{fn}/{key}')
         # coverage report

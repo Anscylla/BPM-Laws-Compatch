@@ -151,7 +151,10 @@ for fn in sorted(os.listdir(base)):
 
 added, out_chunks, stats = 0, [], {}
 for key, (fn, blines) in bpm_ideo.items():
-    lines = list(compat.get(key, blines))
+    base_body = '\n'.join(blines)
+    # stan roboczy = definicja BPM z nalozonym dotychczasowym patchem (merge_ideo)
+    work = pdx.overlay(base_body, '\n'.join(compat[key])) if key in compat else base_body
+    lines = work.split('\n')
     subs = sub_blocks(lines)
     # all stances the ideology currently holds
     have = {}
@@ -187,7 +190,9 @@ for key, (fn, blines) in bpm_ideo.items():
 
     if not per_group:
         if key in compat:
-            out_chunks.append((fn, key, '\n'.join(lines)))
+            delta = pdx.inject_delta(base_body, work, key)
+            if delta:
+                out_chunks.append((fn, key, delta))
         continue
 
     for g in sorted(per_group, key=lambda g: subs.get(g, (10**6, 10**6))[1], reverse=True):
@@ -195,8 +200,9 @@ for key, (fn, blines) in bpm_ideo.items():
             lines[subs[g][1]:subs[g][1]] = per_group[g]
         else:
             lines[-1:-1] = [f'\t{g} = {{'] + per_group[g] + ['\t}']
-    lines[0] = pdx.mark_replace(lines[0])
-    out_chunks.append((fn, key, '\n'.join(lines)))
+    delta = pdx.inject_delta(base_body, '\n'.join(lines), key)
+    if delta:
+        out_chunks.append((fn, key, delta))
 
 order = {fn: i for i, fn in enumerate(sorted({f for f, _ in bpm_ideo.values()}))}
 out_chunks.sort(key=lambda t: (order[t[0]], t[1]))

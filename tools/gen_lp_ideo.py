@@ -80,7 +80,9 @@ for lpid, bpmid in ANALOGUE.items():
             lines[lpg[g][1]:lpg[g][1]] = add
 
     lines[-1:-1] = newblocks
-    body = pdx.mark_replace('\n'.join(lines))
+    body = pdx.inject_delta(lpb, '\n'.join(lines), lpid)
+    if body is None:
+        continue
     chunks.append((lpid, bpmid, body))
     report.append(f'{lpid} <- {bpmid}: +{len(added_groups)} grup ({", ".join(added_groups)}), '
                   f'+{len(added_laws)} pojedynczych praw')

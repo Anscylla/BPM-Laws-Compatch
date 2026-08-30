@@ -171,6 +171,7 @@ for d, outname, items in PATCHES:
         if not body:
             warn.append(f'{d}/{key}: BRAK w BPM')
             continue
+        orig = body
         for kind, *args in ops:
             if kind == 'after':
                 body = op_after(body, args[0], args[1], key=key)
@@ -180,7 +181,11 @@ for d, outname, items in PATCHES:
                 body = op_in_sub(body, args[0], args[1], key=key)
             elif kind == 'append_top':
                 body = op_append_top(body, args[0])
-        chunks.append((key, fn, pdx.mark_replace(body)))
+        delta = pdx.inject_delta(orig, body, key)
+        if delta is None:
+            warn.append(f'{key}: patch nic nie zmienil - pomijam')
+            continue
+        chunks.append((key, fn, delta))
     out = os.path.join(PROJ, *d.split('/'), outname)
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with open(out, 'w', encoding='utf-8-sig', newline='\n') as f:

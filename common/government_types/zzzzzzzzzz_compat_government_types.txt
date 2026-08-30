@@ -2,13 +2,7 @@
 # Definicje z Better Politics Mod uzupelnione o tresc z Laws+.
 
 # --- gov_council_republic  (zrodlo: BPM/common/government_types/bpm_types_override.txt) ---
-REPLACE:gov_council_republic = {
-	transfer_of_power = presidential_elective
-	# new_leader_on_reform_government = yes
-
-	male_ruler = "RULER_CHAIRMAN"
-	female_ruler = "RULER_CHAIRWOMAN"
-	
+INJECT:gov_council_republic = {
 	possible = {
 		has_gov_regency = no
 		is_domain_alliance_gov = no
@@ -30,23 +24,10 @@ REPLACE:gov_council_republic = {
 			has_modifier = bpm_russia_obschina_empowered
 		}
 	}
-
-	on_government_type_change = {
-		change_to_presidential_elective = yes
-	}
-	on_post_government_type_change = {
-		post_change_to_presidential_elective = yes
-	}
 }
 
 # --- gov_soviet_republic  (zrodlo: BPM/common/government_types/bpm_types_override.txt) ---
-REPLACE:gov_soviet_republic = {
-	transfer_of_power = presidential_elective
-	# new_leader_on_reform_government = yes
-
-	male_ruler = "RULER_TITLE_PRESIDENT"
-	female_ruler = "RULER_TITLE_PRESIDENT"
-	
+INJECT:gov_soviet_republic = {
 	possible = {
 		has_gov_regency = no
 		is_domain_alliance_gov = no
@@ -71,22 +52,10 @@ REPLACE:gov_soviet_republic = {
 			has_modifier = bpm_russia_obschina_empowered
 		}
 	}
-
-	on_government_type_change = {
-		change_to_presidential_elective = yes
-	}
-	on_post_government_type_change = {
-		post_change_to_presidential_elective = yes
-	}
 }
 
 # --- gov_council_dictatorship  (zrodlo: BPM/common/government_types/bpm_types_override.txt) ---
-REPLACE:gov_council_dictatorship = {
-	transfer_of_power = dictatorial
-
-	male_ruler = "RULER_CHAIRMAN"
-	female_ruler = "RULER_CHAIRWOMAN"
-	
+INJECT:gov_council_dictatorship = {
 	possible = {
 		has_gov_regency = no
 		is_domain_alliance_gov = no
@@ -102,22 +71,10 @@ REPLACE:gov_council_dictatorship = {
 			}
 		}
 	}
-
-	on_government_type_change = {
-		change_to_dictatorial = yes
-	}
-	on_post_government_type_change = {
-		post_change_to_dictatorial = yes
-	}
 }
 
 # --- gov_soviet_dictatorship  (zrodlo: BPM/common/government_types/bpm_types_override.txt) ---
-REPLACE:gov_soviet_dictatorship = {
-	transfer_of_power = dictatorial
-
-	male_ruler = "RULER_CHAIRMAN"
-	female_ruler = "RULER_CHAIRWOMAN"
-	
+INJECT:gov_soviet_dictatorship = {
 	possible = {
 		has_gov_regency = no
 		is_domain_alliance_gov = no
@@ -137,22 +94,10 @@ REPLACE:gov_soviet_dictatorship = {
 			root.capital.region = sr:region_eastern_europe
 		}
 	}
-
-	on_government_type_change = {
-		change_to_dictatorial = yes
-	}
-	on_post_government_type_change = {
-		post_change_to_dictatorial = yes
-	}
 }
 
 # --- gov_fascist_corporate_state  (zrodlo: BPM/common/government_types/bpm_types_override.txt) ---
-REPLACE:gov_fascist_corporate_state = {
-	transfer_of_power = dictatorial
-
-	male_ruler = "RULER_TITLE_PRESIDENT"
-	female_ruler = "RULER_TITLE_PRESIDENT"
-
+INJECT:gov_fascist_corporate_state = {
 	possible = {
 		has_gov_regency = no
 		is_domain_alliance_gov = no
@@ -184,13 +129,6 @@ REPLACE:gov_fascist_corporate_state = {
 			}
 		}
 		NOT = { has_law = law_type:law_ecclesiarchy }	# Laws+
-	}
-
-	on_government_type_change = {
-		change_to_dictatorial = yes
-	}
-	on_post_government_type_change = {
-		post_change_to_dictatorial = yes
 	}
 }
 

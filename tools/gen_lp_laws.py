@@ -69,6 +69,7 @@ for law in sorted(set(RIGIDITY) | set(INSTITUTION)):
         warn.append(f'{law}: BRAK w Laws+ - pomijam')
         continue
 
+    orig = body
     rig = RIGIDITY.get(law)
     if rig:
         if 'country_rigidity_baseline_add' in body:
@@ -93,9 +94,10 @@ for law in sorted(set(RIGIDITY) | set(INSTITUTION)):
             lines[-1:-1] = block
             body = '\n'.join(lines)
 
-    if law not in INSTITUTION and not rig:
-        continue  # nic do zmiany
-    chunks.append((law, fn, pdx.mark_replace(body)))
+    delta = pdx.inject_delta(orig, body, law)
+    if delta is None:
+        continue
+    chunks.append((law, fn, delta))
 
 out = os.path.join(PROJ, 'common', 'laws', 'zzzzzzzzzz_compat_lawsplus_laws.txt')
 with open(out, 'w', encoding='utf-8-sig', newline='\n') as f:

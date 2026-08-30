@@ -2,10 +2,7 @@
 # Definicje z Better Politics Mod uzupelnione o tresc z Laws+.
 
 # --- amendment_electoral_clientelism  (zrodlo: BPM/common/amendments/bpm_amendments_historical_04.txt) ---
-REPLACE:amendment_electoral_clientelism = {
-
-	parent = law_oligarchy
-
+INJECT:amendment_electoral_clientelism = {
 	allowed_laws = {
 		law_autocracy
 		law_military_junta
@@ -18,58 +15,10 @@ REPLACE:amendment_electoral_clientelism = {
 		law_ecclesiarchy	# Laws+
 		law_weighted_universal_voting	# Laws+
 	}
-
-	modifier = {
-		country_authority_mult = 0.10
-		country_rigidity_baseline_add = 5
-		country_electoral_confidence_impact_mult = -0.25 
-	}
-
-	possible = {
-		hidden_trigger = {
-			country_has_voting_franchise = yes 
-		}
-		modifier:country_forbid_electoral_fraud_bool = no
-	}
-
-	can_repeal = {
-		legitimacy >= legitimacy_to_repeal_amendment
-		hidden_trigger = {
-			has_variable = electoral_fraud_abolish_var
-		}
-		trigger_if = {
-			limit = {
-				has_variable = electoral_fraud_abolish_var
-			}
-			custom_tooltip = {
-				text = caciquismo_can_be_abolished_tt
-				var:electoral_fraud_abolish_var >= 5
-			}
-		}
-	}
-
-	ai_will_revoke = {
-		always = no
-	}
-
-	would_sponsor = {
-		OR = {
-			is_interest_group_type = ig_landowners
-			is_interest_group_type = ig_industrialists
-			is_interest_group_type = ig_petty_bourgeoisie
-			AND = {
-				exists = scope:approval
-				scope:approval > 0
-			}
-		}
-	}
 }
 
 # --- amendment_tradition_of_free_elections  (zrodlo: BPM/common/amendments/bpm_amendments_historical_04.txt) ---
-REPLACE:amendment_tradition_of_free_elections = {
-
-	parent = law_universal_suffrage
-
+INJECT:amendment_tradition_of_free_elections = {
 	allowed_laws = {
 		law_oligarchy
 		law_landed_voting
@@ -80,102 +29,10 @@ REPLACE:amendment_tradition_of_free_elections = {
 		law_ecclesiarchy	# Laws+
 		law_weighted_universal_voting	# Laws+
 	}
-
-	modifier = {
-		country_forbid_electoral_fraud_bool = yes
-		country_rigidity_baseline_add = -5
-		#country_legitimacy_base_add = 10
-		country_enactment_success_chance_law_autocracy_add = -0.10
-		country_enactment_success_chance_law_oligarchy_add = -0.10
-		country_enactment_success_chance_law_technocracy_add = -0.10
-		country_enactment_success_chance_law_anarchy_add = -0.10
-		# Intended that there is no defence against Single Party State
-	}
-
-	possible = {
-		always = yes # Handled by special logic
-	}
-
-	can_repeal = {
-		OR = {
-			AND = {
-				custom_tooltip = {
-					text = ruler_wants_dictatorship_tt
-					ruler = {
-						OR = {
-							law_enactment_stance = {
-								law = law_type:law_autocracy
-								value > neutral
-							}
-							law_enactment_stance = {
-								law = law_type:law_technocracy
-								value > neutral
-							}
-							law_enactment_stance = {
-								law = law_type:law_single_party_state
-								value > neutral
-							}
-						}
-					}
-				}
-				custom_tooltip = {
-					text = any_government_ig_wants_dictatorship_tt
-					any_interest_group = {
-						is_powerful = yes
-						is_in_government = yes
-						OR = {
-							law_enactment_stance = {
-								law = law_type:law_autocracy
-								value > neutral
-							}
-							law_enactment_stance = {
-								law = law_type:law_technocracy
-								value > neutral
-							}
-							law_enactment_stance = {
-								law = law_type:law_single_party_state
-								value > neutral
-							}
-						}
-					}
-				}
-				
-			}
-		}
-		legitimacy >= legitimacy_to_repeal_amendment
-	}
-
-	ai_will_revoke = {
-		country_has_voting_franchise = no
-	}
-
-	would_sponsor = {
-		AND = {
-			exists = scope:approval
-			scope:approval > 0
-		}
-	}
 }
 
 # --- amendment_foreign_investment_seizures  (zrodlo: BPM/common/amendments/bpm_amendment_enactment.txt) ---
-REPLACE:amendment_foreign_investment_seizures = {
-
-	parent = law_protectionism
-
-	allowed_laws = {
-		#law_corporate_state
-		law_organic_democracy
-	}
-
-	modifier = {
-		country_nationalization_cost_non_members_mult = -0.25
-		country_loan_interest_rate_add = 0.05 # Lenders do not approve of this
-	}
-
-	possible = {
-		always = yes
-	}
-
+INJECT:amendment_foreign_investment_seizures = {
 	would_sponsor = {
 		OR = {
 			leader = {
@@ -192,41 +49,10 @@ REPLACE:amendment_foreign_investment_seizures = {
 			has_ideology = ideology:ideology_eco_centralized_economy
 		}
 	}
-
-	ai_will_revoke = {
-		always = no
-	}
-
-	can_repeal = {
-		legitimacy >= legitimacy_to_repeal_amendment
-	}
-
-	amendment_activism_multiplier = 0.75
 }
 
 # --- amendment_industrial_socialization  (zrodlo: BPM/common/amendments/bpm_amendment_enactment.txt) ---
-REPLACE:amendment_industrial_socialization = {
-
-	parent = law_cooperative_ownership
-
-	allowed_laws = {
-		#law_corporate_state
-		law_organic_democracy
-	}
-
-	modifier = {
-		building_group_bg_heavy_industry_allowed_collectivization_add = 0.10
-		building_group_bg_military_industry_allowed_collectivization_add = 0.10
-		building_group_bg_mining_allowed_collectivization_add = 0.10
-		building_group_bg_private_infrastructure_allowed_collectivization_add = 0.10
-		building_nationalization_cost_mult = -0.25
-		country_loan_interest_rate_add = 0.03 # Lenders do not approve of violations of property rights
-	}
-
-	possible = {
-		always = yes
-	}
-
+INJECT:amendment_industrial_socialization = {
 	would_sponsor = {
 		OR = {
 			is_interest_group_type = ig_intelligentsia
@@ -245,39 +71,10 @@ REPLACE:amendment_industrial_socialization = {
 			}
 		}
 	}
-
-	ai_will_revoke = {
-		always = no
-	}
-
-	can_repeal = {
-		legitimacy >= legitimacy_to_repeal_amendment
-	}
-
-	amendment_activism_multiplier = 1
 }
 
 # --- amendment_shop_councils  (zrodlo: BPM/common/amendments/bpm_amendment_enactment.txt) ---
-REPLACE:amendment_shop_councils = {
-
-	parent = law_interventionism # TODO PRCAL-35135 change to State Capitalism
-
-	allowed_laws = {
-		#law_corporate_state
-		law_organic_democracy
-	}
-
-	modifier = {
-		building_group_bg_light_industry_allowed_collectivization_add = 0.10
-		building_group_bg_arts_allowed_collectivization_add = 0.10
-		building_nationalization_cost_mult = -0.15
-		country_loan_interest_rate_add = 0.01 # The lender cares not for the opinion of the petit-bourgeoisie
-	}
-
-	possible = {
-		always = yes
-	}
-
+INJECT:amendment_shop_councils = {
 	would_sponsor = {
 		OR = {
 			is_interest_group_type = ig_intelligentsia
@@ -294,15 +91,5 @@ REPLACE:amendment_shop_councils = {
 			}
 		}
 	}
-
-	ai_will_revoke = {
-		always = no
-	}
-
-	can_repeal = {
-		legitimacy >= legitimacy_to_repeal_amendment
-	}
-
-	amendment_activism_multiplier = 0.5
 }
 

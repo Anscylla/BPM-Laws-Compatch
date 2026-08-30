@@ -105,3 +105,91 @@ def mark_replace(body):
     if not first.startswith(('REPLACE:', 'INJECT:', 'TRY_')):
         first = 'REPLACE:' + first
     return '\n'.join([first] + body.split('\n')[1:])
+
+
+# ---------------------------------------------------------------------------
+# Praca na zawartosci wpisu na poziomie 1 (sekcje i pojedyncze przypisania).
+# Sluzy do wystawiania minimalnych INJECT-ow zamiast REPLACE calego wpisu.
+# ---------------------------------------------------------------------------
+
+def depth1_items(body):
+    """-> [('section', nazwa, [linie]) | ('scalar', nazwa, linia)] w kolejnosci wystapienia."""
+    lines = body.split('\n')
+    out, depth, i = [], 0, 0
+    while i < len(lines):
+        line = lines[i]
+        s = strip_c(line).strip()
+        if depth == 1:
+            m = re.match(r'^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*\{', s)
+            if m:
+                d, j = 0, i
+                while j < len(lines):
+                    d += strip_c(lines[j]).count('{') - strip_c(lines[j]).count('}')
+                    if d == 0:
+                        break
+                    j += 1
+                out.append(('section', m.group(1), lines[i:j + 1]))
+                depth += sum(strip_c(l).count('{') - strip_c(l).count('}') for l in lines[i:j + 1])
+                i = j + 1
+                continue
+            m2 = re.match(r'^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*[^{\s].*$', s)
+            if m2:
+                out.append(('scalar', m2.group(1), line))
+        depth += strip_c(line).count('{') - strip_c(line).count('}')
+        i += 1
+    return out
+
+
+def _find_item(body, kind, name):
+    """-> (start, end) linii danego elementu poziomu 1, albo None."""
+    lines = body.split('\n')
+    depth, i = 0, 0
+    while i < len(lines):
+        s = strip_c(lines[i]).strip()
+        if depth == 1:
+            if kind == 'section' and re.match(r'^' + re.escape(name) + r'\s*=\s*\{', s):
+                d, j = 0, i
+                while j < len(lines):
+                    d += strip_c(lines[j]).count('{') - strip_c(lines[j]).count('}')
+                    if d == 0:
+                        return i, j
+                    j += 1
+            if kind == 'scalar' and re.match(r'^' + re.escape(name) + r'\s*=\s*[^{\s]', s):
+                return i, i
+        depth += strip_c(lines[i]).count('{') - strip_c(lines[i]).count('}')
+        i += 1
+    return None
+
+
+def overlay(base, patch):
+    """Nakladka: elementy poziomu 1 z `patch` zastepuja jednoimienne w `base`
+    (a jesli ich nie ma - sa dopisywane). Odwzorowuje to, co robi INJECT:."""
+    body = base
+    for kind, name, content in depth1_items(patch):
+        block = content if kind == 'section' else [content]
+        r = _find_item(body, kind, name)
+        lines = body.split('\n')
+        if r:
+            lines[r[0]:r[1] + 1] = block
+        else:
+            lines[-1:-1] = block
+        body = '\n'.join(lines)
+    return body
+
+
+def inject_delta(orig, patched, key=None):
+    """Zwroc wpis `INJECT:` niosacy wylacznie te elementy poziomu 1, ktore roznia sie
+    od oryginalu. Dzieki temu patch zamraza pojedyncze sekcje zamiast calego wpisu."""
+    if key is None:
+        key = TOPRE.match(patched.split('\n')[0].lstrip('﻿').strip()).group('key')
+    before = {}
+    for kind, name, content in depth1_items(orig):
+        before.setdefault((kind, name), content)
+    keep = []
+    for kind, name, content in depth1_items(patched):
+        old = before.get((kind, name))
+        if old is None or old != content:
+            keep.extend(content if kind == 'section' else [content])
+    if not keep:
+        return None
+    return '\n'.join([f'INJECT:{key} = {{'] + keep + ['}'])

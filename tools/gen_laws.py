@@ -128,6 +128,7 @@ for law, ops in PATCH.items():
         warn.append(f'{law}: BRAK w BPM - pomijam')
         continue
     src = fn
+    orig = body
     for kind, arg in ops:
         if kind == 'on_activate':
             body = pdx.append_in_sub(body, 'on_activate', arg, create=True)
@@ -143,21 +144,11 @@ for law, ops in PATCH.items():
             body, ok = apply_after_line(body, arg[0], arg[1])
             if not ok:
                 warn.append(f'{law}: nie znaleziono kotwicy "{arg[0]}"')
-    if body.lstrip('﻿').startswith('INJECT:'):
-        keep = SECTIONS_TOUCHED[law]
-        lines = body.split(chr(10))
-        out = [lines[0]]
-        for sec in keep:
-            r = pdx.find_sub(body, sec)
-            if r:
-                out += lines[r[0]:r[1] + 1]
-            else:
-                warn.append(f'{law}: brak sekcji {sec} do wyciecia z INJECT')
-        out.append('}')
-        body = chr(10).join(out)
-        chunks.append((law, src, body))
-    else:
-        chunks.append((law, src, pdx.mark_replace(body)))
+    delta = pdx.inject_delta(orig, body, law)
+    if delta is None:
+        warn.append(f'{law}: patch nic nie zmienil - pomijam')
+        continue
+    chunks.append((law, src, delta))
 
 hdr = """# BPM / Laws+ Compatch - prawa
 # Bazuje na aktualnych definicjach z Better Politics Mod, uzupelnionych o sprzezenia
