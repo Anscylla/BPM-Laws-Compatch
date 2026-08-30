@@ -55,8 +55,8 @@ def meaningful(lines):
         if s and s not in ('{', '}'):
             s = re.sub(r'\s+', ' ', s)
             # celowe poprawki API 1.13 - nie traktuj ich jako utraty tresci
-            s = re.sub(r'has_role = (agitator|general|admiral|politician)',
-                       r'has_role_of_type = ', s)
+            s = re.sub(r'\bhas_role = (agitator|general|admiral|politician)\b',
+                       r'has_role_of_type = \1', s)
             out.append(s)
     return out
 
