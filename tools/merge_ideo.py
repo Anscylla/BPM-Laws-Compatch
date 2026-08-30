@@ -81,6 +81,28 @@ for label, path, _ in sources:
                     WANT.setdefault(key, {}).setdefault(grp, {})[m.group(1)] = (m.group(2), tail)
 print(f'Zrodlo stanowisk: {sources[0][0]} ({len(WANT)} ideologii)')
 
+# ---- 1b. wlasne stanowiska Laws+ dla ideologii, ktore BPM nadpisuje w calosci.
+# Laws+ ma je recznie napisane (m.in. dla lawgroup_ballot_system i lawgroup_discriminated_pop),
+# a REPLACE z BPM je kasuje. Sa lepsze niz cokolwiek wyprowadzonego regula, wiec biora
+# pierwszenstwo przed gen_ideo_gaps - ale ustepuja temu, co bylo w poprzednim compatchu.
+authored = 0
+_lpbase = os.path.join(LP, 'common', 'ideologies')
+for fn in sorted(os.listdir(_lpbase)):
+    if not fn.endswith('.txt'):
+        continue
+    for key, lines in top_blocks(pdx.read(os.path.join(_lpbase, fn))):
+        for grp, (s, e) in sub_blocks(lines).items():
+            if not grp.startswith('lawgroup_'):
+                continue
+            for l in lines[s:e + 1]:
+                m = STANCE.match(pdx.strip_c(l))
+                if m and m.group(1) in NEW_LP_LAWS:
+                    slot = WANT.setdefault(key, {}).setdefault(grp, {})
+                    if m.group(1) not in slot:
+                        slot[m.group(1)] = (m.group(2), '\t# Laws+')
+                        authored += 1
+print(f'Doszlo autorskich stanowisk z Laws+: {authored}')
+
 # ---- 2. re-apply them onto the current BPM definitions
 merged, missing, gaps = [], [], []
 base = os.path.join(BPM, 'common', 'ideologies')

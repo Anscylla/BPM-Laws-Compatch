@@ -181,9 +181,15 @@ for d, outname, items in PATCHES:
                 body = op_in_sub(body, args[0], args[1], key=key)
             elif kind == 'append_top':
                 body = op_append_top(body, args[0])
+        # W scripted_effects/scripted_triggers INJECT: dziala jak podmiana calego wpisu,
+        # a ich cialo to lista instrukcji, nie zbior nazwanych pol - czesciowy INJECT
+        # skasowalby reszte. Tam zawsze pelny REPLACE.
+        if d in ('common/scripted_effects', 'common/scripted_triggers'):
+            chunks.append((key, fn, pdx.mark_replace(body)))
+            continue
         delta = pdx.inject_delta(orig, body, key)
         if delta is None:
-            warn.append(f'{key}: patch nic nie zmienil - pomijam')
+            chunks.append((key, fn, pdx.mark_replace(body)))
             continue
         chunks.append((key, fn, delta))
     out = os.path.join(PROJ, *d.split('/'), outname)

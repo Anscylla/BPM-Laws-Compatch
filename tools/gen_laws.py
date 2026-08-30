@@ -146,8 +146,8 @@ for law, ops in PATCH.items():
                 warn.append(f'{law}: nie znaleziono kotwicy "{arg[0]}"')
     delta = pdx.inject_delta(orig, body, law)
     if delta is None:
-        warn.append(f'{law}: patch nic nie zmienil - pomijam')
-        continue
+        delta = pdx.mark_replace(body)
+        warn.append(f'{law}: czesciowy INJECT niebezpieczny - pelny REPLACE')
     chunks.append((law, src, delta))
 
 hdr = """# BPM / Laws+ Compatch - prawa

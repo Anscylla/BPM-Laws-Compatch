@@ -46,7 +46,11 @@ python tools/gen_lp_ideo.py    # ideologie Laws+
 python tools/verify.py         # czy wpisy patcha wygrywają i czy REPLACE ma cel
 python tools/dangling.py       # nierozwiązane referencje w całym stosie modów
 python tools/brace.py common/*/*.txt
+python tools/check_truncation.py   # czy patch niczego nie gubi z modów źródłowych
 ```
+
+Pipeline ideologii zbiega się po dwóch przebiegach (`merge_ideo` + `gen_ideo_gaps` × 2),
+bo drugi przebieg podnosi do rangi źródła to, co pierwszy wyprowadził.
 
 Skrypty w `tools/` mają zaszyte ścieżki do `C:\Steam\steamapps` — zmień je w `tools/conflicts.py`,
 jeśli gra jest gdzie indziej. Folder `tools/` jest ignorowany przez grę.
