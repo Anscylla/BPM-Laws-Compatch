@@ -8,9 +8,12 @@
 	"short_description" : "Compatibility patch for Better Politics Mod and Laws+.",
 	"tags" : [
 		"Fixes",
-		"ComPatch",
+		"Compatch",
 		"Gameplay",
-		"1.13"
+		"1.13",
+		"Laws +",
+		"BPM",
+		"Better Politics Mod"
 	],
 	"relationships" : [
 		{
