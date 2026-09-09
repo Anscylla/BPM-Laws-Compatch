@@ -1085,11 +1085,86 @@ def build_other(src, report):
 # Validation
 # --------------------------------------------------------------------------
 
+BPM_SPRINGTIME_ARM = [
+    '\t\t\tAND = {',
+    '\t\t\t\thas_variable = peoples_springtime_fully_ended',
+    '\t\t\t\tbpm_country_is_republic = no',
+    '\t\t\t\tNOT = {',
+    '\t\t\t\t\tany_interest_group = {',
+    '\t\t\t\t\t\tbpm_ig_is_radical_left = yes',
+    '\t\t\t\t\t\tbpm_ig_is_marginal = no',
+    '\t\t\t\t\t}',
+    '\t\t\t\t}',
+    '\t\t\t}',
+]
+
+SPRINGTIME_AFTER = [
+    '\t\tje:je_springtime_of_the_peoples ?= {',
+    '\t\t\tremove_involved_country = ROOT',
+    '\t\t}',
+]
+
+
+def build_springtime_event(src, report):
+    """The Revolution Vanquished, raised once instead of every week.
+
+    The journal entry's weekly pulse raises peoples_springtime.8 for every involved
+    country and leans on the event's own trigger to refuse. Better Politics Mod
+    replaces the event with a version that has no trigger, since in its own journal
+    entry nothing pulses it: it is raised once, from peoples_springtime.6. Laws+
+    replaces the journal entry with the base game's, pulse included. Whichever of the
+    two settles the entry, the event that answers it is the one without a gate.
+
+    Better Politics Mod's body is kept, since it is the mod that reshaped this chain,
+    and the base game's gate is put back in front of it with a third arm for Better
+    Politics Mod's own route.
+    """
+    warn = report['warn']
+    _, bpm = src.find('events', 'peoples_springtime.8', src.bpm)
+    _, van = src.find('events', 'peoples_springtime.8', src.game)
+    if not bpm or not van:
+        missing = 'Better Politics Mod' if not bpm else 'the base game'
+        warn.append('peoples_springtime.8: not found in ' + missing)
+        return
+    if find_sub(bpm, 'trigger'):
+        warn.append('peoples_springtime.8: Better Politics Mod now gates it itself, '
+                    'patch no longer needed')
+        return
+
+    rt, ri = find_sub(van, 'trigger'), find_sub(van, 'immediate')
+    if not rt or not ri:
+        warn.append('peoples_springtime.8: the base game no longer gates it as expected')
+        return
+
+    lines = van.split('\n')
+    trigger = lines[rt[0]:rt[1] + 1]
+    ors = [i for i, l in enumerate(trigger) if strip_c(l).strip().startswith('OR = {')]
+    if not ors:
+        warn.append('peoples_springtime.8: the base game trigger is no longer a list of routes')
+        return
+    trigger[ors[0] + 1:ors[0] + 1] = BPM_SPRINGTIME_ARM
+    # Once per country whichever route asked, which is what the pulse runs into.
+    trigger[1:1] = ['\t\tNOT = { has_variable = completed_peoples_springtime }']
+
+    body = bpm.split('\n')
+    first_option = find_sub(bpm, 'option')
+    if not first_option:
+        warn.append('peoples_springtime.8: Better Politics Mod version has no options')
+        return
+    body[first_option[0]:first_option[0]] = trigger + [''] + lines[ri[0]:ri[1] + 1] + ['']
+    body = append_in_sub('\n'.join(body), 'after', '\n'.join(SPRINGTIME_AFTER), create=True)
+    body = body.replace('\t}\n\tafter = {', '\t}\n\n\tafter = {')
+
+    report['springtime_event'] = write_file(
+        'events', 'peoples_springtime', [(None, 'peoples_springtime.8', body)], warn)
+
+
 def our_files():
-    for dp, _, fs in os.walk(os.path.join(MOD_ROOT, 'common')):
-        for fn in sorted(fs):
-            if fn.endswith('.txt'):
-                yield os.path.join(dp, fn)
+    for folder in ('common', 'events'):
+        for dp, _, fs in os.walk(os.path.join(MOD_ROOT, folder)):
+            for fn in sorted(fs):
+                if fn.endswith('.txt'):
+                    yield os.path.join(dp, fn)
 
 
 def check_braces():
@@ -1164,7 +1239,14 @@ def check_no_loss(src):
             base = None
             for fn, m, body in cands:
                 base = overlay(base, body) if (m.startswith('INJECT') and base) else body
-            if mode.startswith('REPLACE'):
+            # Events carry no CMF mode: a plain definition in the file the game reads
+            # last replaces the entry outright, so it is measured against the mod it
+            # follows rather than read as an injection.
+            if subdir == 'events':
+                bpm_entry = src.walk(src.bpm, subdir).get(key)
+                base = bpm_entry[2] if bpm_entry else base
+
+            if mode.startswith('REPLACE') or subdir == 'events':
                 lost = set(norm(base.split('\n'))) - set(norm(ours.split('\n')))
                 if lost:
                     problems.append(f'{subdir}/{key}: {len(lost)} line(s) dropped, '
@@ -1236,12 +1318,13 @@ def main():
         build_lp_laws(src, report)
         build_restored_laws(src, report)
         build_other(src, report)
+        build_springtime_event(src, report)
 
         print('generated:')
         for k in ('ideologies', 'lp_ideologies', 'bpm_laws', 'lp_laws',
                   'discrimination_laws', 'triggers',
                   'effects', 'government_types', 'amendments', 'political_movements',
-                  'interest_groups'):
+                  'interest_groups', 'springtime_event'):
             if k in report:
                 print(f'  {k:<20} {report[k]} entries')
         print(f'  {"derived stances":<20} {report.get("derived", 0)}')
