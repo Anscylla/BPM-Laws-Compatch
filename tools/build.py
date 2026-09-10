@@ -18,6 +18,9 @@ import re
 import sys
 from collections import defaultdict
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import merge3  # noqa: E402
+
 APP_ID = '529340'
 BPM_ID = '2932134122'
 LP_ID = '2941539986'
@@ -1159,6 +1162,100 @@ def build_springtime_event(src, report):
         'events', 'peoples_springtime', [(None, 'peoples_springtime.8', body)], warn)
 
 
+# Folders where an entry both mods define is merged rather than left to the file name.
+# Added a folder at a time, because a merge that goes wrong is a rule of the game quietly
+# changed rather than a crash.
+MERGE_SUBDIRS = [
+    'common/government_types',
+    'common/political_movements',
+    'common/production_methods',
+    'common/ai_strategies',
+    'common/scripted_triggers',
+    'common/character_templates',
+    'common/on_actions',
+    'common/interest_groups',
+    'common/scripted_effects',
+    'common/journal_entries',
+    'common/laws',
+    'common/dynamic_country_names',
+    'common/flag_definitions',
+    'common/history/countries',
+    # Both mods rewrite every party's weights. What Laws+ adds are its own laws and
+    # ideologies, which BPM's rewrite cannot know about: without this none of them count
+    # towards which party a pop or an interest group joins.
+    'common/parties',
+]
+
+
+def build_merges(src, report):
+    """Entries both mods rewrite, merged so neither loses what it added.
+
+    The base game is the ancestor both mods edited. Better Politics Mod is the base, since it
+    is the mod that reshapes how politics works, and what Laws+ adds on top of the base game
+    is folded into it. Where the two cannot be reconciled mechanically the entry is left alone
+    and reported, rather than guessed at.
+
+    Runs last, so what the other generators already emit is visible and left to them.
+    """
+    warn = report['warn']
+    handled = set()
+    for path in our_files():
+        for key, _ in toplevel_keys(path):
+            handled.add(key)
+
+    total = 0
+    for subdir in MERGE_SUBDIRS:
+        b, l = src.walk(src.bpm, subdir), src.walk(src.lp, subdir)
+        v = src.walk(src.game, subdir)
+        chunks = []
+        for key in sorted(set(b) & set(l)):
+            if key in handled or key not in v:
+                continue
+            merged, notes, conceded = merge3.merge_entry(v[key][2], b[key][2], l[key][2])
+            for n in notes:
+                warn.append(f'{key}{n}')
+            # Nothing to do where the winning body already says everything Laws+ adds.
+            if _same(merged, b[key][2]):
+                continue
+            # What Laws+ changed inside something BPM removed is given up on purpose, so it
+            # does not count against the merge.
+            lost = ((_dropped(b[key][2], merged) | _dropped(l[key][2], merged, v[key][2]))
+                    - conceded)
+            if lost:
+                warn.append(f'{subdir}/{key}: merge would drop {len(lost)} line(s), skipped')
+                continue
+            # A merged body is the whole entry, so it replaces. Inheriting an INJECT: head
+            # from Better Politics Mod would offer the game a second copy of an effect or a
+            # trigger section, and the game discards those.
+            chunks.append((None, key, mark_replace(merged)))
+        if chunks:
+            name = 'merged_' + subdir.rsplit('/', 1)[-1]
+            total += write_file(subdir, name, chunks, warn)
+    report['merged'] = total
+
+
+def _lines(body):
+    """The content of an entry, without the line that opens it.
+
+    That line carries the CMF prefix, and a merge keeps the base's. Counting it would report
+    INJECT:GER = { as a line of Laws+ that went missing, which is not content at all.
+    """
+    return {re.sub(r'\s+', ' ', strip_c(l).strip()) for l in body.split('\n')[1:]
+            if strip_c(l).strip() not in ('', '{', '}')}
+
+
+def _same(a, b):
+    return _lines(a) == _lines(b)
+
+
+def _dropped(body, merged, ancestor=None):
+    """What body contributes that the merge does not carry."""
+    out = _lines(body)
+    if ancestor is not None:
+        out -= _lines(ancestor)
+    return out - _lines(merged)
+
+
 def our_files():
     for folder in ('common', 'events'):
         for dp, _, fs in os.walk(os.path.join(MOD_ROOT, folder)):
@@ -1242,7 +1339,13 @@ def check_no_loss(src):
             # Events carry no CMF mode: a plain definition in the file the game reads
             # last replaces the entry outright, so it is measured against the mod it
             # follows rather than read as an injection.
-            if subdir == 'events':
+            #
+            # A merged entry is measured the same way, and for the same reason: it is built
+            # on Better Politics Mod's body, so what the base game once said and both mods
+            # since dropped is not ours to carry. What Laws+ contributes is checked by the
+            # merge itself, which refuses to write an entry that would lose any of it.
+            merged_here = os.path.basename(path).startswith(PREFIX + 'merged_')
+            if subdir == 'events' or merged_here:
                 bpm_entry = src.walk(src.bpm, subdir).get(key)
                 base = bpm_entry[2] if bpm_entry else base
 
@@ -1319,12 +1422,13 @@ def main():
         build_restored_laws(src, report)
         build_other(src, report)
         build_springtime_event(src, report)
+        build_merges(src, report)
 
         print('generated:')
         for k in ('ideologies', 'lp_ideologies', 'bpm_laws', 'lp_laws',
                   'discrimination_laws', 'triggers',
                   'effects', 'government_types', 'amendments', 'political_movements',
-                  'interest_groups', 'springtime_event'):
+                  'interest_groups', 'springtime_event', 'merged'):
             if k in report:
                 print(f'  {k:<20} {report[k]} entries')
         print(f'  {"derived stances":<20} {report.get("derived", 0)}')

@@ -1,7 +1,7 @@
-{
+﻿{
 	"name" : "[1.13] BPM / Laws+ Compatch",
 	"id" : "bpm.lawsplus.compatch",
-	"version" : "2.0.0",
+	"version" : "2.1.0",
 	"game_id" : "victoria3",
 	"picture" : "thumbnail.png",
 	"supported_game_version" : "1.13.*",
@@ -28,7 +28,7 @@
 			"id" : "2941539986",
 			"display_name" : "Laws +",
 			"resource_type" : "mod",
-			"version" : "1.12.12"
+			"version" : "1.12.13"
 		}
 	],
 	"game_custom_data" : {
