@@ -2028,6 +2028,10 @@ INJECT:law_command_economy = {
 	disallowing_laws = {
 		law_corporatocracy	# laws+
 	}
+	unlocking_laws = {
+		law_ecclesiarchy	# laws+
+		law_proletariat_dictatorship	# laws+
+	}	
 }
 
 # law_cooperative_ownership

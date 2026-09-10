@@ -185,6 +185,15 @@ REPLACE:gov_fascist_corporate_state = {
 			}
 		}
 		NOT = { has_law = law_type:law_ecclesiarchy }	# laws+
+		NOT = {	# laws+
+			AND = {
+				NOT = { c:KUK ?= this }
+				OR = {
+					country_has_primary_culture = cu:north_italian
+					country_has_primary_culture = cu:south_italian
+				}
+			}
+		}
 	}
 
 	on_government_type_change = {

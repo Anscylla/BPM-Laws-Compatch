@@ -134,7 +134,10 @@ REPLACE:je_austrian_neo_absolutism = {
 		show_as_tooltip = {
 			activate_law = law_type:law_neo_absolutism
 		}
-		trigger_event = { id = austria_events.1 popup = yes }
+		trigger_event = {
+			id = austria_events.1
+			popup = yes
+		}
 	}
 	event_outcome_completed_desc = {
 		first_valid = {
@@ -249,10 +252,16 @@ REPLACE:je_austrian_neo_absolutism = {
 					"scripted_bar_progress(austrian_neo_absolutism_constitutional_pressure_progress_bar)" >= 100
 				}
 			}
-			trigger_event = { id = austria_events.2 popup = yes }
+			trigger_event = {
+				id = austria_events.2
+				popup = yes
+			}
 		}
 		else = {
-			trigger_event = { id = austria_events.5 popup = yes }
+			trigger_event = {
+				id = austria_events.5
+				popup = yes
+			}
 		}
 		set_variable = je_austrian_neo_absolutism_failed_var
 	}
@@ -283,9 +292,43 @@ REPLACE:je_ethno_nationalist = {
 	group = je_group_internal_affairs
 	is_shown_when_inactive = {
 		always = no
+		any_interest_group = {
+			any_scope_character = {
+				OR = {
+					AND = {
+						prominence >= define:NCharacters|PROMINENCE_IMPORTANT_THRESHOLD
+						has_role_of_type = politician
+					}
+					has_role_of_type = agitator
+				}
+				OR = {
+					has_ideology = ideology:ideology_fascist
+					has_ideology = ideology:ideology_ethno_nationalist
+					has_ideology = ideology:ideology_clerical_fascist
+					has_ideology = ideology:ideology_national_socialist
+				}
+			}
+		}
 	}
 	possible = {
 		always = no
+		any_interest_group = {
+			is_in_government = yes
+			any_scope_character = {
+				OR = {
+					AND = {
+						prominence >= define:NCharacters|PROMINENCE_IMPORTANT_THRESHOLD
+						has_role_of_type = politician
+					}
+					has_role_of_type = agitator
+				}
+				OR = {
+					has_ideology = ideology:ideology_fascist
+					has_ideology = ideology:ideology_ethno_nationalist
+					has_ideology = ideology:ideology_national_socialist
+				}
+			}
+		}
 	}
 	complete = {
 		has_law_or_variant = law_type:law_ethnostate
@@ -298,7 +341,9 @@ REPLACE:je_ethno_nationalist = {
 			NOT = {
 				any_state = {
 					is_homeland_of_country_cultures = ROOT
-					NOT = { owner = ROOT }
+					NOT = {
+						owner = ROOT
+					}
 				}
 			}
 		}
@@ -307,7 +352,9 @@ REPLACE:je_ethno_nationalist = {
 		set_variable = {
 			name = completed_ethno_nationalism_var
 		}
-		trigger_event = { id = fascism_events.6 }
+		trigger_event = {
+			id = fascism_events.6
+		}
 	}
 	invalid = {
 		NOT = {
@@ -412,7 +459,9 @@ REPLACE:je_fascism_1 = {
 					}
 				}
 			}
-			create_political_movement = { type = movement_fascist }
+			create_political_movement = {
+				type = movement_fascist
+			}
 		}
 		every_scope_character = {
 			limit = {
@@ -513,7 +562,9 @@ REPLACE:je_fascism_1 = {
 				}
 			}
 		}
-		trigger_event = { id = fascism_events.11 }
+		trigger_event = {
+			id = fascism_events.11
+		}
 		custom_tooltip = {
 			text = fascist_characters_stays_increased_tt
 		}
@@ -527,13 +578,17 @@ REPLACE:je_fascism_1 = {
 		}
 	}
 	on_fail = {
-		trigger_event = { id = fascism_events.10 }
+		trigger_event = {
+			id = fascism_events.10
+		}
 		custom_tooltip = {
 			text = fascist_characters_return_to_normal_tt
 		}
 	}
 	on_timeout = {
-		trigger_event = { id = fascism_events.10 }
+		trigger_event = {
+			id = fascism_events.10
+		}
 		custom_tooltip = {
 			text = fascist_characters_return_to_normal_tt
 		}
@@ -557,7 +612,10 @@ REPLACE:je_fascism_1 = {
 						}
 					}
 				}
-				trigger_event = { id = fascism_events.9 popup = yes }
+				trigger_event = {
+					id = fascism_events.9
+					popup = yes
+				}
 			}
 			every_interest_group = {
 				limit = {
@@ -590,18 +648,61 @@ REPLACE:je_liberalism_1 = {
 		always = yes
 	}
 	possible = {
-		NOT = { has_variable = liberalism_1_done }
+		NOT = {
+			has_variable = liberalism_1_done
+		}
 		has_technology_researched = democracy
 		has_technology_researched = international_trade
+		any_interest_group = {
+			is_in_government = yes
+			OR = {
+				trigger_if = {
+					limit = {
+						owner = {
+							has_technology_researched = feminism
+						}
+					}
+					has_ideology = ideology:ideology_liberal_modern
+				}
+				trigger_else = {
+					has_ideology = ideology:ideology_liberal
+				}
+				any_scope_character = {
+					OR = {
+						AND = {
+							prominence >= define:NCharacters|PROMINENCE_IMPORTANT_THRESHOLD
+							has_role_of_type = politician
+						}
+						has_role_of_type = agitator
+					}
+					OR = {
+						has_ideology = ideology:ideology_radical
+						has_ideology = ideology:ideology_market_liberal
+						has_ideology = ideology:ideology_humanitarian
+						has_ideology = ideology:ideology_humanitarian_royalist
+						has_ideology = ideology:ideology_feminist
+						has_ideology = ideology:ideology_anarcho_liberal
+					}
+				}
+			}
+		}
 	}
 	complete = {
 		bpm_country_laws_ok_voting = yes
 		government_legitimacy >= 50
 		OR = {
-			ig:ig_liberals ?= { is_in_government = yes }
-			ig:ig_radicals ?= { is_in_government = yes }
-			ig:ig_national_liberals ?= { is_in_government = yes }
-			ig:ig_market_liberals ?= { is_in_government = yes }
+			ig:ig_liberals ?= {
+				is_in_government = yes
+			}
+			ig:ig_radicals ?= {
+				is_in_government = yes
+			}
+			ig:ig_national_liberals ?= {
+				is_in_government = yes
+			}
+			ig:ig_market_liberals ?= {
+				is_in_government = yes
+			}
 			has_law_or_variant = law_type:law_weighted_universal_voting
 		}
 		is_at_war = no
@@ -610,10 +711,33 @@ REPLACE:je_liberalism_1 = {
 				is_insurrectionary = yes
 			}
 		}
+		any_interest_group = {
+			is_in_government = yes
+			OR = {
+				custom_tooltip = {
+					text = has_ideology_liberal_tt
+					OR = {
+						has_ideology = ideology:ideology_liberal
+						has_ideology = ideology:ideology_liberal_modern
+					}
+				}
+				leader = {
+					has_ideology = ideology:ideology_radical
+				}
+				leader = {
+					has_ideology = ideology:ideology_market_liberal
+				}
+				leader = {
+					has_ideology = ideology:ideology_anarcho_liberal
+				}
+			}
+		}
 	}
 	on_complete = {
 		set_variable = liberalism_1_done
-		trigger_event = { id = liberalism.1 }
+		trigger_event = {
+			id = liberalism.1
+		}
 	}
 	weight = 10000
 }
@@ -644,7 +768,9 @@ REPLACE:je_liberalism_3 = {
 		}
 	}
 	on_complete = {
-		trigger_event = { id = liberalism.3 }
+		trigger_event = {
+			id = liberalism.3
+		}
 	}
 	weight = 5000
 }
@@ -666,7 +792,9 @@ REPLACE:je_liberalism_4 = {
 		has_law = law_type:law_no_codified_discrimination
 	}
 	on_complete = {
-		trigger_event = { id = liberalism.4 }
+		trigger_event = {
+			id = liberalism.4
+		}
 	}
 	weight = 5000
 }
@@ -711,7 +839,10 @@ REPLACE:je_new_republic = {
 		}
 	}
 	on_fail = {
-		trigger_event = { id = BRZ_vargas.3 popup = yes }
+		trigger_event = {
+			id = BRZ_vargas.3
+			popup = yes
+		}
 		hidden_effect = {
 			scope:vargas_scope = {
 				set_character_immortal = no
@@ -749,6 +880,11 @@ REPLACE:je_new_republic = {
 			has_law = law_type:law_unitary
 		}
 		OR = {
+			has_law_or_variant = law_type:law_regulatory_bodies
+			has_law_or_variant = law_type:law_worker_protections
+			has_law_or_variant = law_type:law_union_representation
+		}
+		OR = {
 			has_law_or_variant = law_type:law_compulsory_primary_school
 			has_law_or_variant = law_type:law_child_benefit
 		}
@@ -758,7 +894,10 @@ REPLACE:je_new_republic = {
 		}
 	}
 	on_complete = {
-		trigger_event = { id = BRZ_vargas.2 popup = yes }
+		trigger_event = {
+			id = BRZ_vargas.2
+			popup = yes
+		}
 		hidden_effect = {
 			scope:vargas_scope = {
 				set_character_immortal = no
@@ -781,6 +920,232 @@ REPLACE:je_new_republic = {
 	}
 	weight = 100
 	should_be_pinned_by_default_uninvolved_or_context = yes
+}
+
+# je_springtime_of_the_peoples
+REPLACE:je_springtime_of_the_peoples = {
+	icon = "gfx/interface/icons/event_icons/48je.dds"
+	group = bpm_je_group_global
+	should_be_involved = {
+		is_in_geographic_region = geographic_region_europe
+	}
+	immediate_all_involved = {
+		trigger_event = {
+			id = 1848.4
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_political_movement = {
+						OR = {
+							is_political_movement_type = movement_radical
+							is_political_movement_type = movement_german_national
+							is_political_movement_type = movement_italian_national
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					OR = {
+						country_has_primary_culture = cu:north_german
+						country_has_primary_culture = cu:south_german
+					}
+				}
+				create_political_movement = {
+					type = movement_german_national
+				}
+			}
+			else_if = {
+				limit = {
+					OR = {
+						country_has_primary_culture = cu:north_italian
+						country_has_primary_culture = cu:south_italian
+					}
+				}
+				create_political_movement = {
+					type = movement_italian_national
+				}
+			}
+			else = {
+				create_political_movement = {
+					type = movement_radical
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:PRU
+				this = c:PRU
+			}
+			create_character = {
+				culture = cu:north_german
+				female = no
+				ideology = ideology_radical
+				interest_group = ig_radicals
+				is_agitator = yes
+				traits = {
+					inspirational_orator
+					ambitious
+					firebrand
+				}
+			}
+		}
+		if = {
+			limit = {
+				exists = c:AUS
+				this = c:AUS
+				c:HUN = {
+					is_subject = yes
+				}
+			}
+			trigger_event = {
+				id = peoples_springtime.9
+				days = 30
+				popup = yes
+			}
+		}
+		start_national_awakening = {
+			culture = cu:north_italian
+			months = 48
+			state_region = s:STATE_VENETIA
+		}
+		add_modifier = {
+			name = bpm_peoples_springtime_modifier
+			months = 26
+		}
+	}
+	on_timeout_all_involved = {
+		set_variable = completed_peoples_springtime_je
+		remove_global_variable = bpm_peoples_springtime_happening
+		set_global_variable = bpm_peoples_springtime_happened
+		if = {
+			limit = {
+				NOT = {
+					has_global_variable = recently_completed_peoples_springtime_je
+				}
+			}
+			set_global_variable = {
+				name = recently_completed_peoples_springtime_je
+				months = 24
+			}
+		}
+		custom_tooltip = je_springtime_of_the_peoples_tt_3
+		hidden_effect = {
+			remove_modifier = bpm_pre_peoples_springtime
+			remove_modifier = bpm_peoples_springtime_modifier
+			every_interest_group = {
+				remove_modifier = bpm_1848_stubborn_ig
+			}
+			if = {
+				limit = {
+					is_player = no
+				}
+				add_loyalists = {
+					value = 0.5
+					strata = upper
+				}
+				add_loyalists = {
+					value = 0.3
+					strata = middle
+				}
+				add_loyalists = {
+					value = 0.2
+					strata = lower
+				}
+			}
+		}
+		custom_tooltip = je_springtime_of_the_peoples_tt_4
+	}
+	on_weekly_pulse = {
+		effect = {
+			scope:journal_entry = {
+				every_scope_je_involved = {
+					trigger_event = peoples_springtime.100
+				}
+			}
+		}
+	}
+	on_monthly_pulse = {
+		effect = {
+			scope:journal_entry = {
+				every_scope_je_involved = {
+					trigger_event = 1848.5
+					trigger_event = bpm_radlib_utils.5
+					trigger_event = bpm_radlib_utils.6
+					random = {
+						chance = 8
+						trigger_event = peoples_springtime.3
+					}
+					random = {
+						chance = 8
+						trigger_event = peoples_springtime.4
+					}
+					random = {
+						chance = 8
+						trigger_event = peoples_springtime.5
+					}
+					bpm_setup_country_stubbornness = yes
+				}
+			}
+		}
+	}
+	invalid = {
+		has_variable = completed_peoples_springtime_je
+	}
+	weight = 10000
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	transferable = no
+	can_revolution_inherit = yes
+	timeout = 730
+	complete = {
+		AND = {
+			OR = {
+				custom_tooltip = {
+					text = had_springtime_revolution_tt_no_scope
+					scope:journal_entry = {
+						any_scope_je_involved = {
+							is_player = yes
+							has_variable = had_springtime_revolution
+						}
+					}
+				}
+				custom_tooltip = {
+					text = has_liberal_or_radical_in_government_tt
+					scope:journal_entry = {
+						any_scope_je_involved = {
+							is_player = yes
+							any_interest_group = {
+								is_in_government = yes
+								OR = {
+									has_ideology = ideology:ideology_liberal
+									leader = {
+										has_ideology = ideology:ideology_radical
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			custom_tooltip = {
+				text = has_census_voting_or_universal_suffrage_tt
+				scope:journal_entry = {
+					any_scope_je_involved = {
+						is_player = yes
+						OR = {
+							has_law_or_variant = law_type:law_census_voting
+							has_law_or_variant = law_type:law_weighted_universal_voting
+							has_law_or_variant = law_type:law_universal_suffrage
+						}
+					}
+				}
+			}
+		}
+		hidden_trigger = {
+			always = no
+		}
+	}
 }
 
 # je_standestaat
@@ -871,8 +1236,14 @@ REPLACE:je_standestaat = {
 				}
 			}
 		}
-		set_variable = { name = corporatists_suppression_var value = 0 }
-		trigger_event = { id = austrian_fascism.1 popup = yes }
+		set_variable = {
+			name = corporatists_suppression_var
+			value = 0
+		}
+		trigger_event = {
+			id = austrian_fascism.1
+			popup = yes
+		}
 	}
 	on_monthly_pulse = {
 		effect = {
@@ -884,10 +1255,16 @@ REPLACE:je_standestaat = {
 						ig_clout <= 0.05
 					}
 				}
-				change_variable = { name = corporatists_suppression_var add = 1 }
+				change_variable = {
+					name = corporatists_suppression_var
+					add = 1
+				}
 			}
 			else = {
-				set_variable = { name = corporatists_suppression_var value = 0 }
+				set_variable = {
+					name = corporatists_suppression_var
+					value = 0
+				}
 			}
 		}
 	}
@@ -959,7 +1336,10 @@ REPLACE:je_standestaat = {
 		}
 	}
 	on_complete = {
-		trigger_event = { id = austrian_fascism.2 popup = yes }
+		trigger_event = {
+			id = austrian_fascism.2
+			popup = yes
+		}
 	}
 	event_outcome_completed_desc = {
 		first_valid = {
@@ -1034,7 +1414,10 @@ REPLACE:je_standestaat = {
 		}
 	}
 	on_fail = {
-		trigger_event = { id = austrian_fascism.3 popup = yes }
+		trigger_event = {
+			id = austrian_fascism.3
+			popup = yes
+		}
 	}
 	event_outcome_failed_desc = {
 		first_valid = {

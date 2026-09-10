@@ -38,6 +38,7 @@ content to them.
 | `common/amendments/…` | electoral and socialisation amendments |
 | `common/political_movements/…` | movements accept leaders holding Laws+ ideologies |
 | `common/interest_groups/…` | attraction weights for `law_meritocratic_bureaucracy` and `law_gwageo` |
+| `common/**/…_merged_*.txt` | entries both mods rewrite, merged so neither loses what it added |
 
 Ideology stances carry a tag: `# laws+` for values written by Laws+ that a full
 override would otherwise discard, `# bpm` for values taken from Better Politics Mod,
@@ -51,9 +52,8 @@ Hand edits to any of them survive a rebuild.
   legislative events with its own enactment system.
 * Laws+ flavour (party weights, party names, interest group weights) is not carried
   over where Better Politics Mod rewrote the system.
-* `law_multicultural` is skipped: Better Politics Mod injects an `is_visible` block
-  into a law Laws+ defines in full, so that injection is already discarded by the
-  game before this patch loads.
+* Where both mods set the same single value - a historical agitator's ideology, say -
+  the entry can only carry one, and it carries Better Politics Mod's.
 
 ## Rebuilding
 
@@ -80,3 +80,9 @@ patch picks its mode accordingly:
 |---|---|---|
 | effects and triggers (`on_activate`, `is_visible`, `ai_will_do`, `possible`, …) | the second block is discarded | `REPLACE:` of the whole entry |
 | modifiers and lists (`modifier`, `disallowing_laws`, `allowed_laws`, …) | blocks are summed or concatenated | `INJECT:` carrying only the added lines |
+
+An entry is only merged where the game gets it wrong on its own: two full definitions,
+of which the later file name wins and the other is lost, or a section the game reads
+once that both mods write. Where one mod merely injects a list into the other's entry
+the game reads both and adds them up, and the patch leaves it alone rather than
+freezing the base game's body into a `REPLACE:`.

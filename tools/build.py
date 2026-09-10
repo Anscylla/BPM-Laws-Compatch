@@ -120,15 +120,9 @@ MODES = ('REPLACE_OR_CREATE:', 'INJECT_OR_CREATE:', 'TRY_REPLACE:', 'TRY_INJECT:
 # one entry is discarded by the game with "section already read earlier", so these
 # can only be changed by replacing the whole entry. Every other block (modifier
 # lists, law lists) is additive, so a patch must carry only the added lines.
-EFFECT_TRIGGER_SECTIONS = {
-    'on_activate', 'on_deactivate', 'on_enact', 'on_impose', 'on_created',
-    'is_visible', 'can_enact', 'can_impose', 'ai_will_do', 'would_sponsor',
-    'possible', 'trigger', 'creation_trigger', 'character_support_trigger',
-    'can_pressure_interest_group', 'change_allowed_trigger', 'on_government_type_change',
-    'on_post_government_type_change', 'effect', 'ai_enact_weight_modifier',
-    'ai_impose_chance', 'pop_weight', 'monarch_weight', 'join_weight',
-    'character_support_weight', 'pop_support_weight', 'additional_radicalism_factors',
-}
+# Sections the game reads once per entry, so a second one is discarded rather than added.
+# One list, kept where the merge needs it.
+EFFECT_TRIGGER_SECTIONS = merge3.ONCE
 
 
 def strip_c(line):
@@ -273,6 +267,35 @@ def overlay(base, patch):
             lines[-1:-1] = block
         body = '\n'.join(lines)
     return body
+
+
+def inject_effective(base, patch):
+    """-> the entry the game ends up with once patch is injected into base.
+
+    An injection is appended to the end of the entry it lands on. A modifier list or a list of
+    laws is then read twice and adds up, which is how Better Politics Mod writes its numbers.
+    A section the game reads once is the exception: the copy already in the entry wins and the
+    injected one is dropped with an error in the log.
+    """
+    add = []
+    for kind, name, content in depth1_items(patch):
+        if kind == 'section' and name in merge3.ONCE and find_item(base, 'section', name):
+            continue
+        add.extend(content if kind == 'section' else [content])
+    lines = base.split('\n')
+    lines[-1:-1] = add
+    return '\n'.join(lines)
+
+
+def is_injection(body):
+    return body.split('\n')[0].lstrip('﻿').startswith(
+        ('INJECT:', 'TRY_INJECT:', 'INJECT_OR_CREATE:'))
+
+
+def whole_entry(van, body):
+    """An injection is a patch, not an entry, and a merge that treats it as one writes a
+    REPLACE holding a couple of sections where the entry has thirty."""
+    return inject_effective(van, body) if is_injection(body) else body
 
 
 def mark_replace(body):
@@ -484,10 +507,13 @@ BPM_LAW_PATCH = {
     'law_monarchy':             [('disallow', ['law_proletariat_dictatorship'])],
     'law_agrarianism':          [('disallow', ['law_corporatocracy'])],
     'law_interventionism':      [('disallow', ['law_corporatocracy'])],
-    'law_command_economy':      [('disallow', ['law_corporatocracy'])],
+    'law_command_economy':      [('disallow', ['law_corporatocracy']),
+                                 ('unlock', ['law_ecclesiarchy',
+                                             'law_proletariat_dictatorship'])],
     'law_cooperative_ownership':[('disallow', ['law_corporatocracy'])],
     'law_laissez_faire':        [('disallow', ['law_proletariat_dictatorship'])],
-    'law_multicultural':        [('is_visible', 'NOT = { has_law = law_type:law_cosmopolitanism }')],
+    # law_multicultural is not here: Better Politics Mod injects an is_visible into it and
+    # Laws+ writes one of its own, so the entry is merged whole rather than patched.
 }
 
 # country_rigidity_baseline_add is a Better Politics Mod stat; Laws+ laws sit at zero
@@ -564,7 +590,10 @@ OTHER_PATCHES = [
         ('calculate_communism_progress',
          [('replace_line', 'has_law = law_type:law_secret_police',
            'OR = {\n\thas_law = law_type:law_secret_police\n'
-           '\thas_law_or_variant = law_type:law_gendarmerie\n}')]),
+           '\thas_law_or_variant = law_type:law_gendarmerie\n}'),
+          ('replace_line', 'has_law = law_type:law_militarized_police',
+           'OR = {\n\thas_law = law_type:law_militarized_police\n'
+           '\thas_law_or_variant = law_type:law_privatized_police\n}')]),
     ]),
     ('common/government_types', 'government_types', [
         ('gov_council_republic', [('after', 'has_law = law_type:law_technocracy',
@@ -580,7 +609,18 @@ OTHER_PATCHES = [
            ['AND = {', '\thas_law_or_variant = law_type:law_proletariat_dictatorship',
             '\thas_law_or_variant = law_type:law_no_election', '}'])]),
         ('gov_fascist_corporate_state',
-         [('in_sub', 'possible', f'\t\tNOT = {{ has_law = law_type:law_ecclesiarchy }}{TAG_LP}')]),
+         [('in_sub', 'possible', f'\t\tNOT = {{ has_law = law_type:law_ecclesiarchy }}{TAG_LP}'),
+          # Laws+ keeps Italy out of the generic fascist state, which has its own government
+          # type there, unless it is the Austro-Hungarian one.
+          ('in_sub', 'possible', f'\t\tNOT = {{{TAG_LP}\n'
+                                 '\t\t\tAND = {\n'
+                                 '\t\t\t\tNOT = { c:KUK ?= this }\n'
+                                 '\t\t\t\tOR = {\n'
+                                 '\t\t\t\t\tcountry_has_primary_culture = cu:north_italian\n'
+                                 '\t\t\t\t\tcountry_has_primary_culture = cu:south_italian\n'
+                                 '\t\t\t\t}\n'
+                                 '\t\t\t}\n'
+                                 '\t\t}')]),
     ]),
     ('common/amendments', 'amendments', [
         ('amendment_electoral_clientelism',
@@ -613,14 +653,37 @@ OTHER_PATCHES = [
                                   [f'has_ideology = ideology:ideology_anarcho_liberal{TAG_LP}'])]),
         ('movement_meiji_restorationist',
          [('after', 'ideology:ideology_reformer',
-           [f'has_ideology = ideology:ideology_anarcho_liberal{TAG_LP}'])]),
+           [f'has_ideology = ideology:ideology_anarcho_liberal{TAG_LP}']),
+          # Laws+ also counts its own sakoku towards the opening of Japan. Better Politics Mod
+          # dropped that factor from the movement, so there is nothing to count it in.
+          ('after', 'is_enacting_law = law_type:law_council_republic',
+           [f'is_enacting_law = law_type:law_corporatocracy{TAG_LP}'])]),
     ]),
     ('common/interest_groups', 'interest_groups', [
         ('ig_petty_bourgeoisie',
          [('after', 'has_law = law_type:law_appointed_bureaucrats',
            [f'has_law_or_variant = law_type:law_meritocratic_bureaucracy{TAG_LP}'])]),
         ('ig_devout', [('after', 'has_law = law_type:law_theocracy',
-                        [f'has_law = law_type:law_gwageo{TAG_LP}'])]),
+                        [f'has_law = law_type:law_gwageo{TAG_LP}']),
+                       # Laws+ names the devout of an animist state and gives bureaucrats a
+                       # reason to join it under its examination law. Better Politics Mod has
+                       # neither case, so both stand on their own rather than in its chain.
+                       ('in_sub', 'on_enable',
+                        f'\t\tif = {{{TAG_LP}\n'
+                        '\t\t\tlimit = { country_has_state_religion = rel:animist }\n'
+                        '\t\t\tig:ig_devout ?= { set_interest_group_name = ig_pagan_shamans }\n'
+                        '\t\t}'),
+                       ('in_sub', 'pop_weight',
+                        f'\t\tif = {{{TAG_LP}\n'
+                        '\t\t\tlimit = {\n'
+                        '\t\t\t\towner = { has_law = law_type:law_gwageo }\n'
+                        '\t\t\t\tis_pop_type = bureaucrats\n'
+                        '\t\t\t}\n'
+                        '\t\t\tadd = {\n'
+                        '\t\t\t\tdesc = "POP_BUREAUCRATS"\n'
+                        '\t\t\t\tvalue = 100\n'
+                        '\t\t\t}\n'
+                        '\t\t}')]),
     ]),
 ]
 
@@ -974,6 +1037,9 @@ def build_bpm_laws(src, report):
             elif kind == 'disallow':
                 body = append_in_sub(body, 'disallowing_laws',
                                      '\n'.join(f'\t\t{l}{TAG_LP}' for l in arg), create=True)
+            elif kind == 'unlock':
+                body = append_in_sub(body, 'unlocking_laws',
+                                     '\n'.join(f'\t\t{l}{TAG_LP}' for l in arg), create=True)
             elif kind == 'is_visible':
                 if find_sub(body, 'is_visible'):
                     body = append_in_sub(body, 'is_visible', f'\t\t{arg}{TAG_LP}')
@@ -1187,6 +1253,33 @@ MERGE_SUBDIRS = [
 ]
 
 
+def _once_sections(body):
+    return {n for kind, n, _ in depth1_items(body)
+            if kind == 'section' and n in merge3.ONCE}
+
+
+def _worth_merging(van, bpm, lp):
+    """Whether the game gets this entry wrong on its own.
+
+    Two full definitions of one entry: the file that sorts later wins and the other is gone,
+    so the entry has to be merged. An injection is different - the game applies it to whichever
+    body won, and a list read twice simply adds up. There the only thing that goes missing is a
+    section the game reads once and both sides define, and only that is worth a REPLACE, which
+    freezes the base game's body into the compatch.
+    """
+    inj_b, inj_l = is_injection(bpm), is_injection(lp)
+    if not inj_b and not inj_l:
+        return True
+    if inj_b and inj_l:
+        counts = {}
+        for body in (van, bpm, lp):
+            for n in _once_sections(body):
+                counts[n] = counts.get(n, 0) + 1
+        return any(c > 1 for c in counts.values())
+    patch, base = (bpm, lp) if inj_b else (lp, bpm)
+    return bool(_once_sections(patch) & _once_sections(base))
+
+
 def build_merges(src, report):
     """Entries both mods rewrite, merged so neither loses what it added.
 
@@ -1211,16 +1304,22 @@ def build_merges(src, report):
         for key in sorted(set(b) & set(l)):
             if key in handled or key not in v:
                 continue
-            merged, notes, conceded = merge3.merge_entry(v[key][2], b[key][2], l[key][2])
+            if not _worth_merging(v[key][2], b[key][2], l[key][2]):
+                continue
+            bb, ll = whole_entry(v[key][2], b[key][2]), whole_entry(v[key][2], l[key][2])
+            merged, notes, conceded = merge3.merge_entry(v[key][2], bb, ll)
             for n in notes:
                 warn.append(f'{key}{n}')
             # Nothing to do where the winning body already says everything Laws+ adds.
-            if _same(merged, b[key][2]):
+            if _same(merged, bb):
                 continue
             # What Laws+ changed inside something BPM removed is given up on purpose, so it
             # does not count against the merge.
-            lost = ((_dropped(b[key][2], merged) | _dropped(l[key][2], merged, v[key][2]))
-                    - conceded)
+            lost = ((_dropped(bb, merged) | _dropped(ll, merged, v[key][2])) - conceded)
+            # Where both mods only patch the entry, neither of them removed anything and the
+            # base game's own body has to come through whole.
+            if bb is not b[key][2] and ll is not l[key][2]:
+                lost |= _dropped(v[key][2], merged)
             if lost:
                 warn.append(f'{subdir}/{key}: merge would drop {len(lost)} line(s), skipped')
                 continue
@@ -1235,13 +1334,19 @@ def build_merges(src, report):
 
 
 def _lines(body):
-    """The content of an entry, without the line that opens it.
+    """The content of an entry, as the merge sees it and whatever the layout.
 
-    That line carries the CMF prefix, and a merge keeps the base's. Counting it would report
-    INJECT:GER = { as a line of Laws+ that went missing, which is not content at all.
+    The line that opens the entry is left out: it carries the CMF prefix, and a merge keeps
+    the base's, so counting it would report INJECT:GER = { as a line of Laws+ that went
+    missing. Layout is left out for the same reason - a block written on one line and the
+    same block written over five hold the same content, and the merge writes one item per
+    line.
     """
-    return {re.sub(r'\s+', ' ', strip_c(l).strip()) for l in body.split('\n')[1:]
-            if strip_c(l).strip() not in ('', '{', '}')}
+    lines = body.split('\n')
+    out = set()
+    for it in merge3.parse('\n'.join(lines[1:-1]) if len(lines) > 2 else ''):
+        out |= merge3.flat(it)
+    return out
 
 
 def _same(a, b):
@@ -1350,7 +1455,18 @@ def check_no_loss(src):
                 base = bpm_entry[2] if bpm_entry else base
 
             if mode.startswith('REPLACE') or subdir == 'events':
-                lost = set(norm(base.split('\n'))) - set(norm(ours.split('\n')))
+                # A merged entry is written one item to a line, so a block the source mod
+                # wrote on one line is there but not as that line. Content is what counts.
+                lost = (_lines(base) - _lines(ours) if merged_here else
+                        set(norm(base.split('\n'))) - set(norm(ours.split('\n'))))
+                if merged_here:
+                    # A line of Better Politics Mod that is the base game's own, and that
+                    # Laws+ has since changed, is superseded rather than lost: one line
+                    # holds one value and the merge takes the one that moved.
+                    van_e = src.walk(src.game, subdir).get(key)
+                    lp_e = src.walk(src.lp, subdir).get(key)
+                    if van_e and lp_e:
+                        lost -= _lines(van_e[2]) - _lines(whole_entry(van_e[2], lp_e[2]))
                 if lost:
                     problems.append(f'{subdir}/{key}: {len(lost)} line(s) dropped, '
                                     f'e.g. {sorted(lost)[0]}')

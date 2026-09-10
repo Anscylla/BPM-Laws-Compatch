@@ -618,6 +618,10 @@ REPLACE:ig_devout = {
 		}
 
 		ig:ig_devout = { bpm_reorder_ideologies = yes }
+		if = {	# laws+
+			limit = { country_has_state_religion = rel:animist }
+			ig:ig_devout ?= { set_interest_group_name = ig_pagan_shamans }
+		}
 	}
 	on_disable = {}
 
@@ -809,6 +813,16 @@ REPLACE:ig_devout = {
 				value = 1.5
 			}
 		}		
+		if = {	# laws+
+			limit = {
+				owner = { has_law = law_type:law_gwageo }
+				is_pop_type = bureaucrats
+			}
+			add = {
+				desc = "POP_BUREAUCRATS"
+				value = 100
+			}
+		}
 	}
 	
 	monarch_weight = {

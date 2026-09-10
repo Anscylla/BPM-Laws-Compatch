@@ -4,7 +4,9 @@
 
 # ig_armed_forces
 REPLACE:ig_armed_forces = {
-	color = hsv{ 0.05 0.1 0.4 }
+	color = hsv {
+		0.05 0.1 0.4
+	}
 	texture = "gfx/interface/icons/ig_icons/armed_forces.dds"
 	layer = "revolution_dynamic_armed_forces"
 	index = 0
@@ -27,7 +29,9 @@ REPLACE:ig_armed_forces = {
 		ig:ig_armed_forces = {
 		}
 		if = {
-			limit = { game_date > 1836.1.1 }
+			limit = {
+				game_date > 1836.1.1
+			}
 			owner = {
 				bpm_copy_variable_from_civil_war_origin = yes
 			}
@@ -49,7 +53,9 @@ REPLACE:ig_armed_forces = {
 		else_if = {
 			limit = {
 				country_has_primary_culture = cu:japanese
-				NOT = { has_global_variable = fall_of_the_samurai_global_var }
+				NOT = {
+					has_global_variable = fall_of_the_samurai_global_var
+				}
 			}
 			ig:ig_armed_forces = {
 				bpm_ig_make_samurai = yes
@@ -82,7 +88,8 @@ REPLACE:ig_armed_forces = {
 			}
 		}
 	}
-	on_disable = {}
+	on_disable = {
+	}
 	priority_cultures = {
 		rule = {
 			trigger = {
@@ -107,7 +114,8 @@ REPLACE:ig_armed_forces = {
 			}
 		}
 	}
-	on_character_ig_membership = {}
+	on_character_ig_membership = {
+	}
 	pop_potential = {
 		pop_acceptance >= acceptance_status_4
 		OR = {
@@ -133,28 +141,36 @@ REPLACE:ig_armed_forces = {
 			}
 		}
 		if = {
-			limit = { is_pop_type = soldiers }
+			limit = {
+				is_pop_type = soldiers
+			}
 			add = {
 				desc = "POP_SOLDIERS"
 				value = 50
 			}
 		}
 		else_if = {
-			limit = { is_pop_type = officers }
+			limit = {
+				is_pop_type = officers
+			}
 			add = {
 				desc = "POP_OFFICERS"
 				value = 300
 			}
 		}
 		else_if = {
-			limit = { is_pop_type = aristocrats }
+			limit = {
+				is_pop_type = aristocrats
+			}
 			add = {
 				desc = "POP_ARISTOCRATS"
 				value = 100
 			}
 		}
 		else_if = {
-			limit = { is_pop_type = bureaucrats }
+			limit = {
+				is_pop_type = bureaucrats
+			}
 			add = {
 				desc = "POP_BUREAUCRATS"
 				value = 50
@@ -216,6 +232,20 @@ REPLACE:ig_armed_forces = {
 	monarch_weight = {
 		owner.ig:ig_armed_forces = {
 			value = bpm_ig_monarch_weight
+		}
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						has_law_or_variant = law_type:law_universal_suffrage
+						has_law_or_variant = law_type:law_census_voting
+						has_law_or_variant = law_type:law_weighted_universal_voting
+					}
+				}
+			}
+			multiply = {
+				value = 0.5
+			}
 		}
 	}
 	agitator_weight = {

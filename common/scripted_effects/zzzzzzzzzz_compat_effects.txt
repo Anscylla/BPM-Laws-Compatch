@@ -334,7 +334,10 @@ REPLACE:calculate_communism_progress = {
 	}
 	else_if = {
 		limit = {
-			has_law = law_type:law_militarized_police
+			OR = {
+				has_law = law_type:law_militarized_police
+				has_law_or_variant = law_type:law_privatized_police
+			}
 		}
 		change_variable = { name = temp_policing_var_contribution multiply = -0.5 }
 	}
