@@ -1167,26 +1167,23 @@ BPM_SPRINGTIME_ARM = [
     '\t\t\t}',
 ]
 
-SPRINGTIME_AFTER = [
-    '\t\tje:je_springtime_of_the_peoples ?= {',
-    '\t\t\tremove_involved_country = ROOT',
-    '\t\t}',
-]
-
-
 def build_springtime_event(src, report):
-    """The Revolution Vanquished, raised once instead of every week.
+    """The Revolution Vanquished, gated the way the base game gates it.
 
-    The journal entry's weekly pulse raises peoples_springtime.8 for every involved
-    country and leans on the event's own trigger to refuse. Better Politics Mod
-    replaces the event with a version that has no trigger, since in its own journal
-    entry nothing pulses it: it is raised once, from peoples_springtime.6. Laws+
-    replaces the journal entry with the base game's, pulse included. Whichever of the
-    two settles the entry, the event that answers it is the one without a gate.
+    The base game's journal entry raises peoples_springtime.8 for every involved country
+    every week and leans on the event's own trigger to refuse: the event sets
+    completed_peoples_springtime the first time and its trigger asks for the absence of it.
+    Better Politics Mod replaces both halves - its entry pulses peoples_springtime.100
+    instead, and its event carries no trigger at all, which is safe as long as nothing
+    pulses it. Laws+ replaces the entry with the base game's, pulse included. Put the two
+    mods together and Laws+ pulses the event Better Politics Mod left ungated, once a week,
+    forever.
 
-    Better Politics Mod's body is kept, since it is the mod that reshaped this chain,
-    and the base game's gate is put back in front of it with a third arm for Better
-    Politics Mod's own route.
+    The cure is the journal entry, not the event: the entry lives in common/, where the
+    patch's file name settles who wins, and the merge of the two entries follows Better
+    Politics Mod - so peoples_springtime.8 is never pulsed at all. This is the second half,
+    for anyone whose set leaves some other entry in charge: Better Politics Mod's body with
+    the base game's gate put back in front of it, plus a third arm for its own route.
     """
     warn = report['warn']
     _, bpm = src.find('events', 'peoples_springtime.8', src.bpm)
@@ -1220,9 +1217,10 @@ def build_springtime_event(src, report):
     if not first_option:
         warn.append('peoples_springtime.8: Better Politics Mod version has no options')
         return
+    # The gate alone. Taking the country out of the journal entry afterwards would end the
+    # rest of the chain for it as well, and the gate already answers the pulse.
     body[first_option[0]:first_option[0]] = trigger + [''] + lines[ri[0]:ri[1] + 1] + ['']
-    body = append_in_sub('\n'.join(body), 'after', '\n'.join(SPRINGTIME_AFTER), create=True)
-    body = body.replace('\t}\n\tafter = {', '\t}\n\n\tafter = {')
+    body = '\n'.join(body)
 
     report['springtime_event'] = write_file(
         'events', 'peoples_springtime', [(None, 'peoples_springtime.8', body)], warn)

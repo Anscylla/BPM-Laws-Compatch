@@ -88,11 +88,5 @@ peoples_springtime.8 = {
 			value = 0.1
 		}
 	}
-
-	after = {
-		je:je_springtime_of_the_peoples ?= {
-			remove_involved_country = ROOT
-		}
-	}
 }
 
