@@ -1,7 +1,7 @@
 ﻿{
 	"name" : "[1.13] BPM / Laws+ Compatch",
 	"id" : "bpm.lawsplus.compatch",
-	"version" : "2.1.0",
+	"version" : "2.1.1",
 	"game_id" : "victoria3",
 	"picture" : "thumbnail.png",
 	"supported_game_version" : "1.13.*",
@@ -21,14 +21,14 @@
 			"id" : "2932134122",
 			"display_name" : "Better Politics Mod",
 			"resource_type" : "mod",
-			"version" : "2.5"
+			"version" : "2.*"
 		},
 		{
 			"rel_type" : "dependency",
 			"id" : "2941539986",
 			"display_name" : "Laws +",
 			"resource_type" : "mod",
-			"version" : "1.12.13"
+			"version" : "1.*"
 		}
 	],
 	"game_custom_data" : {

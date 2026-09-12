@@ -663,8 +663,10 @@ OTHER_PATCHES = [
         ('ig_petty_bourgeoisie',
          [('after', 'has_law = law_type:law_appointed_bureaucrats',
            [f'has_law_or_variant = law_type:law_meritocratic_bureaucracy{TAG_LP}'])]),
+        # The anchor sits in a pop_weight, where the scope is a pop and a law is the
+        # country's, so this reaches for the owner the way the line above it does.
         ('ig_devout', [('after', 'has_law = law_type:law_theocracy',
-                        [f'has_law = law_type:law_gwageo{TAG_LP}']),
+                        [f'owner = {{ has_law = law_type:law_gwageo }}{TAG_LP}']),
                        # Laws+ names the devout of an animist state and gives bureaucrats a
                        # reason to join it under its examination law. Better Politics Mod has
                        # neither case, so both stand on their own rather than in its chain.
