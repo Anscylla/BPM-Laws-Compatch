@@ -102,7 +102,7 @@ REPLACE:amendment_industrial_socialization = {
 				has_ideology = ideology:ideology_fascist
 				has_ideology = ideology:ideology_national_socialist	# laws+
 				has_ideology = ideology:ideology_integralist
-				has_ideology = ideology:ideology_social_democrat
+				has_ideology = ideology:ideology_state_socialist
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """Three-way merge of one database entry: vanilla is the ancestor, BPM the base.
 
 Both mods edit the same vanilla entry. BPM restructures, Laws+ adds cases. The merge keeps
@@ -38,6 +38,11 @@ ONCE = {
 
 def _head_name(item):
     return item[1].split('=')[0].strip() if item[0] == 'block' else None
+
+
+def _head_key(item):
+    """The name on the left of a single line: desc, value, has_law and so on."""
+    return item[1].split('=')[0].strip() if item[0] == 'scalar' else None
 
 
 def _strip(line):
@@ -166,7 +171,7 @@ def pair(src_items, dst_items):
     return out
 
 
-def merge(van, bpm, lp, path, notes, conceded, base=''):
+def merge(van, bpm, lp, path, notes, conceded, base='', superseded=None):
     """-> merged item list. van/bpm/lp are item lists of the same block.
 
     Whatever Laws+ changed inside something Better Politics Mod removed is recorded in
@@ -207,12 +212,18 @@ def merge(van, bpm, lp, path, notes, conceded, base=''):
         if van[vi][0] == 'block':
             out[bi] = ('block', bpm[bi][1],
                        merge(van[vi][2], bpm[bi][2], lp[li][2],
-                             path + '/' + van[vi][1], notes, conceded, base))
+                             path + '/' + van[vi][1], notes, conceded, base, superseded))
         elif flat(van[vi]) != flat(lp[li]):
             # One line, one value. Where only Laws+ moved it, its value stands; where both
             # did, there is no third value that means both and BPM is the mod that decides.
-            if flat(van[vi]) == flat(bpm[bi]):
-                conceded |= flat(bpm[bi])
+            #
+            # A desc is the exception, because it is a label rather than a value: it names the
+            # line of tooltip this weight is printed on. Two blocks whose desc differs are two
+            # different weights however alike their insides look, so a desc that disagrees is
+            # a sign the blocks around it were paired wrongly, and carrying Laws+'s across
+            # would file Better Politics Mod's number under somebody else's name.
+            if flat(van[vi]) == flat(bpm[bi]) and _head_key(van[vi]) != 'desc':
+                superseded |= flat(bpm[bi])
                 out[bi] = lp[li]
             else:
                 notes.append('%s: both set %r differently, follows BPM' %
@@ -261,12 +272,12 @@ def render(items, indent=1):
 
 
 def merge_entry(van_body, bpm_body, lp_body):
-    """-> (merged body, notes, conceded). Bodies include their own 'key = {' first line."""
+    """-> (merged body, notes, conceded, superseded). Bodies include their own 'key = {' first line."""
     def guts(b):
         lines = b.split('\n')
         return '\n'.join(lines[1:-1]) if len(lines) > 2 else ''
-    notes, conceded = [], set()
+    notes, conceded, superseded = [], set(), set()
     items = merge(parse(guts(van_body)), parse(guts(bpm_body)), parse(guts(lp_body)),
-                  '', notes, conceded, bpm_body)
+                  '', notes, conceded, bpm_body, superseded)
     head = bpm_body.split('\n')[0]
-    return '\n'.join([head] + render(items) + ['}']), notes, conceded
+    return '\n'.join([head] + render(items) + ['}']), notes, conceded, superseded

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Build script for the BPM / Laws+ compatibility patch.
 
 Regenerates every file under common/ from the current Better Politics Mod and
@@ -1307,7 +1307,7 @@ def build_merges(src, report):
             if not _worth_merging(v[key][2], b[key][2], l[key][2]):
                 continue
             bb, ll = whole_entry(v[key][2], b[key][2]), whole_entry(v[key][2], l[key][2])
-            merged, notes, conceded = merge3.merge_entry(v[key][2], bb, ll)
+            merged, notes, conceded, superseded = merge3.merge_entry(v[key][2], bb, ll)
             for n in notes:
                 warn.append(f'{key}{n}')
             # Nothing to do where the winning body already says everything Laws+ adds.
@@ -1315,7 +1315,11 @@ def build_merges(src, report):
                 continue
             # What Laws+ changed inside something BPM removed is given up on purpose, so it
             # does not count against the merge.
-            lost = ((_dropped(bb, merged) | _dropped(ll, merged, v[key][2])) - conceded)
+            # Each side's losses are excused only by its own set. Both hold lines, and the same
+            # words occur in both mods, so one set for both sides lets a line Better Politics
+            # Mod really lost pass as one Laws+ gave up.
+            lost = ((_dropped(bb, merged) - superseded)
+                    | (_dropped(ll, merged, v[key][2]) - conceded))
             # Where both mods only patch the entry, neither of them removed anything and the
             # base game's own body has to come through whole.
             if bb is not b[key][2] and ll is not l[key][2]:

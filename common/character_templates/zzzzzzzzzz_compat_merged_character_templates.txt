@@ -52,7 +52,7 @@ REPLACE:agitator_antonio_sardinha = {
 	religion = rel:catholic
 	female = no
 	interest_group = ig_reactionaries
-	ideology = ideology_integralist
+	ideology = ideology_clerical_fascist
 	birth_date = 1887.9.9
 	traits = {
 		direct bigoted ambitious
@@ -69,6 +69,10 @@ REPLACE:agitator_antonio_sardinha = {
 		interest_group_trigger = {
 			bpm_ig_is_marginal = no
 			is_interest_group_type = ig_reactionaries
+			OR = {
+				is_interest_group_type = ig_intelligentsia
+				is_interest_group_type = ig_petty_bourgeoisie
+			}
 		}
 		earliest_usage_date = 1910.1.1
 		latest_usage_date = 1935.12.31

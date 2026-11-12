@@ -46,6 +46,7 @@ REPLACE:ai_strategy_nationalist_agenda = {
 		if = {
 			limit = {
 				bpm_has_law_change_journal = yes
+				has_enactment_je_or_law_commitment = yes
 			}
 			add = 25
 		}
@@ -150,7 +151,12 @@ REPLACE:ai_strategy_nationalist_agenda = {
 			}
 			if = {
 				limit = {
-					bpm_leader_is_nationalist = yes
+					interest_group ?= {
+						OR = {
+							bpm_ig_is_fascist = yes
+							bpm_ig_is_very_hawkish = yes
+						}
+					}
 				}
 				add = 100
 			}
@@ -161,6 +167,7 @@ REPLACE:ai_strategy_nationalist_agenda = {
 				c:FRA = this
 				ruler = {
 					has_variable = bonapartist_leader
+					has_variable = house_bonaparte
 				}
 			}
 			add = 30
@@ -267,6 +274,7 @@ REPLACE:ai_strategy_progressive_agenda = {
 		if = {
 			limit = {
 				bpm_has_law_change_journal = yes
+				has_enactment_je_or_law_commitment = yes
 			}
 			add = 25
 		}
@@ -354,15 +362,11 @@ REPLACE:ai_strategy_progressive_agenda = {
 		ruler ?= {
 			if = {
 				limit = {
-					bpm_leader_is_radical_liberal = yes
+					interest_group ?= {
+						bpm_ig_is_radical_liberal = yes
+					}
 				}
 				add = 100
-			}
-			else_if = {
-				limit = {
-					bpm_leader_is_progressive_liberal = yes
-				}
-				add = 20
 			}
 		}
 		if = {

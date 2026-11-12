@@ -19,12 +19,39 @@ REPLACE:coa_fascist_trigger = {
 	}
 }
 
+# has_reactionary_ideology
+REPLACE:has_reactionary_ideology = {
+	interest_group ?= {
+		bpm_ig_is_traditionalist = yes
+	}
+	custom_tooltip = {
+		text = has_reactionary_ideology_tt
+		OR = {
+			has_ideology = ideology:ideology_traditionalist
+			has_ideology = ideology:ideology_fascist
+			has_ideology = ideology:ideology_integralist
+			has_ideology = ideology:ideology_ethno_nationalist
+			has_ideology = ideology:ideology_theocrat
+			has_ideology = ideology:ideology_legitimist
+			has_ideology = ideology:ideology_luddite
+			has_ideology = ideology:ideology_corporatist_leader
+			character_has_carlist_ideology = yes
+			character_has_miguelist_ideology = yes
+			has_ideology = ideology:ideology_clerical_fascist
+			has_ideology = ideology:ideology_national_socialist
+			has_ideology = ideology:ideology_clerical_fascist
+		}
+	}
+}
+
 # ig_is_reactionary
 REPLACE:ig_is_reactionary = {
+	bpm_ig_is_traditionalist = yes
 	OR = {
-		bpm_ig_is_traditionalist = yes
+		has_ideology = ideology:ideology_reactionary
+		has_ideology = ideology:ideology_pro_slavery
+		has_ideology = ideology:ideology_pro_slavery_colonial
 		leader = {
-			bpm_leader_is_reactionary = yes
 			OR = {
 				has_ideology = ideology:ideology_slaver
 				has_ideology = ideology:ideology_fascist
@@ -36,6 +63,16 @@ REPLACE:ig_is_reactionary = {
 				has_ideology = ideology:ideology_theocrat
 				has_ideology = ideology:ideology_clerical_fascist
 				has_ideology = ideology:ideology_national_socialist
+			}
+		}
+		AND = {
+			law_stance = {
+				law = law_type:law_autocracy
+				value >= neutral
+			}
+			law_stance = {
+				law = law_type:law_council_republic
+				value < neutral
 			}
 		}
 	}

@@ -34,6 +34,7 @@ REPLACE:ideology_national_socialist = { # 국가사회주의자 (슈트라서주
 		law_professional_army = disapprove
 		law_peasant_levies = disapprove
 		law_disarmed_nation = strongly_disapprove
+		law_revolutionary_guard = strongly_disapprove	# bpm
 	}
 
 	lawgroup_economic_system = {
@@ -536,6 +537,7 @@ REPLACE:ideology_national_socialist = { # 국가사회주의자 (슈트라서주
 		law_technocracy = approve
 		law_military_junta = approve		
 		law_organic_democracy = approve
+		law_labour_suffrage = strongly_disapprove
 	}
 
 	lawgroup_centralization = {
@@ -622,6 +624,7 @@ REPLACE:ideology_clerical_fascist = { # 교권 파시스트
 		law_anarchy = strongly_disapprove
 		law_military_junta = approve	# bpm
 		law_organic_democracy = strongly_approve	# bpm
+		law_labour_suffrage = strongly_disapprove	# bpm
 	}
 
 	lawgroup_church_and_state = { # 전통주의와 동일
@@ -1900,6 +1903,7 @@ REPLACE:ideology_anarcho_liberal = { # 무정부주의적 자유주의자
 		law_technocracy = disapprove
 		law_military_junta = disapprove
 		law_organic_democracy = strongly_disapprove
+		law_labour_suffrage = strongly_disapprove
 	}
 
 	lawgroup_free_speech = {
@@ -1914,6 +1918,7 @@ REPLACE:ideology_anarcho_liberal = { # 무정부주의적 자유주의자
 		law_no_home_affairs = approve
 		law_national_guard = strongly_disapprove
 		law_secret_police = strongly_disapprove
+		law_extraordinary_commission = strongly_disapprove
 	}
 
 	lawgroup_repeatable_politics = {
